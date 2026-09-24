@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product & Solutions | QuickDoc Healthcare Systems</title>
+  <style>
+    :root {
+      --bg: #07172B;
+      --card-bg: #143154;
+      --emerald: #10B981;
+      --cyan: #38BDF8;
+      --text: #FFFFFF;
+      --text-muted: #94A3B8;
+      --border: #224770;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Roboto,sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
+    header { display:flex; justify-content:space-between; align-items:center; padding:18px 8%; background:#0B223D; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+    .logo { font-size:22px; font-weight:800; color:#fff; text-decoration:none; }
+    .logo span { color:var(--cyan); font-weight:300; }
+    nav a { color:var(--text-muted); text-decoration:none; margin-left:20px; font-size:14px; font-weight:600; }
+    nav a.active, nav a:hover { color:var(--cyan); }
+    .container { max-width:1100px; margin:0 auto; padding:60px 20px; }
+    .badge { display:inline-block; padding:5px 15px; background:rgba(2,132,199,0.2); border:1px solid var(--cyan); border-radius:20px; color:var(--cyan); font-size:12px; font-weight:700; margin-bottom:15px; }
+    h1 { font-size:38px; font-weight:800; margin-bottom:15px; }
+    .subtitle { font-size:18px; color:var(--text-muted); max-width:750px; margin-bottom:40px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:25px; margin-bottom:50px; }
+    .card { background:var(--card-bg); border:1px solid var(--border); padding:30px; border-radius:14px; }
+    .card h3 { font-size:20px; margin-bottom:10px; color:var(--cyan); }
+    .card p { color:var(--text-muted); font-size:14px; }
+    .banner { background:#0B223D; border:1px solid var(--border); border-radius:14px; padding:35px; margin-top:20px; }
+    .banner h2 { font-size:24px; color:var(--emerald); margin-bottom:10px; }
+    .banner p { color:var(--text-muted); font-size:15px; }
+    footer { background:#061322; border-top:1px solid #1E293B; padding:30px 8%; text-align:center; color:var(--text-muted); font-size:13px; margin-top:60px; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">QuickDoc <span>Healthcare</span></a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="product.html" class="active">Product</a>
+      <a href="about.html">About Us</a>
+      <a href="partners.html">Hospitals</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="badge">PLATFORM ARCHITECTURE</div>
+    <h1>The QuickDoc Solutions Engine</h1>
+    <p class="subtitle">An end-to-end ecosystem connecting patients, clinical departments, and moving transit units into one synchronized queue network.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>1. Patient Discovery App</h3>
+        <p>A smart mobile interface where users describe symptoms and receive immediate specialty mapping, verified doctor rosters, and guaranteed arrival consultation slots.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--emerald);">2. OP-Flow Hospital Dashboard</h3>
+        <p>A B2B SaaS management cockpit for hospital administrators to balance peak outpatient surges, track specialist availability, and stage digital intake ahead of arrival.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:#F59E0B;">3. Transit Telemetry Pod</h3>
+        <p>Pre-hospital edge hardware linking emergency transit vehicles to receiving hospital triage bays, relaying critical vitals before the patient arrives at the emergency room.</p>
+      </div>
+    </div>
+
+    <div class="banner">
+      <h2>National Health Interoperability (ABDM Ready)</h2>
+      <p>QuickDoc is built to integrate with India’s Ayushman Bharat Digital Mission (ABDM) standards, supporting ABHA identity creation, FHIR-compliant digital records, and seamless interoperability across hospital management software (HIMS).</p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 QuickDoc Healthcare Systems. Slogan: "find your doc. beat the clock" | RYLA RTS 62.0.
+  </footer>
+</body>
+</html>
