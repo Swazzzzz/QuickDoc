@@ -7,38 +7,67 @@
   <style>
     :root {
       --bg: #07172B;
-      --card-bg: #143154;
+      --card-bg: rgba(20, 49, 84, 0.7);
       --emerald: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.35);
       --cyan: #38BDF8;
       --text: #FFFFFF;
       --text-muted: #94A3B8;
       --border: #224770;
     }
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Roboto,sans-serif; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Roboto,-apple-system,sans-serif; }
     body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
-    header { display:flex; justify-content:space-between; align-items:center; padding:18px 8%; background:#0B223D; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
-    .logo { font-size:22px; font-weight:800; color:#fff; text-decoration:none; }
-    .logo span { color:var(--cyan); font-weight:300; }
-    nav a { color:var(--text-muted); text-decoration:none; margin-left:20px; font-size:14px; font-weight:600; }
-    nav a.active, nav a:hover { color:var(--cyan); }
-    .container { max-width:1100px; margin:0 auto; padding:60px 20px; }
-    .badge { display:inline-block; padding:5px 15px; background:rgba(2,132,199,0.2); border:1px solid var(--cyan); border-radius:20px; color:var(--cyan); font-size:12px; font-weight:700; margin-bottom:15px; }
-    h1 { font-size:38px; font-weight:800; margin-bottom:15px; }
-    .subtitle { font-size:18px; color:var(--text-muted); max-width:750px; margin-bottom:40px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:25px; margin-bottom:45px; }
-    .card { background:var(--card-bg); border:1px solid var(--border); padding:30px; border-radius:14px; }
-    .card h3 { font-size:20px; margin-bottom:10px; color:var(--cyan); }
-    .card p { color:var(--text-muted); font-size:14px; }
-    .founder-card { background:#0B223D; border:1px solid var(--border); border-radius:16px; padding:35px; margin-top:20px; }
-    .founder-card h2 { font-size:26px; color:#fff; margin-bottom:5px; }
-    .founder-card h4 { font-size:16px; color:var(--emerald); margin-bottom:15px; font-weight:600; }
-    .founder-card p { color:var(--text-muted); font-size:15px; line-height:1.7; }
-    footer { background:#061322; border-top:1px solid #1E293B; padding:30px 8%; text-align:center; color:var(--text-muted); font-size:13px; margin-top:60px; }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 8%; background: rgba(11, 34, 61, 0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
+    }
+    .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-svg { width: 44px; height: 44px; filter: drop-shadow(0 0 8px var(--emerald-glow)); }
+    .logo-title { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
+    .logo-title span { color: var(--cyan); font-weight: 300; }
+    nav a { color: var(--text-muted); text-decoration: none; margin-left: 24px; font-size: 14px; font-weight: 600; transition: color 0.3s; }
+    nav a:hover, nav a.active { color: var(--cyan); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; animation: fadeIn 0.8s ease-out; }
+    .badge {
+      display: inline-block; padding: 5px 16px; background: rgba(2, 132, 199, 0.15);
+      border: 1px solid var(--cyan); border-radius: 20px; color: var(--cyan);
+      font-size: 12px; font-weight: 700; margin-bottom: 15px;
+    }
+    h1 { font-size: 40px; font-weight: 900; margin-bottom: 15px; }
+    .subtitle { font-size: 18px; color: var(--text-muted); max-width: 750px; margin-bottom: 45px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; margin-bottom: 45px; }
+    .card {
+      background: var(--card-bg); border: 1px solid var(--border); padding: 34px;
+      border-radius: 16px; transition: all 0.3s ease; backdrop-filter: blur(8px);
+    }
+    .card:hover { transform: translateY(-5px); border-color: var(--cyan); }
+    .card h3 { font-size: 20px; margin-bottom: 10px; color: var(--cyan); }
+    .card p { color: var(--text-muted); font-size: 14.5px; }
+    .founder-card {
+      background: #0B223D; border: 1px solid var(--border); border-radius: 16px;
+      padding: 40px; margin-top: 25px;
+    }
+    .founder-card h2 { font-size: 26px; color: #fff; margin-bottom: 4px; }
+    .founder-card h4 { font-size: 16px; color: var(--emerald); margin-bottom: 16px; font-weight: 600; }
+    .founder-card p { color: var(--text-muted); font-size: 15.5px; line-height: 1.8; }
+    footer {
+      background: #061322; border-top: 1px solid #1E293B; padding: 35px 8%;
+      text-align: center; color: var(--text-muted); font-size: 13.5px; margin-top: 70px;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
   <header>
-    <a href="index.html" class="logo">QuickDoc <span>Healthcare</span></a>
+    <a href="index.html" class="logo-container">
+      <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" rx="24" fill="#0B223D" stroke="#224770" stroke-width="3"/>
+        <path d="M50 20 V80 M20 50 H80" stroke="#10B981" stroke-width="12" stroke-linecap="round"/>
+        <path d="M26 50 H40 L45 35 L55 65 L60 50 H74" stroke="#38BDF8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="logo-title">QuickDoc <span>Healthcare</span></div>
+    </a>
     <nav>
       <a href="index.html">Home</a>
       <a href="product.html">Product</a>
@@ -49,36 +78,36 @@
   </header>
 
   <div class="container">
-    <div class="badge">OUR MISSION & LEADERSHIP</div>
-    <h1>Built to Eliminate Hospital Guesswork</h1>
-    <p class="subtitle">QuickDoc was founded with a singular purpose: to restore dignity and speed to patient care by replacing blind clinic visits with smart triage routing.</p>
+    <div class="badge">VISION &amp; FOUNDATION</div>
+    <h1>Eliminating Healthcare Friction</h1>
+    <p class="subtitle">QuickDoc was created to eliminate information asymmetry in clinical discovery, ensuring patients reach the right specialist without unmanaged wait times.</p>
 
     <div class="grid">
       <div class="card">
         <h3>Our Vision</h3>
-        <p>A healthcare world with zero guesswork, zero unmanaged waiting queues, and instant specialist discovery for every patient.</p>
+        <p>A healthcare ecosystem characterized by zero guesswork, zero unmanaged waiting rooms, and transparent doctor slot discovery.</p>
       </div>
       <div class="card">
         <h3 style="color:var(--emerald);">Our Mission</h3>
-        <p>To empower families with direct symptom-based slot booking and equip clinics with automated outpatient flow management.</p>
+        <p>To empower patients with dynamic symptom triage tools while equipping clinics with automated outpatient orchestration.</p>
       </div>
       <div class="card">
-        <h3 style="color:#F59E0B;">Our Core Values</h3>
-        <p>Transparency in healthcare discovery, clinical workflow integrity, and accessible health logistics for urban corridors.</p>
+        <h3 style="color:#F59E0B;">Core Values</h3>
+        <p>Clinical transparency, patient dignity, and responsive digital health logistics designed for real-world clinics.</p>
       </div>
     </div>
 
     <div class="founder-card">
       <h2>Founder: Swathi S</h2>
-      <h4>Systems Architect &amp; Venture Lead | Team Admirals</h4>
+      <h4>Systems Architect &amp; Founder, QuickDoc Healthcare Systems</h4>
       <p>
-        Incubated within the RYLA "Be An Entrepreneur 62.0" cohort (RTS 13.0), Swathi S developed QuickDoc Healthcare Systems to resolve acute outpatient congestion. By combining real-time doctor availability with symptom-driven triage protocols, QuickDoc bridges patients directly to the care they need without transit blindness or lobby delays.
+        QuickDoc was conceptualized by Swathi S to address systemic outpatient crowding and clinic-hopping. By integrating real-time specialist schedules with algorithmic symptom intake, QuickDoc gives patients immediate clarity on where and when to access care, while helping healthcare facilities maintain balanced, predictable consultation workflows.
       </p>
     </div>
   </div>
 
   <footer>
-    &copy; 2026 QuickDoc Healthcare Systems. Slogan: "find your doc. beat the clock" | RYLA RTS 62.0.
+    &copy; 2026 QuickDoc Healthcare Systems. All Rights Reserved. | "find your doc. beat the clock"
   </footer>
 </body>
 </html>
