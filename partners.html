@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Network & Partners | QuickDoc Healthcare Systems</title>
+  <style>
+    :root {
+      --bg: #07172B;
+      --card-bg: #143154;
+      --emerald: #10B981;
+      --cyan: #38BDF8;
+      --text: #FFFFFF;
+      --text-muted: #94A3B8;
+      --border: #224770;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Roboto,sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
+    header { display:flex; justify-content:space-between; align-items:center; padding:18px 8%; background:#0B223D; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+    .logo { font-size:22px; font-weight:800; color:#fff; text-decoration:none; }
+    .logo span { color:var(--cyan); font-weight:300; }
+    nav a { color:var(--text-muted); text-decoration:none; margin-left:20px; font-size:14px; font-weight:600; }
+    nav a.active, nav a:hover { color:var(--cyan); }
+    .container { max-width:1100px; margin:0 auto; padding:60px 20px; }
+    .badge { display:inline-block; padding:5px 15px; background:rgba(2,132,199,0.2); border:1px solid var(--cyan); border-radius:20px; color:var(--cyan); font-size:12px; font-weight:700; margin-bottom:15px; }
+    h1 { font-size:38px; font-weight:800; margin-bottom:15px; }
+    .subtitle { font-size:18px; color:var(--text-muted); max-width:750px; margin-bottom:40px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:25px; margin-bottom:45px; }
+    .card { background:var(--card-bg); border:1px solid var(--border); padding:30px; border-radius:14px; }
+    .card h3 { font-size:20px; margin-bottom:10px; color:var(--cyan); }
+    .card p { color:var(--text-muted); font-size:14px; }
+    .pilot-cta { background:#0B223D; border:1px solid var(--border); border-radius:16px; padding:40px; text-align:center; margin-top:20px; }
+    .pilot-cta h2 { font-size:28px; color:#fff; margin-bottom:12px; }
+    .pilot-cta p { color:var(--text-muted); font-size:16px; max-width:650px; margin:0 auto 25px; }
+    .btn { display:inline-block; background:var(--emerald); color:#fff; padding:12px 28px; border-radius:8px; text-decoration:none; font-weight:700; font-size:15px; }
+    footer { background:#061322; border-top:1px solid #1E293B; padding:30px 8%; text-align:center; color:var(--text-muted); font-size:13px; margin-top:60px; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">QuickDoc <span>Healthcare</span></a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="product.html">Product</a>
+      <a href="about.html">About Us</a>
+      <a href="partners.html" class="active">Hospitals</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="badge">B2B HOSPITAL COLLABORATIONS</div>
+    <h1>Hospital Network &amp; Corridor Pilots</h1>
+    <p class="subtitle">QuickDoc partners directly with hospitals, polyclinics, and diagnostic centers to streamline outpatient queue management and maximize clinical efficiency.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Optimized Slot Utilization</h3>
+        <p>Dynamic slot booking balances patient distribution across doctor consulting hours, eliminating erratic waiting room spikes.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--emerald);">Reduced Lobby Crowding</h3>
+        <p>Digital pre-intake and scheduled arrival windows lower front-desk triage congestion by up to 65% across peak hours.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:#F59E0B;">Seamless HIMS Integration</h3>
+        <p>Lightweight APIs connect directly to existing hospital management software with full ABDM and FHIR compliance.</p>
+      </div>
+    </div>
+
+    <div class="pilot-cta">
+      <h2>Join the Tier-2 Urban Healthcare Pilot</h2>
+      <p>We are currently onboarding 30 hospital and polyclinic partners across regional corridors to deploy our OP-Flow smart scheduling platform.</p>
+      <a href="contact.html" class="btn">Apply as a Pilot Hospital</a>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 QuickDoc Healthcare Systems. Slogan: "find your doc. beat the clock" | RYLA RTS 62.0.
+  </footer>
+</body>
+</html>
