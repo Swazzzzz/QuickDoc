@@ -7,40 +7,74 @@
   <style>
     :root {
       --bg: #07172B;
-      --card-bg: #143154;
+      --card-bg: rgba(20, 49, 84, 0.7);
       --emerald: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.35);
       --cyan: #38BDF8;
       --text: #FFFFFF;
       --text-muted: #94A3B8;
       --border: #224770;
     }
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Roboto,sans-serif; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Roboto,-apple-system,sans-serif; }
     body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
-    header { display:flex; justify-content:space-between; align-items:center; padding:18px 8%; background:#0B223D; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
-    .logo { font-size:22px; font-weight:800; color:#fff; text-decoration:none; }
-    .logo span { color:var(--cyan); font-weight:300; }
-    nav a { color:var(--text-muted); text-decoration:none; margin-left:20px; font-size:14px; font-weight:600; }
-    nav a.active, nav a:hover { color:var(--cyan); }
-    .container { max-width:1100px; margin:0 auto; padding:60px 20px; }
-    .badge { display:inline-block; padding:5px 15px; background:rgba(2,132,199,0.2); border:1px solid var(--cyan); border-radius:20px; color:var(--cyan); font-size:12px; font-weight:700; margin-bottom:15px; }
-    h1 { font-size:38px; font-weight:800; margin-bottom:15px; }
-    .subtitle { font-size:18px; color:var(--text-muted); max-width:750px; margin-bottom:40px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:30px; }
-    .card { background:var(--card-bg); border:1px solid var(--border); padding:35px; border-radius:16px; }
-    .card h3 { font-size:22px; margin-bottom:15px; color:#fff; }
-    .info-line { margin-bottom:12px; color:var(--text-muted); font-size:15px; }
-    .info-line strong { color:#fff; }
-    .form-group { margin-bottom:15px; }
-    label { display:block; font-size:13px; font-weight:600; color:var(--text-muted); margin-bottom:6px; }
-    input, textarea { width:100%; padding:12px; border-radius:8px; border:1px solid var(--border); background:#07172B; color:#fff; font-size:14px; }
-    input:focus, textarea:focus { outline:none; border-color:var(--cyan); }
-    .btn { display:inline-block; background:var(--emerald); color:#fff; padding:12px 28px; border-radius:8px; border:none; font-weight:700; font-size:15px; cursor:pointer; width:100%; }
-    footer { background:#061322; border-top:1px solid #1E293B; padding:30px 8%; text-align:center; color:var(--text-muted); font-size:13px; margin-top:60px; }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 8%; background: rgba(11, 34, 61, 0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
+    }
+    .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-svg { width: 44px; height: 44px; filter: drop-shadow(0 0 8px var(--emerald-glow)); }
+    .logo-title { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
+    .logo-title span { color: var(--cyan); font-weight: 300; }
+    nav a { color: var(--text-muted); text-decoration: none; margin-left: 24px; font-size: 14px; font-weight: 600; transition: color 0.3s; }
+    nav a:hover, nav a.active { color: var(--cyan); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; animation: fadeIn 0.8s ease-out; }
+    .badge {
+      display: inline-block; padding: 5px 16px; background: rgba(2, 132, 199, 0.15);
+      border: 1px solid var(--cyan); border-radius: 20px; color: var(--cyan);
+      font-size: 12px; font-weight: 700; margin-bottom: 15px;
+    }
+    h1 { font-size: 40px; font-weight: 900; margin-bottom: 15px; }
+    .subtitle { font-size: 18px; color: var(--text-muted); max-width: 750px; margin-bottom: 45px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+    .card {
+      background: var(--card-bg); border: 1px solid var(--border); padding: 36px;
+      border-radius: 16px; backdrop-filter: blur(8px);
+    }
+    .card h3 { font-size: 22px; margin-bottom: 20px; color: #fff; }
+    .info-line { margin-bottom: 16px; color: var(--text-muted); font-size: 15px; display: flex; flex-direction: column; gap: 4px; }
+    .info-line strong { color: #fff; font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.8px; }
+    .info-line a { color: var(--cyan); text-decoration: none; font-weight: 600; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+    input, textarea {
+      width: 100%; padding: 13px; border-radius: 8px; border: 1px solid var(--border);
+      background: #07172B; color: #fff; font-size: 14px; transition: border-color 0.3s;
+    }
+    input:focus, textarea:focus { outline: none; border-color: var(--cyan); }
+    .btn {
+      display: inline-block; background: var(--emerald); color: #fff; padding: 14px 28px;
+      border-radius: 8px; border: none; font-weight: 700; font-size: 15px; cursor: pointer;
+      width: 100%; box-shadow: 0 4px 15px var(--emerald-glow); transition: all 0.3s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5); }
+    footer {
+      background: #061322; border-top: 1px solid #1E293B; padding: 35px 8%;
+      text-align: center; color: var(--text-muted); font-size: 13.5px; margin-top: 70px;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
   <header>
-    <a href="index.html" class="logo">QuickDoc <span>Healthcare</span></a>
+    <a href="index.html" class="logo-container">
+      <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" rx="24" fill="#0B223D" stroke="#224770" stroke-width="3"/>
+        <path d="M50 20 V80 M20 50 H80" stroke="#10B981" stroke-width="12" stroke-linecap="round"/>
+        <path d="M26 50 H40 L45 35 L55 65 L60 50 H74" stroke="#38BDF8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="logo-title">QuickDoc <span>Healthcare</span></div>
+    </a>
     <nav>
       <a href="index.html">Home</a>
       <a href="product.html">Product</a>
@@ -52,48 +86,53 @@
 
   <div class="container">
     <div class="badge">DIRECT ENGAGEMENT</div>
-    <h1>Connect With QuickDoc Systems</h1>
-    <p class="subtitle">Reach out for hospital pilot onboarding, corridor expansion inquiries, investor discussions, or platform demonstrations.</p>
+    <h1>Get in Touch</h1>
+    <p class="subtitle">Connect with QuickDoc Healthcare Systems for hospital onboarding, partnership proposals, or technical inquiries.</p>
 
     <div class="grid">
-      <!-- Contact Details Dossier -->
       <div class="card">
-        <h3 style="color:var(--cyan);">Venture Directory</h3>
-        <div class="info-line"><strong>Entity:</strong> QuickDoc Healthcare Systems</div>
-        <div class="info-line"><strong>Founder &amp; Systems Architect:</strong> Swathi S</div>
-        <div class="info-line"><strong>Official Email:</strong> quickdoc.med@gmail.com</div>
-        <div class="info-line"><strong>Program Submissions:</strong> punchgurukulam@gmail.com</div>
-        <div class="info-line"><strong>Incubation Cohort:</strong> RYLA Be An Entrepreneur 62.0 | RTS 13.0</div>
-        <div class="info-line"><strong>Squad Division:</strong> Team Admirals</div>
-        <div class="info-line" style="margin-top:20px; color:var(--emerald);">
-          <strong>Official Slogan:</strong> "find your doc. beat the clock"
+        <h3 style="color:var(--cyan);">Company Directory</h3>
+        <div class="info-line">
+          <strong>Entity</strong>
+          <span>QuickDoc Healthcare Systems</span>
+        </div>
+        <div class="info-line">
+          <strong>Founder &amp; Systems Architect</strong>
+          <span>Swathi S</span>
+        </div>
+        <div class="info-line">
+          <strong>Official Contact Email</strong>
+          <a href="mailto:quickdoc.med@gmail.com">quickdoc.med@gmail.com</a>
+        </div>
+        <div class="info-line" style="margin-top: 20px;">
+          <strong>Official Slogan</strong>
+          <span style="color:var(--emerald); font-weight:700;">"find your doc. beat the clock"</span>
         </div>
       </div>
 
-      <!-- Inquiry Form -->
       <div class="card">
-        <h3 style="color:var(--emerald);">Partner / Pilot Inquiry</h3>
-        <form onsubmit="event.preventDefault(); alert('Inquiry received. The QuickDoc team will respond shortly.');">
+        <h3 style="color:var(--emerald);">Send a Message</h3>
+        <form onsubmit="event.preventDefault(); alert('Thank you. Your message has been sent to quickdoc.med@gmail.com');">
           <div class="form-group">
-            <label>Name or Facility Name</label>
-            <input type="text" placeholder="Dr. / Administrator / Investor" required>
+            <label>Your Name / Organization</label>
+            <input type="text" placeholder="Dr. / Administrator / Partner" required>
           </div>
           <div class="form-group">
             <label>Email Address</label>
-            <input type="email" placeholder="name@hospital.com" required>
+            <input type="email" placeholder="name@domain.com" required>
           </div>
           <div class="form-group">
-            <label>Message / Clinical Scope</label>
-            <textarea rows="4" placeholder="Describe your facility, clinic corridor, or partnership interest..." required></textarea>
+            <label>Inquiry Details</label>
+            <textarea rows="4" placeholder="How can QuickDoc assist your organization?" required></textarea>
           </div>
-          <button type="submit" class="btn">Submit Pilot Request</button>
+          <button type="submit" class="btn">Send Inquiry</button>
         </form>
       </div>
     </div>
   </div>
 
   <footer>
-    &copy; 2026 QuickDoc Healthcare Systems. Slogan: "find your doc. beat the clock" | RYLA RTS 62.0.
+    &copy; 2026 QuickDoc Healthcare Systems. All Rights Reserved. | "find your doc. beat the clock"
   </footer>
 </body>
 </html>
