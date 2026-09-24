@@ -7,37 +7,128 @@
   <style>
     :root {
       --bg: #07172B;
-      --card-bg: #143154;
+      --card-bg: rgba(20, 49, 84, 0.7);
       --emerald: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.35);
       --cyan: #38BDF8;
       --text: #FFFFFF;
       --text-muted: #94A3B8;
       --border: #224770;
     }
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Roboto,sans-serif; }
-    body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
-    header { display:flex; justify-content:space-between; align-items:center; padding:18px 8%; background:#0B223D; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
-    .logo { font-size:22px; font-weight:800; color:#fff; text-decoration:none; }
-    .logo span { color:var(--cyan); font-weight:300; }
-    nav a { color:var(--text-muted); text-decoration:none; margin-left:20px; font-size:14px; font-weight:600; }
-    nav a.active, nav a:hover { color:var(--cyan); }
-    .hero { text-align:center; padding:80px 20px 60px; }
-    .badge { display:inline-block; padding:5px 15px; background:rgba(2,132,199,0.2); border:1px solid var(--cyan); border-radius:20px; color:var(--cyan); font-size:12px; font-weight:700; margin-bottom:15px; }
-    .hero h1 { font-size:42px; font-weight:800; margin-bottom:15px; }
-    .hero h1 span { color:var(--emerald); font-style:italic; }
-    .hero p { font-size:18px; color:var(--text-muted); max-width:750px; margin:0 auto 25px; }
-    .btn { display:inline-block; background:var(--emerald); color:#fff; padding:12px 26px; border-radius:8px; text-decoration:none; font-weight:700; font-size:15px; }
-    .container { max-width:1100px; margin:0 auto; padding:40px 20px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:25px; margin-top:30px; }
-    .card { background:var(--card-bg); border:1px solid var(--border); padding:30px; border-radius:14px; }
-    .card h3 { font-size:20px; margin-bottom:10px; color:var(--cyan); }
-    .card p { color:var(--text-muted); font-size:14px; }
-    footer { background:#061322; border-top:1px solid #1E293B; padding:30px 8%; text-align:center; color:var(--text-muted); font-size:13px; margin-top:60px; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Roboto,-apple-system,sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+
+    /* Navigation */
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 8%; background: rgba(11, 34, 61, 0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-svg { width: 44px; height: 44px; filter: drop-shadow(0 0 8px var(--emerald-glow)); transition: transform 0.3s ease; }
+    .logo-container:hover .logo-svg { transform: rotate(5deg) scale(1.05); }
+    .logo-title { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
+    .logo-title span { color: var(--cyan); font-weight: 300; }
+
+    nav a {
+      color: var(--text-muted); text-decoration: none; margin-left: 24px;
+      font-size: 14px; font-weight: 600; transition: color 0.3s, text-shadow 0.3s;
+      position: relative;
+    }
+    nav a:hover, nav a.active { color: var(--cyan); text-shadow: 0 0 10px rgba(56, 189, 248, 0.4); }
+    nav a.active::after {
+      content: ''; position: absolute; bottom: -6px; left: 0; width: 100%; height: 2px;
+      background: var(--cyan); border-radius: 2px;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center; padding: 100px 20px 70px;
+      position: relative; animation: fadeIn 1s ease-out;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 18px;
+      background: rgba(2, 132, 199, 0.15); border: 1px solid var(--cyan);
+      border-radius: 24px; color: var(--cyan); font-size: 12px; font-weight: 700;
+      letter-spacing: 1px; margin-bottom: 24px;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    }
+    .pulse-dot {
+      width: 8px; height: 8px; background: var(--emerald); border-radius: 50%;
+      box-shadow: 0 0 8px var(--emerald); animation: pulse 1.8s infinite;
+    }
+    .hero h1 { font-size: 46px; font-weight: 900; margin-bottom: 18px; line-height: 1.2; }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--emerald), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p { font-size: 19px; color: var(--text-muted); max-width: 780px; margin: 0 auto 35px; }
+
+    /* Interactive CTA Buttons */
+    .btn-group { display: flex; justify-content: center; gap: 16px; }
+    .btn {
+      display: inline-block; padding: 13px 30px; border-radius: 8px; font-weight: 700;
+      font-size: 15px; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--emerald), #059669); color: #fff;
+      box-shadow: 0 4px 15px var(--emerald-glow); border: none;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5); }
+    .btn-secondary {
+      background: transparent; color: var(--cyan); border: 1px solid var(--cyan);
+    }
+    .btn-secondary:hover { background: rgba(56, 189, 248, 0.1); transform: translateY(-3px); }
+
+    /* Cards Grid */
+    .container { max-width: 1100px; margin: 0 auto; padding: 50px 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+    .card {
+      background: var(--card-bg); border: 1px solid var(--border); padding: 36px 28px;
+      border-radius: 16px; transition: all 0.35s ease; backdrop-filter: blur(8px);
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .card:hover { transform: translateY(-6px); border-color: var(--cyan); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); }
+    .card:hover::before { opacity: 1; }
+    .card h3 { font-size: 20px; margin-bottom: 12px; color: var(--cyan); }
+    .card p { color: var(--text-muted); font-size: 14.5px; }
+
+    /* Footer */
+    footer {
+      background: #061322; border-top: 1px solid #1E293B; padding: 35px 8%;
+      text-align: center; color: var(--text-muted); font-size: 13.5px; margin-top: 80px;
+    }
+
+    /* Keyframes */
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
   <header>
-    <a href="index.html" class="logo">QuickDoc <span>Healthcare</span></a>
+    <a href="index.html" class="logo-container">
+      <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" rx="24" fill="#0B223D" stroke="#224770" stroke-width="3"/>
+        <path d="M50 20 V80 M20 50 H80" stroke="#10B981" stroke-width="12" stroke-linecap="round"/>
+        <path d="M26 50 H40 L45 35 L55 65 L60 50 H74" stroke="#38BDF8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="logo-title">QuickDoc <span>Healthcare</span></div>
+    </a>
     <nav>
       <a href="index.html" class="active">Home</a>
       <a href="product.html">Product</a>
@@ -48,32 +139,38 @@
   </header>
 
   <section class="hero">
-    <div class="badge">SMART SYMPTOM TRIAGE & OUTPATIENT DISCOVERY</div>
+    <div class="badge">
+      <div class="pulse-dot"></div>
+      SMART SYMPTOM TRIAGE &amp; OUTPATIENT DISCOVERY
+    </div>
     <h1>Stop Hospital Guesswork.<br><span>"find your doc. beat the clock"</span></h1>
-    <p>Eliminating multi-hour outpatient queues and clinic-hopping by matching patient symptoms with verified doctor availability across local hospital networks.</p>
-    <a href="product.html" class="btn">Explore Platform</a>
+    <p>Eliminating multi-hour outpatient queues and clinic-hopping by matching symptoms directly to verified specialist availability across hospital corridors.</p>
+    <div class="btn-group">
+      <a href="product.html" class="btn btn-primary">Explore Platform</a>
+      <a href="contact.html" class="btn btn-secondary">Get in Touch</a>
+    </div>
   </section>
 
   <div class="container">
-    <h2 style="text-align:center; font-size:28px;">Core Value Proposition</h2>
+    <h2 style="text-align:center; font-size:30px; font-weight:800;">Solving Outpatient Chaos</h2>
     <div class="grid">
       <div class="card">
         <h3>Dynamic Symptom Triage</h3>
-        <p>Patients input their condition; QuickDoc instantly matches symptom severity to the precise specialty required.</p>
+        <p>Patients input clinical symptoms; QuickDoc algorithmically maps severity to the verified specialist department needed.</p>
       </div>
       <div class="card">
-        <h3 style="color:var(--emerald);">Live Doctor Availability</h3>
-        <p>Real-time slot discovery across regional clinics prevents blind waiting and eliminates clinic-hopping.</p>
+        <h3 style="color:var(--emerald);">Live Doctor Slot Discovery</h3>
+        <p>Real-time slot availability across nearby polyclinics and hospitals eliminates blind waiting and prevents walk-away dropouts.</p>
       </div>
       <div class="card">
         <h3 style="color:#F59E0B;">65% Dwell Reduction</h3>
-        <p>Pre-scheduled doctor approvals and digital pre-intake ensure patients arrive only when consultations are ready.</p>
+        <p>Pre-scheduled doctor approvals and digital pre-intake ensure patients arrive right when consultations are staged.</p>
       </div>
     </div>
   </div>
 
   <footer>
-    &copy; 2026 QuickDoc Healthcare Systems. Founder: Swathi S | RYLA RTS 62.0 (Team Admirals). Slogan: "find your doc. beat the clock".
+    &copy; 2026 QuickDoc Healthcare Systems. All Rights Reserved. | "find your doc. beat the clock"
   </footer>
 </body>
 </html>
