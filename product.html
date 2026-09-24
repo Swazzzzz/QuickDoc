@@ -7,37 +7,66 @@
   <style>
     :root {
       --bg: #07172B;
-      --card-bg: #143154;
+      --card-bg: rgba(20, 49, 84, 0.7);
       --emerald: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.35);
       --cyan: #38BDF8;
       --text: #FFFFFF;
       --text-muted: #94A3B8;
       --border: #224770;
     }
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Roboto,sans-serif; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Roboto,-apple-system,sans-serif; }
     body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
-    header { display:flex; justify-content:space-between; align-items:center; padding:18px 8%; background:#0B223D; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
-    .logo { font-size:22px; font-weight:800; color:#fff; text-decoration:none; }
-    .logo span { color:var(--cyan); font-weight:300; }
-    nav a { color:var(--text-muted); text-decoration:none; margin-left:20px; font-size:14px; font-weight:600; }
-    nav a.active, nav a:hover { color:var(--cyan); }
-    .container { max-width:1100px; margin:0 auto; padding:60px 20px; }
-    .badge { display:inline-block; padding:5px 15px; background:rgba(2,132,199,0.2); border:1px solid var(--cyan); border-radius:20px; color:var(--cyan); font-size:12px; font-weight:700; margin-bottom:15px; }
-    h1 { font-size:38px; font-weight:800; margin-bottom:15px; }
-    .subtitle { font-size:18px; color:var(--text-muted); max-width:750px; margin-bottom:40px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:25px; margin-bottom:50px; }
-    .card { background:var(--card-bg); border:1px solid var(--border); padding:30px; border-radius:14px; }
-    .card h3 { font-size:20px; margin-bottom:10px; color:var(--cyan); }
-    .card p { color:var(--text-muted); font-size:14px; }
-    .banner { background:#0B223D; border:1px solid var(--border); border-radius:14px; padding:35px; margin-top:20px; }
-    .banner h2 { font-size:24px; color:var(--emerald); margin-bottom:10px; }
-    .banner p { color:var(--text-muted); font-size:15px; }
-    footer { background:#061322; border-top:1px solid #1E293B; padding:30px 8%; text-align:center; color:var(--text-muted); font-size:13px; margin-top:60px; }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 8%; background: rgba(11, 34, 61, 0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
+    }
+    .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-svg { width: 44px; height: 44px; filter: drop-shadow(0 0 8px var(--emerald-glow)); }
+    .logo-title { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
+    .logo-title span { color: var(--cyan); font-weight: 300; }
+    nav a { color: var(--text-muted); text-decoration: none; margin-left: 24px; font-size: 14px; font-weight: 600; transition: color 0.3s; }
+    nav a:hover, nav a.active { color: var(--cyan); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; animation: fadeIn 0.8s ease-out; }
+    .badge {
+      display: inline-block; padding: 5px 16px; background: rgba(2, 132, 199, 0.15);
+      border: 1px solid var(--cyan); border-radius: 20px; color: var(--cyan);
+      font-size: 12px; font-weight: 700; margin-bottom: 15px;
+    }
+    h1 { font-size: 40px; font-weight: 900; margin-bottom: 15px; }
+    .subtitle { font-size: 18px; color: var(--text-muted); max-width: 750px; margin-bottom: 45px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; margin-bottom: 50px; }
+    .card {
+      background: var(--card-bg); border: 1px solid var(--border); padding: 34px;
+      border-radius: 16px; transition: all 0.3s ease; backdrop-filter: blur(8px);
+    }
+    .card:hover { transform: translateY(-5px); border-color: var(--emerald); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35); }
+    .card h3 { font-size: 20px; margin-bottom: 12px; color: var(--cyan); }
+    .card p { color: var(--text-muted); font-size: 14.5px; }
+    .banner {
+      background: #0B223D; border: 1px solid var(--border); border-radius: 16px;
+      padding: 35px; margin-top: 30px; position: relative;
+    }
+    .banner h2 { font-size: 24px; color: var(--emerald); margin-bottom: 12px; }
+    .banner p { color: var(--text-muted); font-size: 15px; }
+    footer {
+      background: #061322; border-top: 1px solid #1E293B; padding: 35px 8%;
+      text-align: center; color: var(--text-muted); font-size: 13.5px; margin-top: 70px;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
   <header>
-    <a href="index.html" class="logo">QuickDoc <span>Healthcare</span></a>
+    <a href="index.html" class="logo-container">
+      <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" rx="24" fill="#0B223D" stroke="#224770" stroke-width="3"/>
+        <path d="M50 20 V80 M20 50 H80" stroke="#10B981" stroke-width="12" stroke-linecap="round"/>
+        <path d="M26 50 H40 L45 35 L55 65 L60 50 H74" stroke="#38BDF8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="logo-title">QuickDoc <span>Healthcare</span></div>
+    </a>
     <nav>
       <a href="index.html">Home</a>
       <a href="product.html" class="active">Product</a>
@@ -48,33 +77,33 @@
   </header>
 
   <div class="container">
-    <div class="badge">PLATFORM ARCHITECTURE</div>
+    <div class="badge">PLATFORM CAPABILITIES</div>
     <h1>The QuickDoc Solutions Engine</h1>
-    <p class="subtitle">An end-to-end ecosystem connecting patients, clinical departments, and moving transit units into one synchronized queue network.</p>
+    <p class="subtitle">An integrated digital ecosystem bridging patients and clinical facilities into a synchronized healthcare discovery network.</p>
 
     <div class="grid">
       <div class="card">
         <h3>1. Patient Discovery App</h3>
-        <p>A smart mobile interface where users describe symptoms and receive immediate specialty mapping, verified doctor rosters, and guaranteed arrival consultation slots.</p>
+        <p>A streamlined mobile portal where users enter symptoms to instantly find verified doctor rosters and lock in consultation slots without lobby queues.</p>
       </div>
       <div class="card">
-        <h3 style="color:var(--emerald);">2. OP-Flow Hospital Dashboard</h3>
-        <p>A B2B SaaS management cockpit for hospital administrators to balance peak outpatient surges, track specialist availability, and stage digital intake ahead of arrival.</p>
+        <h3 style="color:var(--emerald);">2. OP-Flow Dashboard</h3>
+        <p>A centralized SaaS management interface for clinics and hospitals to balance outpatient surges and stage patient intake records in advance.</p>
       </div>
       <div class="card">
-        <h3 style="color:#F59E0B;">3. Transit Telemetry Pod</h3>
-        <p>Pre-hospital edge hardware linking emergency transit vehicles to receiving hospital triage bays, relaying critical vitals before the patient arrives at the emergency room.</p>
+        <h3 style="color:#F59E0B;">3. Real-Time Telemetry Rails</h3>
+        <p>Enables transit medical units and clinics to communicate diagnostic parameters directly to consulting physicians prior to patient arrival.</p>
       </div>
     </div>
 
     <div class="banner">
-      <h2>National Health Interoperability (ABDM Ready)</h2>
-      <p>QuickDoc is built to integrate with India’s Ayushman Bharat Digital Mission (ABDM) standards, supporting ABHA identity creation, FHIR-compliant digital records, and seamless interoperability across hospital management software (HIMS).</p>
+      <h2>Standardized Interoperability Architecture</h2>
+      <p>QuickDoc is engineered around digital health standards, supporting encrypted clinical telemetry, unified patient record mapping, and direct integration with modern Hospital Information Management Systems (HIMS).</p>
     </div>
   </div>
 
   <footer>
-    &copy; 2026 QuickDoc Healthcare Systems. Slogan: "find your doc. beat the clock" | RYLA RTS 62.0.
+    &copy; 2026 QuickDoc Healthcare Systems. All Rights Reserved. | "find your doc. beat the clock"
   </footer>
 </body>
 </html>
