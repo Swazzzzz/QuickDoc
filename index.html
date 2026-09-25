@@ -12,17 +12,17 @@
 
   <style>
     :root {
-      --navy-dark: #07172B;
-      --navy-card: rgba(13, 34, 58, 0.88);
+      --navy-dark: #040d1a;
+      --navy-card: rgba(8, 24, 46, 0.88);
       --teal-brand: #1DBB9B;
       --teal-light: #2DD4BF;
-      --teal-glow: rgba(29, 187, 155, 0.45);
+      --teal-glow: rgba(29, 187, 155, 0.55);
       --cyan-accent: #38BDF8;
       --danger-red: #EF4444;
-      --danger-glow: rgba(239, 68, 68, 0.55);
+      --danger-glow: rgba(239, 68, 68, 0.6);
       --text-white: #FFFFFF;
       --text-muted: #94A3B8;
-      --border-color: #1E3A5F;
+      --border-color: #17365D;
     }
 
     * {
@@ -41,27 +41,52 @@
       color: var(--text-white);
       line-height: 1.6;
       perspective: 1200px;
+      overflow-x: hidden;
     }
 
-    /* ================= CUSTOM SMOOTH SCROLLBAR ================= */
-    ::-webkit-scrollbar {
-      width: 10px;
+    /* ================= 5. VIDEO/ANIMATED MOVEMENT BACKGROUND ================= */
+    #global-motion-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.85;
     }
-    ::-webkit-scrollbar-track {
-      background: #050E1A;
+
+    /* Ambient dynamic gradient wash */
+    .ambient-glow-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 20% 30%, rgba(29, 187, 155, 0.12) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(56, 189, 248, 0.1) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+      animation: ambientShift 18s ease-in-out infinite alternate;
     }
+
+    @keyframes ambientShift {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.08) translate(-20px, 15px); }
+      100% { transform: scale(1) translate(20px, -15px); }
+    }
+
+    /* Custom WebKit Scrollbar */
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-track { background: #030811; }
     ::-webkit-scrollbar-thumb {
       background: linear-gradient(180deg, var(--teal-brand), #0D9488);
       border-radius: 6px;
-      border: 2px solid #050E1A;
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--cyan-accent);
-      box-shadow: 0 0 10px var(--cyan-accent);
-    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--cyan-accent); }
 
-    /* ================= LEFT-SIDE FLOATING 3D NAVIGATION ================= */
-    .sidebar-left-3d {
+    /* ================= 3. COMPLETE LEFT-SIDE VISIBLE PAGE LIST DOCK ================= */
+    .sidebar-left-nav {
       position: fixed;
       left: 20px;
       top: 50%;
@@ -69,62 +94,64 @@
       z-index: 2000;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      background: rgba(13, 34, 58, 0.85);
-      backdrop-filter: blur(16px);
+      gap: 10px;
+      background: rgba(6, 18, 34, 0.94);
+      backdrop-filter: blur(18px);
       border: 1px solid var(--border-color);
-      padding: 18px 12px;
-      border-radius: 30px;
-      box-shadow: 8px 12px 30px rgba(0, 0, 0, 0.6);
+      padding: 16px 14px;
+      border-radius: 20px;
+      box-shadow: 8px 12px 35px rgba(0, 0, 0, 0.75), inset 0 0 10px rgba(56, 189, 248, 0.08);
       transform-style: preserve-3d;
+      min-width: 175px;
     }
 
-    .nav-dot-left {
+    .nav-dock-header {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      color: var(--teal-light);
+      margin-bottom: 6px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-color);
+      text-transform: uppercase;
+    }
+
+    .nav-dock-link {
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      gap: 10px;
       text-decoration: none;
-      position: relative;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: all 0.25s ease;
+      color: var(--text-muted);
+      font-size: 12.5px;
+      font-weight: 600;
     }
 
     .dot-circle {
-      width: 12px;
-      height: 12px;
+      width: 9px;
+      height: 9px;
       border-radius: 50%;
-      background: #1E3A5F;
-      border: 2px solid #334E68;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .dot-label-left {
-      background: #102A45;
-      color: var(--cyan-accent);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      margin-left: 12px;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(-10px);
+      background: #142E4B;
+      border: 1.5px solid #2B4E73;
       transition: all 0.25s ease;
-      white-space: nowrap;
-      position: absolute;
-      left: 14px;
+      flex-shrink: 0;
     }
 
-    .nav-dot-left:hover .dot-label-left {
-      opacity: 1;
-      transform: translateX(0);
+    .nav-dock-link:hover,
+    .nav-dock-link.active {
+      color: #FFFFFF;
+      background: rgba(29, 187, 155, 0.16);
+      transform: translateX(4px);
     }
 
-    .nav-dot-left.active .dot-circle,
-    .nav-dot-left:hover .dot-circle {
+    .nav-dock-link:hover .dot-circle,
+    .nav-dock-link.active .dot-circle {
       background: var(--teal-brand);
       border-color: var(--cyan-accent);
-      transform: scale(1.45);
-      box-shadow: 0 0 12px var(--teal-brand);
+      box-shadow: 0 0 10px var(--teal-brand);
+      transform: scale(1.3);
     }
 
     /* ================= HEADER ================= */
@@ -132,7 +159,7 @@
       position: sticky;
       top: 0;
       width: 100%;
-      background: rgba(7, 23, 43, 0.95);
+      background: rgba(4, 13, 26, 0.94);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-color);
       z-index: 1500;
@@ -206,27 +233,71 @@
 
     /* ================= LIVE OPD QUEUE TICKER ================= */
     .telemetry-ticker {
-      background: #091D33;
+      background: #061527;
       border-bottom: 1px solid var(--border-color);
       overflow: hidden;
       white-space: nowrap;
-      padding: 7px 0;
+      padding: 8px 0;
       font-size: 12.5px;
       font-family: monospace;
       color: var(--teal-light);
+      position: relative;
+      z-index: 10;
     }
 
     .ticker-content {
       display: inline-block;
       padding-left: 100%;
-      animation: tickerMarquee 35s linear infinite;
+      animation: tickerMarquee 42s linear infinite;
+    }
+
+    /* ================= 4. POPUP & LIGHTED TILES ================= */
+    section {
+      position: relative;
+      z-index: 5;
+    }
+
+    .tile-interactive-3d {
+      background: var(--navy-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 34px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                  border-color 0.4s ease, 
+                  box-shadow 0.4s ease;
+    }
+
+    .tile-interactive-3d::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at center, rgba(45, 212, 191, 0.38) 0%, transparent 72%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .tile-interactive-3d:hover,
+    .tile-interactive-3d:active {
+      transform: translateY(-14px) scale(1.03) rotateX(2deg);
+      border-color: var(--teal-light);
+      box-shadow: 0 25px 60px rgba(29, 187, 155, 0.4), inset 0 0 20px rgba(45, 212, 191, 0.2);
+    }
+
+    .tile-interactive-3d:hover::before,
+    .tile-interactive-3d:active::before {
+      opacity: 1;
     }
 
     /* ================= HERO ================= */
     .hero {
       padding: 70px 6% 40px;
       text-align: center;
-      background: radial-gradient(circle at 50% 25%, rgba(29, 187, 155, 0.14) 0%, transparent 60%);
       transform-style: preserve-3d;
     }
 
@@ -234,7 +305,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(29, 187, 155, 0.1);
+      background: rgba(29, 187, 155, 0.12);
       border: 1px solid var(--teal-brand);
       padding: 6px 20px;
       border-radius: 30px;
@@ -242,7 +313,7 @@
       font-weight: 700;
       color: var(--teal-brand);
       margin-bottom: 22px;
-      box-shadow: 0 0 16px rgba(29, 187, 155, 0.2);
+      box-shadow: 0 0 16px rgba(29, 187, 155, 0.25);
     }
 
     .hero h1 {
@@ -274,10 +345,10 @@
     }
 
     .chip-btn {
-      background: rgba(16, 42, 69, 0.8);
+      background: rgba(14, 38, 64, 0.85);
       border: 1px solid var(--border-color);
       color: var(--text-white);
-      padding: 7px 16px;
+      padding: 8px 18px;
       border-radius: 20px;
       font-size: 13px;
       cursor: pointer;
@@ -286,30 +357,15 @@
 
     .chip-btn:hover {
       border-color: var(--teal-brand);
-      background: rgba(29, 187, 155, 0.15);
+      background: rgba(29, 187, 155, 0.2);
       transform: translateY(-2px);
     }
 
     /* ================= 1. COIMBATORE MAP ================= */
-    .map-section {
-      padding: 30px 6% 70px;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .section-title h2 {
-      font-size: 36px;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .section-title p {
-      color: var(--text-muted);
-      font-size: 16px;
-    }
+    .map-section { padding: 30px 6% 70px; }
+    .section-title { text-align: center; margin-bottom: 25px; }
+    .section-title h2 { font-size: 36px; font-weight: 800; margin-bottom: 8px; }
+    .section-title p { color: var(--text-muted); font-size: 16px; }
 
     .map-card-3d {
       border-radius: 20px;
@@ -321,7 +377,7 @@
 
     #coimbatore-map {
       width: 100%;
-      height: 560px;
+      height: 580px;
       background: #081628;
     }
 
@@ -329,7 +385,7 @@
       position: absolute;
       top: 16px;
       left: 16px;
-      background: rgba(7, 23, 43, 0.92);
+      background: rgba(5, 17, 34, 0.95);
       border: 1px solid var(--border-color);
       padding: 10px 18px;
       border-radius: 12px;
@@ -373,7 +429,7 @@
 
     /* ================= 2. EMERGENCY RADAR (SAFETY 1ST) ================= */
     .emergency-banner {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(13, 34, 58, 0.95) 100%);
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(13, 34, 58, 0.95) 100%);
       border: 2px solid var(--danger-red);
       border-radius: 20px;
       padding: 40px;
@@ -382,7 +438,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 30px;
-      box-shadow: 0 0 40px rgba(239, 68, 68, 0.25);
+      box-shadow: 0 0 45px rgba(239, 68, 68, 0.3);
       position: relative;
       overflow: hidden;
     }
@@ -462,19 +518,6 @@
       transform-style: preserve-3d;
     }
 
-    .metric-card-3d {
-      border-radius: 20px;
-      padding: 40px;
-      background: var(--navy-card);
-      border: 1px solid var(--border-color);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-      transition: transform 0.4s ease;
-    }
-
-    .metric-card-3d:hover {
-      transform: translateY(-8px) rotateX(3deg);
-    }
-
     .metric-card-3d.problem { border-left: 6px solid #EF4444; }
     .metric-card-3d.solution { border-left: 6px solid var(--teal-brand); box-shadow: 0 15px 40px rgba(29, 187, 155, 0.15); }
 
@@ -496,20 +539,6 @@
       margin-top: 40px;
     }
 
-    .step-card {
-      background: var(--navy-card);
-      border: 1px solid var(--border-color);
-      border-radius: 18px;
-      padding: 30px 24px;
-      transition: all 0.35s ease;
-    }
-
-    .step-card:hover {
-      transform: translateY(-8px);
-      border-color: var(--teal-brand);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-    }
-
     .step-num {
       width: 44px; height: 44px;
       background: linear-gradient(135deg, var(--teal-brand), #0D9488);
@@ -518,26 +547,12 @@
       font-size: 18px; font-weight: 900; margin-bottom: 20px;
     }
 
-    /* ================= 5. HOSPITALS (ANIMATED PARTICLE & CROSS CANVAS) ================= */
+    /* ================= 5. HOSPITALS ================= */
     .hospitals-section {
       padding: 60px 6% 90px;
       position: relative;
-      background: #07172B;
       overflow: hidden;
       transform-style: preserve-3d;
-    }
-
-    #hospital-network-canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .hospitals-content-wrap {
-      position: relative;
-      z-index: 2;
     }
 
     .hospital-sync-stage {
@@ -579,7 +594,7 @@
     }
     .hospital-hub-3d:hover { transform: rotateY(0deg) translateZ(40px); }
 
-    /* ================= 6. ABOUT US (POPUP 3D EFFECTS & FOUNDER SWATHI S) ================= */
+    /* ================= 6. ABOUT US ================= */
     .about-section { padding: 40px 6% 80px; }
     
     .founder-banner {
@@ -595,54 +610,34 @@
     }
 
     .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-    
-    .about-card-interactive {
-      background: var(--navy-card);
-      border: 1px solid var(--border-color);
-      border-radius: 18px;
-      padding: 35px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
 
-    .about-card-interactive::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at center, rgba(29, 187, 155, 0.25) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-
-    .about-card-interactive:hover,
-    .about-card-interactive:active {
-      transform: translateY(-12px) scale(1.03);
-      border-color: var(--teal-light);
-      box-shadow: 0 20px 45px rgba(29, 187, 155, 0.3);
-    }
-
-    .about-card-interactive:hover::before,
-    .about-card-interactive:active::before {
-      opacity: 1;
-    }
-
-    .about-card-interactive h3 {
-      font-size: 22px; font-weight: 800; color: var(--teal-brand); margin-bottom: 12px; position: relative; z-index: 2;
-    }
-    .about-card-interactive p {
-      color: var(--text-muted); font-size: 15px; line-height: 1.8; position: relative; z-index: 2;
-    }
-
-    /* ================= 7. BOOKING & REDBUS-STYLE DISCOVERY ================= */
+    /* ================= 2. STRICT WORKFLOW BOOKING SECTION ================= */
     .booking-section { padding: 40px 6% 80px; }
+    
     .form-container-3d {
-      max-width: 900px; margin: 0 auto;
+      max-width: 920px; margin: 0 auto;
       background: var(--navy-card); border: 1px solid var(--border-color);
       border-radius: 24px; padding: 45px;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .stage-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      position: relative;
+    }
+    .stage-step {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
+    .stage-step.active {
+      color: var(--teal-brand);
+      text-shadow: 0 0 10px var(--teal-glow);
     }
 
     .triage-hud {
@@ -655,25 +650,28 @@
       justify-content: space-between;
       align-items: center;
     }
-
     .triage-hud.critical {
       border-color: var(--danger-red);
       background: rgba(239, 68, 68, 0.15);
     }
-
     .triage-status { font-size: 13.5px; font-weight: 700; color: var(--teal-light); }
     .triage-hud.critical .triage-status { color: #FCA5A5; }
 
-    /* RedBus-Style Hospital Slot Stack */
+    /* Hidden Stages strictly unlocked in sequence */
+    #stage-2-hospitals, #stage-3-specialist-timing {
+      display: none;
+      animation: fadeInStage 0.6s ease-out;
+    }
+
     .redbus-container {
-      margin: 25px 0;
+      margin: 15px 0 25px;
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
 
     .redbus-card {
-      background: #0A1C30;
+      background: #071729;
       border: 1px solid var(--border-color);
       border-radius: 14px;
       padding: 18px 22px;
@@ -683,47 +681,63 @@
       transition: all 0.3s ease;
       cursor: pointer;
     }
-
     .redbus-card:hover, .redbus-card.selected {
       border-color: var(--teal-brand);
-      background: #0F2A48;
-      box-shadow: 0 6px 20px rgba(29, 187, 155, 0.25);
+      background: #0D2644;
+      box-shadow: 0 6px 25px rgba(29, 187, 155, 0.3);
+      transform: translateY(-3px);
     }
-
-    .redbus-hosp-info h4 { font-size: 17px; color: #fff; margin-bottom: 2px; }
+    .redbus-hosp-info h4 { font-size: 17px; color: #fff; margin-bottom: 4px; }
     .redbus-hosp-info p { font-size: 13px; color: var(--text-muted); }
-    .redbus-doc { font-size: 12px; color: var(--teal-light); font-weight: 700; margin-top: 4px; }
+    .redbus-click-hint { font-size: 11.5px; color: var(--teal-light); margin-top: 6px; font-weight: 600; }
     
-    .redbus-slot-pills {
-      display: flex;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .slot-pill {
-      background: #16365C;
-      border: 1px solid var(--border-color);
-      color: #fff;
-      font-size: 11.5px;
-      font-weight: 600;
-      padding: 5px 10px;
-      border-radius: 6px;
-      transition: all 0.2s;
-    }
-
-    .slot-pill:hover, .slot-pill.active {
-      background: var(--teal-brand);
-      border-color: var(--teal-light);
-    }
-
     .redbus-dwell-badge {
       font-size: 12px;
       font-weight: 800;
-      padding: 5px 12px;
+      padding: 6px 14px;
       border-radius: 20px;
       background: rgba(29, 187, 155, 0.15);
       color: var(--teal-brand);
       white-space: nowrap;
+      border: 1px solid rgba(29, 187, 155, 0.3);
+    }
+
+    /* Specialist Details & Slot Container */
+    .specialist-card-active {
+      background: #081C33;
+      border: 1.5px solid var(--teal-brand);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .specialist-meta h3 { font-size: 20px; color: #fff; margin-bottom: 2px; }
+    .specialist-meta p { font-size: 13.5px; color: var(--teal-light); font-weight: 600; margin-bottom: 12px; }
+
+    .redbus-slot-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .slot-pill {
+      background: #122C4B;
+      border: 1px solid var(--border-color);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .slot-pill:hover, .slot-pill.active {
+      background: var(--teal-brand);
+      border-color: var(--teal-light);
+      box-shadow: 0 0 14px var(--teal-glow);
+      transform: translateY(-2px);
     }
 
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
@@ -732,7 +746,7 @@
 
     label { font-size: 13px; font-weight: 700; color: var(--teal-brand); text-transform: uppercase; letter-spacing: 0.5px; }
     input, select, textarea {
-      width: 100%; background: #081728; border: 1px solid var(--border-color);
+      width: 100%; background: #061527; border: 1px solid var(--border-color);
       border-radius: 8px; padding: 12px 14px; color: #fff; font-size: 14px;
       transition: all 0.25s ease;
     }
@@ -740,13 +754,14 @@
       outline: none; border-color: var(--teal-brand); box-shadow: 0 0 12px var(--teal-glow);
     }
 
-    .submit-btn {
+    .btn-stage {
       background: linear-gradient(135deg, var(--teal-brand), #0D9488);
-      color: #fff; border: none; border-radius: 10px; padding: 16px;
-      font-size: 16px; font-weight: 800; cursor: pointer; width: 100%;
+      color: #fff; border: none; border-radius: 10px; padding: 14px 20px;
+      font-size: 15px; font-weight: 800; cursor: pointer; width: 100%;
       box-shadow: 0 6px 20px var(--teal-glow); transition: all 0.3s ease;
+      margin-top: 10px;
     }
-    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px var(--teal-glow); }
+    .btn-stage:hover { transform: translateY(-2px); box-shadow: 0 10px 25px var(--teal-glow); }
 
     /* ================= 8. CONTACT ================= */
     .contact-section { padding: 40px 6% 80px; }
@@ -762,19 +777,20 @@
     .contact-line a { color: var(--teal-brand); text-decoration: none; }
 
     footer {
-      background: #050E1A; border-top: 1px solid #142840;
+      background: #030811; border-top: 1px solid #142840;
       padding: 30px 6%; text-align: center; color: var(--text-muted); font-size: 14px;
+      position: relative; z-index: 10;
     }
 
     /* ================= DIGITAL GATE PASS MODAL ================= */
     .modal-backdrop {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(4, 14, 26, 0.85); backdrop-filter: blur(12px);
+      background: rgba(3, 9, 18, 0.88); backdrop-filter: blur(12px);
       z-index: 5000; display: none; align-items: center; justify-content: center;
     }
 
     .gate-pass-card {
-      background: #0D223A; border: 2px solid var(--teal-brand); border-radius: 24px;
+      background: #0A1C30; border: 2px solid var(--teal-brand); border-radius: 24px;
       padding: 35px; width: 90%; max-width: 480px; text-align: center;
       box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 30px var(--teal-glow);
       position: relative;
@@ -799,10 +815,6 @@
       70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(29, 187, 155, 0); }
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(29, 187, 155, 0); }
     }
-    @keyframes rotateCross {
-      from { transform: translate(-50%, -50%) rotate(0deg); }
-      to { transform: translate(-50%, -50%) rotate(360deg); }
-    }
     @keyframes dataStream {
       0% { background-position: 100% 0; }
       100% { background-position: -100% 0; }
@@ -811,9 +823,13 @@
       0% { transform: translate3d(0, 0, 0); }
       100% { transform: translate3d(-100%, 0, 0); }
     }
+    @keyframes fadeInStage {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     @media (max-width: 900px) {
-      .sidebar-left-3d { display: none; }
+      .sidebar-left-nav { display: none; }
       .comparison-grid, .contact-card-3d, .form-grid { grid-template-columns: 1fr; }
       .form-group.full { grid-column: span 1; }
       .emergency-banner { flex-direction: column; text-align: center; }
@@ -826,46 +842,51 @@
 </head>
 <body>
 
-  <!-- Screen Red Radar Flash Frame -->
+  <!-- Screen Emergency Red Flash -->
   <div class="sos-flash-overlay" id="sosFlash"></div>
 
-  <!-- ================= LEFT-SIDE FLOATING 3D NAVIGATION ================= -->
-  <aside class="sidebar-left-3d">
-    <a href="#hero" class="nav-dot-left active">
+  <!-- Ambient Dynamic Animated Canvas with Continuous Wave / Particle Movement -->
+  <canvas id="global-motion-canvas"></canvas>
+  <div class="ambient-glow-mesh"></div>
+
+  <!-- ================= 3. COMPLETE LEFT-SIDE PAGE LIST NAVIGATION ================= -->
+  <aside class="sidebar-left-nav">
+    <div class="nav-dock-header">QuickDoc Directory</div>
+    <a href="#hero" class="nav-dock-link active">
       <div class="dot-circle"></div>
-      <span class="dot-label-left">Home Top</span>
+      <span>1. Home Overview</span>
     </a>
-    <a href="#map" class="nav-dot-left">
+    <a href="#map" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span class="dot-label-left">Coimbatore Map</span>
+      <span>2. Coimbatore Map</span>
     </a>
-    <a href="#emergency" class="nav-dot-left">
-      <div class="dot-circle" style="background:var(--danger-red);"></div>
-      <span class="dot-label-left">1 km Emergency</span>
+    <a href="#emergency" class="nav-dock-link">
+      <div class="dot-circle" style="background:var(--danger-red); border-color:#EF4444;"></div>
+      <span style="color:#FCA5A5;">3. 1 km Emergency</span>
     </a>
-    <a href="#solutions" class="nav-dot-left">
+    <a href="#solutions" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span class="dot-label-left">Problem &amp; 88% Proof</span>
+      <span>4. Problem &amp; Rates</span>
     </a>
-    <a href="#how-it-works" class="nav-dot-left">
+    <a href="#how-it-works" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span class="dot-label-left">How It Works</span>
+      <span>5. How It Works</span>
     </a>
-    <a href="#hospitals" class="nav-dot-left">
+    <a href="#hospitals" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span class="dot-label-left">Hospitals Sync</span>
+      <span>6. Connected Hospitals</span>
     </a>
-    <a href="#about" class="nav-dot-left">
+    <a href="#about" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span class="dot-label-left">About Us</span>
+      <span>7. About Us</span>
     </a>
-    <a href="#book" class="nav-dot-left">
+    <a href="#book" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span class="dot-label-left">RedBus Slots</span>
+      <span>8. Doctor Booking</span>
     </a>
-    <a href="#contact" class="nav-dot-left">
+    <a href="#contact" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span class="dot-label-left">Contact</span>
+      <span>9. Professional Contact</span>
     </a>
   </aside>
 
@@ -896,7 +917,7 @@
   <!-- ================= LIVE OPD QUEUE TICKER ================= -->
   <div class="telemetry-ticker">
     <div class="ticker-content">
-      KMCH Avinashi Rd: Trauma Ward Green (0m wait) | Neuro OPD: 4 slots open &bull;&bull;&bull; GKNM Hospital: Cardiology Cath Lab Staged | OPD Token #42 In Cabin &bull;&bull;&bull; PSG Hospitals Peelamedu: Fast-Track Pediatrics Active (Avg dwell: 11 mins) &bull;&bull;&bull; Sri Ramakrishna Hospital: Ortho Urgent Care Walk-ins Cleared &bull;&bull;&bull; CMCH Trichy Rd: 24/7 Casualty Roster Fully Staffed &bull;&bull;&bull; Royal Care Neelambur: Cardiac ICU Standby Ready
+      KMCH Avinashi Rd: Trauma Ward Green (0m wait) | Neuro OPD: 4 slots open &bull;&bull;&bull; GKNM Hospital: Cardiology Cath Lab Staged | OPD Token #42 In Cabin &bull;&bull;&bull; Ganga Hospital: Plastic &amp; Ortho Trauma Fast-Track Active &bull;&bull;&bull; KG Hospital: Robotic Heart Unit Standby &bull;&bull;&bull; PSG Hospitals Peelamedu: JCI Prime Wing Active (Avg dwell: 8 mins) &bull;&bull;&bull; Sri Ramakrishna Hospital: Urology &amp; Nephro Roster Clear &bull;&bull;&bull; GEM Hospital: GI Laparoscopy Unit Open &bull;&bull;&bull; CMCH Trichy Rd: 24/7 Casualty Fully Staffed &bull;&bull;&bull; Royal Care Neelambur: Cardiac ICU Standby Ready
     </div>
   </div>
 
@@ -908,12 +929,12 @@
     <h1>Direct Doctor Discovery.<br><span>Zero Lobby Guesswork.</span></h1>
     <p>Eliminating multi-hour outpatient queues, transit blindness, and clinic-hopping across Coimbatore with real-time specialty slot allocation and rapid 1 km emergency dispatch.</p>
 
-    <!-- Quick Symptom Triggers -->
     <div class="quick-chips">
       <button class="chip-btn" onclick="applySymptomQuickChip('Chest heaviness and sweating', 'Cardiology')">🫀 Chest Pain / Heaviness</button>
-      <button class="chip-btn" onclick="applySymptomQuickChip('Sudden twisting knee fracture with swelling', 'Orthopaedics')">🦴 Knee / Bone Injury</button>
-      <button class="chip-btn" onclick="applySymptomQuickChip('Persistent wheezing and breathlessness', 'Pulmonology')">🫁 Asthma / Breathing</button>
-      <button class="chip-btn" onclick="applySymptomQuickChip('Toddler high fever with dehydration', 'Paediatrics')">👶 Child / Toddler Fever</button>
+      <button class="chip-btn" onclick="applySymptomQuickChip('Sudden twisting knee fracture with swelling', 'Orthopaedics &amp; Trauma')">🦴 Knee / Bone Injury</button>
+      <button class="chip-btn" onclick="applySymptomQuickChip('Persistent wheezing and breathlessness', 'Pulmonology &amp; Chest')">🫁 Asthma / Breathing</button>
+      <button class="chip-btn" onclick="applySymptomQuickChip('Toddler high fever with dehydration', 'Paediatrics &amp; Child Care')">👶 Child / Toddler Fever</button>
+      <button class="chip-btn" onclick="applySymptomQuickChip('Severe abdominal pain and acid vomiting', 'Gastroenterology &amp; GI')">🩺 Abdominal / Stomach Pain</button>
     </div>
   </section>
 
@@ -921,7 +942,7 @@
   <section class="map-section" id="map">
     <div class="section-title">
       <h2>Live Coimbatore Hospital Locality Map</h2>
-      <p>Touch or zoom any hospital pin to view exact real-world locations, doctor availability, and directions.</p>
+      <p>Touch or zoom any hospital pin to view exact real-world locations, active doctor availability, and directions.</p>
     </div>
 
     <div class="map-card-3d">
@@ -960,7 +981,7 @@
     </div>
 
     <div class="comparison-grid">
-      <div class="metric-card-3d problem">
+      <div class="tile-interactive-3d metric-card-3d problem">
         <h3 style="color:#F87171; margin-bottom:12px;">⚠️ The Unmanaged OPD Crisis</h3>
         <div class="rate-stat">68%</div>
         <div class="stat-desc">Of outpatient crowding is caused by avoidable scheduling asymmetry.</div>
@@ -978,7 +999,7 @@
         </div>
       </div>
 
-      <div class="metric-card-3d solution">
+      <div class="tile-interactive-3d metric-card-3d solution">
         <h3 style="color:var(--teal-brand); margin-bottom:12px;">✅ The QuickDoc Solution (Proven)</h3>
         <div class="rate-stat">88%</div>
         <div class="stat-desc">Measured operational reduction in overall outpatient queue and transit latency.</div>
@@ -1006,65 +1027,60 @@
     </div>
 
     <div class="workflow-steps">
-      <div class="step-card">
+      <div class="tile-interactive-3d step-card">
         <div class="step-num">01</div>
-        <h4>Symptom Triage</h4>
-        <p>Enter your symptoms. Our NLP clinical engine automatically routes you to the exact medical department.</p>
+        <h4>Describe Symptoms</h4>
+        <p>Input your health concern. Our clinical NLP engine maps symptoms to the exact medical department.</p>
       </div>
 
-      <div class="step-card">
+      <div class="tile-interactive-3d step-card">
         <div class="step-num">02</div>
-        <h4>RedBus-Style Discovery</h4>
-        <p>Compare verified hospitals, active consultants, open slots, and average queue dwell times.</p>
+        <h4>Hospitals Generated</h4>
+        <p>Available hospitals with matching departments unlock dynamically in a RedBus-style directory.</p>
       </div>
 
-      <div class="step-card">
+      <div class="tile-interactive-3d step-card">
         <div class="step-num">03</div>
-        <h4>Instant Slot Lock</h4>
-        <p>Choose your consultation window. Your intake is pushed directly to the hospital's clinical file.</p>
+        <h4>Specialist &amp; Timing</h4>
+        <p>Selecting any hospital reveals the active specialist on duty along with real-time consultation windows.</p>
       </div>
 
-      <div class="step-card">
+      <div class="tile-interactive-3d step-card">
         <div class="step-num">04</div>
         <h4>Digital Gate Pass</h4>
-        <p>Walk straight into the consulting room without waiting in physical front-desk queues.</p>
+        <p>Walk directly into the consulting room without waiting in physical reception desk queues.</p>
       </div>
     </div>
   </section>
 
-  <!-- ================= 5. HOSPITALS (ANIMATED PARTICLE & CROSS CANVAS) ================= -->
+  <!-- ================= 5. HOSPITALS ================= -->
   <section class="hospitals-section" id="hospitals">
-    <!-- Interactive Background Particle Canvas -->
-    <canvas id="hospital-network-canvas"></canvas>
+    <div class="section-title">
+      <h2>Connected Hospital Network</h2>
+      <p>Synchronizing mobile patients directly with hospital enterprise systems via encrypted health telemetry.</p>
+    </div>
 
-    <div class="hospitals-content-wrap">
-      <div class="section-title">
-        <h2>Connected Hospital Network</h2>
-        <p>Synchronizing mobile patients directly with hospital enterprise systems via encrypted health telemetry.</p>
+    <div class="hospital-sync-stage">
+      <div class="phone-mockup-3d">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div style="font-size:10px; font-weight:800; color:var(--teal-brand); text-align:center;">QUICKDOC APP</div>
+          <div class="phone-row" style="width:70%;"></div>
+          <div class="phone-row" style="width:90%;"></div>
+          <div style="margin-top:auto; font-size:9px; color:#94A3B8; text-align:center;">SLOT CONFIRMED</div>
+          <div class="phone-row" style="background:var(--teal-brand); height:16px;"></div>
+        </div>
       </div>
 
-      <div class="hospital-sync-stage">
-        <div class="phone-mockup-3d">
-          <div class="phone-notch"></div>
-          <div class="phone-screen">
-            <div style="font-size:10px; font-weight:800; color:var(--teal-brand); text-align:center;">QUICKDOC APP</div>
-            <div class="phone-row" style="width:70%;"></div>
-            <div class="phone-row" style="width:90%;"></div>
-            <div style="margin-top:auto; font-size:9px; color:#94A3B8; text-align:center;">SLOT CONFIRMED</div>
-            <div class="phone-row" style="background:var(--teal-brand); height:16px;"></div>
-          </div>
-        </div>
+      <div class="sync-stream-pipe"></div>
 
-        <div class="sync-stream-pipe"></div>
-
-        <div class="hospital-hub-3d">
-          <svg width="60" height="60" viewBox="0 0 100 100" fill="none">
-            <rect x="42" y="10" width="16" height="80" rx="6" fill="#1DBB9B"/>
-            <rect x="10" y="42" width="80" height="16" rx="6" fill="#1DBB9B"/>
-          </svg>
-          <span style="font-size:13px; font-weight:800; margin-top:10px; color:#fff;">HOSPITAL HIMS</span>
-          <span style="font-size:11px; color:var(--teal-brand);">LIVE INTAKE</span>
-        </div>
+      <div class="hospital-hub-3d">
+        <svg width="60" height="60" viewBox="0 0 100 100" fill="none">
+          <rect x="42" y="10" width="16" height="80" rx="6" fill="#1DBB9B"/>
+          <rect x="10" y="42" width="80" height="16" rx="6" fill="#1DBB9B"/>
+        </svg>
+        <span style="font-size:13px; font-weight:800; margin-top:10px; color:#fff;">HOSPITAL HIMS</span>
+        <span style="font-size:11px; color:var(--teal-brand);">LIVE INTAKE</span>
       </div>
     </div>
   </section>
@@ -1076,10 +1092,9 @@
       <p>Engineering accessible, queue-free healthcare discoverability for every patient.</p>
     </div>
 
-    <!-- Founder Attribution Banner -->
     <div class="founder-banner">
       <div>
-        <div style="font-size:12px; font-weight:700; color:var(--teal-brand); text-transform:uppercase; letter-spacing:1px;">Leadership</div>
+        <div style="font-size:12px; font-weight:700; color:var(--teal-brand); text-transform:uppercase; letter-spacing:1px;">Founder</div>
         <h3 style="font-size:24px; color:#fff;">Swathi S</h3>
         <p style="color:var(--text-muted); font-size:14px;">Founder, QuickDoc</p>
       </div>
@@ -1090,98 +1105,121 @@
       </div>
     </div>
 
-    <!-- Interactive Pop-Up Hover Cards -->
     <div class="about-grid">
-      <div class="about-card-interactive" onclick="triggerCardPop(this)">
+      <div class="tile-interactive-3d about-card">
         <h3>Our Mission</h3>
         <p>To eliminate information asymmetry and healthcare transit blindness by delivering instant symptom-to-specialist matching and real-time hospital slot availability.</p>
       </div>
 
-      <div class="about-card-interactive" onclick="triggerCardPop(this)">
+      <div class="tile-interactive-3d about-card">
         <h3>Our Vision</h3>
         <p>A society with zero guesswork, zero unmanaged waiting rooms, and guaranteed golden-hour medical intervention for acute emergencies.</p>
       </div>
 
-      <div class="about-card-interactive" onclick="triggerCardPop(this)">
+      <div class="tile-interactive-3d about-card">
         <h3>Operational Efficacy</h3>
         <p>By shifting intake away from crowded waiting halls into pre-scheduled digital channels, QuickDoc restores human dignity to patients while maximizing clinical productivity for physicians.</p>
       </div>
     </div>
   </section>
 
-  <!-- ================= 7. BOOKING & REDBUS-STYLE DISCOVERY ================= -->
+  <!-- ================= 2. STRICT WORKFLOW BOOKING SECTION ================= -->
   <section class="booking-section" id="book">
     <div class="section-title">
-      <h2>RedBus-Style Doctor &amp; Hospital Booking</h2>
-      <p>Describe your condition below. QuickDoc will automatically route your specialty and generate available hospitals with live slot buttons.</p>
+      <h2>Sequential Doctor &amp; Hospital Booking</h2>
+      <p>Step 1: Fill details &amp; symptoms ➔ Step 2: Choose hospital ➔ Step 3: View specialist on duty and lock your time.</p>
     </div>
 
     <div class="form-container-3d">
+      <div class="stage-indicator">
+        <span class="stage-step active" id="badge-step-1">1. Patient Details &amp; Symptoms</span>
+        <span class="stage-step" id="badge-step-2">2. Available Hospitals</span>
+        <span class="stage-step" id="badge-step-3">3. Specialist &amp; Timing</span>
+      </div>
+
       <div class="triage-hud" id="triageHud">
         <div class="triage-status" id="triageStatus">
-          🧠 Clinical NLP Ready: Describe your symptoms below to discover available hospitals &amp; times.
+          🧠 Step 1 Active: Enter patient credentials and describe symptoms to generate available hospitals.
         </div>
       </div>
 
-      <form onsubmit="handleAppointmentBooking(event)">
-        <div class="form-grid">
-          <div class="form-group full">
-            <label>Describe Your Symptoms or Medical Concern</label>
-            <textarea id="symptomsText" rows="3" placeholder="Type in plain words (e.g. chest pain with sweating, knee fracture from fall, asthma breathlessness)..." oninput="processSymptomInput(this.value)" required></textarea>
-          </div>
+      <form id="appointmentMasterForm" onsubmit="handleAppointmentBooking(event)">
+        
+        <!-- STEP 1: PERSONAL DETAILS & SYMPTOMS DESCRIPTION -->
+        <div id="stage-1-details">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Patient Full Name</label>
+              <input type="text" id="patientName" placeholder="Enter patient name" required />
+            </div>
 
-          <div class="form-group">
-            <label>Auto-Assigned Specialty</label>
-            <select id="deptSelect" onchange="renderRedBusSlots(this.value)" required>
-              <option value="General Medicine / Triage">General Medicine / Triage</option>
-              <option value="Cardiology">Cardiology</option>
-              <option value="Orthopaedics">Orthopaedics</option>
-              <option value="Neurology">Neurology</option>
-              <option value="Pulmonology">Pulmonology</option>
-              <option value="Paediatrics">Paediatrics</option>
-              <option value="Gastroenterology">Gastroenterology</option>
-              <option value="Dermatology">Dermatology</option>
-              <option value="Emergency & Trauma Care">Emergency &amp; Trauma Care</option>
-            </select>
-          </div>
+            <div class="form-group">
+              <label>Contact Phone Number</label>
+              <input type="tel" id="patientPhone" placeholder="+91 98765 43210" required />
+            </div>
 
-          <div class="form-group">
-            <label>Selected Hospital</label>
-            <input type="text" id="selectedHospitalInput" placeholder="Select from the hospital cards below" readonly required />
-          </div>
+            <div class="form-group full">
+              <label>Preferred Consultation Date</label>
+              <input type="date" id="bookingDate" required />
+            </div>
 
-          <!-- RedBus-Style Hospital & Slot Selection List -->
-          <div class="form-group full">
-            <label>Available Hospitals &amp; Timings (RedBus-Style List)</label>
-            <div class="redbus-container" id="redbusStack">
-              <!-- Dynamically rendered via JS -->
+            <div class="form-group full">
+              <label>Describe Your Symptoms or Medical Concern</label>
+              <textarea id="symptomsText" rows="3" placeholder="Type in plain words (e.g. severe chest pressure with sweating, knee fracture from accident, sudden breathing wheeze)..." oninput="processSymptomInput(this.value)" required></textarea>
+            </div>
+
+            <div class="form-group full">
+              <label>Auto-Evaluated Specialty Department</label>
+              <select id="deptSelect" required>
+                <option value="General Medicine / Triage">General Medicine / Triage</option>
+                <option value="Cardiology">Cardiology</option>
+                <option value="Orthopaedics &amp; Trauma">Orthopaedics &amp; Trauma</option>
+                <option value="Gastroenterology &amp; GI">Gastroenterology &amp; GI</option>
+                <option value="Neurology &amp; Stroke">Neurology &amp; Stroke</option>
+                <option value="Pulmonology &amp; Chest">Pulmonology &amp; Chest</option>
+                <option value="Paediatrics &amp; Child Care">Paediatrics &amp; Child Care</option>
+                <option value="Emergency &amp; Trauma Care">Emergency &amp; Trauma Care</option>
+              </select>
             </div>
           </div>
 
-          <div class="form-group">
-            <label>Patient Full Name</label>
-            <input type="text" id="patientName" placeholder="Enter patient name" required />
+          <button type="button" class="btn-stage" onclick="unlockStage2Hospitals()">
+            GENERATE MATCHING HOSPITALS LIST &rarr;
+          </button>
+        </div>
+
+        <!-- STEP 2: AVAILABLE HOSPITALS LIST (UNLOCKS ONLY AFTER STEP 1) -->
+        <div id="stage-2-hospitals">
+          <div style="margin: 25px 0 10px; display:flex; justify-content:space-between; align-items:center;">
+            <label style="color:var(--teal-light); font-size:14px;">Select Hospital From Live Duty Roster</label>
+            <span style="font-size:12px; color:var(--text-muted);">Click any hospital card to reveal on-duty specialist and timings</span>
           </div>
 
-          <div class="form-group">
-            <label>Contact Phone Number</label>
-            <input type="tel" id="patientPhone" placeholder="+91 98765 43210" required />
-          </div>
+          <input type="hidden" id="selectedHospitalInput" required />
 
-          <div class="form-group">
-            <label>Selected Slot Window</label>
-            <input type="text" id="selectedSlotInput" placeholder="Click any slot pill above" readonly required />
-          </div>
-
-          <div class="form-group">
-            <label>Preferred Date</label>
-            <input type="date" id="bookingDate" required />
+          <div class="redbus-container" id="redbusStack">
+            <!-- Dynamically populated via JS based on symptoms/specialty -->
           </div>
         </div>
 
-        <button type="submit" class="submit-btn">
-          GENERATE DIGITAL FAST-TRACK PASS
-        </button>
+        <!-- STEP 3: SPECIALIST NAME & TIMING SLOTS (UNLOCKS ONLY AFTER HOSPITAL CLICK) -->
+        <div id="stage-3-specialist-timing">
+          <div class="specialist-card-active" id="specialistDisplayCard">
+            <!-- Specialist Name & Time Buttons Rendered Dynamically -->
+          </div>
+
+          <div class="form-grid" style="margin-top:20px;">
+            <div class="form-group full">
+              <label>Selected Slot Confirmation</label>
+              <input type="text" id="selectedSlotInput" placeholder="Click any time slot above" readonly required />
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            CONFIRM &amp; GENERATE DIGITAL FAST-TRACK PASS
+          </button>
+        </div>
+
       </form>
     </div>
   </section>
@@ -1245,6 +1283,7 @@
       <div style="font-size:12px; font-weight:800; color:var(--teal-brand); letter-spacing:1px;">QUICKDOC FAST-TRACK GATE PASS</div>
       <h3 style="margin-top:5px; font-size:24px; color:#fff;" id="modalPatient">Patient Name</h3>
       <p style="font-size:13px; color:var(--text-muted);" id="modalHospital">Hospital Name</p>
+      <p style="font-size:12px; color:var(--teal-brand); margin-top:2px;" id="modalSpecialist">Doctor Name</p>
 
       <div class="qr-box">
         <canvas id="qrCanvas" width="130" height="130"></canvas>
@@ -1265,7 +1304,76 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
   <script>
-    // 1. Initialize Map on Coimbatore with No-Key Standard OpenStreetMap Tiles
+    // 5. Continuous Video/Animated Movement Background Canvas
+    const motionCanvas = document.getElementById('global-motion-canvas');
+    if (motionCanvas) {
+      const mctx = motionCanvas.getContext('2d');
+      let w, h;
+      let motionElements = [];
+
+      function resizeMotion() {
+        w = motionCanvas.width = window.innerWidth;
+        h = motionCanvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resizeMotion);
+      resizeMotion();
+
+      for (let i = 0; i < 55; i++) {
+        motionElements.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.75,
+          vy: (Math.random() - 0.5) * 0.75,
+          size: Math.random() * 9 + 4,
+          isCross: Math.random() > 0.4
+        });
+      }
+
+      function renderMotionLoop() {
+        mctx.clearRect(0, 0, w, h);
+
+        for (let i = 0; i < motionElements.length; i++) {
+          for (let j = i + 1; j < motionElements.length; j++) {
+            const dx = motionElements[i].x - motionElements[j].x;
+            const dy = motionElements[i].y - motionElements[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 135) {
+              mctx.strokeStyle = `rgba(29, 187, 155, ${0.16 * (1 - dist / 135)})`;
+              mctx.lineWidth = 1;
+              mctx.beginPath();
+              mctx.moveTo(motionElements[i].x, motionElements[i].y);
+              mctx.lineTo(motionElements[j].x, motionElements[j].y);
+              mctx.stroke();
+            }
+          }
+        }
+
+        motionElements.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = w;
+          if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h;
+          if (p.y > h) p.y = 0;
+
+          if (p.isCross) {
+            mctx.fillStyle = 'rgba(29, 187, 155, 0.28)';
+            const s = p.size;
+            mctx.fillRect(p.x - s / 6, p.y - s / 2, s / 3, s);
+            mctx.fillRect(p.x - s / 2, p.y - s / 6, s, s / 3);
+          } else {
+            mctx.fillStyle = 'rgba(56, 189, 248, 0.35)';
+            mctx.beginPath();
+            mctx.arc(p.x, p.y, 2.2, 0, Math.PI * 2);
+            mctx.fill();
+          }
+        });
+        requestAnimationFrame(renderMotionLoop);
+      }
+      renderMotionLoop();
+    }
+
+    // 1. Comprehensive Master Directory of All Major Hospitals in Coimbatore
     const map = L.map('coimbatore-map', {
       scrollWheelZoom: false
     }).setView([11.0168, 76.9558], 12);
@@ -1286,7 +1394,7 @@
         html: `
           <div style="
             width: 30px; height: 30px; 
-            background: #0A192F; 
+            background: #061325; 
             border: 2px solid ${color}; 
             border-radius: 50% 50% 50% 0; 
             transform: rotate(-45deg); 
@@ -1302,31 +1410,43 @@
       });
     }
 
-    const majorHospitals = [
-      { name: "GKNM Hospital", lat: 11.0125, lon: 76.9754, loc: "PN Palayam, Coimbatore", slots: "Cardiology, General & ER Ready" },
-      { name: "PSG Hospitals", lat: 11.0264, lon: 77.0028, loc: "Peelamedu, Avinashi Rd", slots: "Paediatrics, Ortho & Trauma Bay" },
-      { name: "Sri Ramakrishna Hospital", lat: 11.0253, lon: 76.9782, loc: "Avarampalayam, Siddhapudur", slots: "Neurology & Fast OPD Available" },
-      { name: "KMCH", lat: 11.0456, lon: 77.0514, loc: "Avinashi Road, Aerodrome Post", slots: "Comprehensive ER & Multi-specialty" },
-      { name: "Coimbatore Medical College Hospital (CMCH)", lat: 10.9996, lon: 76.9678, loc: "Trichy Road, Town Hall", slots: "24/7 Casualty & Triage Wing" },
-      { name: "Royal Care Hospital", lat: 11.0664, lon: 77.0864, loc: "Neelambur, Coimbatore", slots: "Cardiac ICU & Pulmonary Wing" }
+    const coimbatoreMasterHospitals = [
+      { name: "Kovai Medical Center & Hospital (KMCH)", lat: 11.0456, lon: 77.0514, loc: "Avinashi Road", slots: "Comprehensive ER, Cardiac, Neuro & Multi-specialty" },
+      { name: "PSG Hospitals", lat: 11.0264, lon: 77.0028, loc: "Peelamedu", slots: "Tamil Nadu's Only JCI Prime Certified Multi-Speciality Hospital" },
+      { name: "GKNM Hospital", lat: 11.0125, lon: 76.9754, loc: "PN Palayam", slots: "Cardiology, Oncology & 24/7 ER Ready" },
+      { name: "Ganga Hospital", lat: 11.0289, lon: 76.9512, loc: "Mettupalayam Road, Ramnagar", slots: "World Renowned Ortho, Trauma, Spine & Plastic Surgery" },
+      { name: "KG Hospital", lat: 11.0021, lon: 76.9622, loc: "Arts College Road", slots: "Advanced Robotic Heart & Cardiac Center" },
+      { name: "Sri Ramakrishna Hospital", lat: 11.0253, lon: 76.9782, loc: "Avarampalayam, Siddhapudur", slots: "Cardio, Nephro, Urology & Rapid Triage" },
+      { name: "GEM Hospital", lat: 11.0068, lon: 76.9942, loc: "Ramanathapuram", slots: "Pioneering Gastroenterology & Laparoscopic Hub" },
+      { name: "Coimbatore Medical College Hospital (CMCH)", lat: 10.9996, lon: 76.9678, loc: "Trichy Road, Town Hall", slots: "24/7 Public Trauma & Casualty Command" },
+      { name: "Royal Care Super Speciality Hospital", lat: 11.0664, lon: 77.0864, loc: "Neelambur", slots: "Comprehensive Cardiac ICU & Interventional ER" },
+      { name: "Kongunad Hospital", lat: 11.0223, lon: 76.9634, loc: "Tatabad, 11th Street", slots: "Multi-Speciality Emergency & Intensive Care" },
+      { name: "FIMS Hospitals", lat: 11.0076, lon: 76.9712, loc: "Race Course", slots: "NABH Accredited Multi-Speciality Care" },
+      { name: "NG Hospital & Research Centre", lat: 11.0042, lon: 77.0143, loc: "Singanallur", slots: "Liver Transplant & GI Surgery Pioneer" },
+      { name: "The Eye Foundation", lat: 11.0189, lon: 76.9576, loc: "DB Road, RS Puram", slots: "Advanced Cornea & Retinal Trauma Unit" },
+      { name: "Rao Hospital", lat: 11.0112, lon: 76.9534, loc: "West Venkatasamy Road, RS Puram", slots: "Obstetrics, Gynaecology & Laparoscopy Center" },
+      { name: "Manu Hospital", lat: 11.0278, lon: 76.9723, loc: "New Siddhapudur", slots: "Speciality Ortho, Joint & General OPD" },
+      { name: "Sheela Hospital", lat: 11.0094, lon: 76.9748, loc: "Kuppusamy Street, PN Palayam", slots: "24/7 Emergency & Maternity Center" },
+      { name: "Rex Ortho Hospital", lat: 11.0105, lon: 76.9641, loc: "Periaswamy Road, RS Puram", slots: "Trauma, Spine & Joint Replacement" },
+      { name: "Ashwin Hospital", lat: 11.0211, lon: 76.9489, loc: "Alagesan Road, Saibaba Colony", slots: "Tertiary Multi-Speciality Medical Care" }
     ];
 
-    majorHospitals.forEach(h => {
+    coimbatoreMasterHospitals.forEach(h => {
       const popupHtml = `
         <div class="popup-title">${h.name}</div>
-        <div class="popup-loc">📍 ${h.loc}</div>
+        <div class="popup-loc">📍 ${h.loc}, Coimbatore</div>
         <div class="popup-slot">🟢 ${h.slots}</div>
         <div class="popup-actions">
-          <a href="#book" class="popup-btn" onclick="selectHospitalFromMap('${h.name}')">Book Slot</a>
+          <a href="#book" class="popup-btn" onclick="preselectHospitalFromMap('${h.name}')">Book Slot</a>
           <a href="https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lon}" target="_blank" class="popup-btn nav-btn">📍 Navigate</a>
         </div>
       `;
-      const m = L.marker([h.lat, h.lon], { icon: createQDPin('#38BDF8') }).bindPopup(popupHtml);
-      markers.addLayer(m);
+      markers.addLayer(L.marker([h.lat, h.lon], { icon: createQDPin('#38BDF8') }).bindPopup(popupHtml));
     });
+    map.addLayer(markers);
+    document.getElementById('hospital-count-badge').textContent = `Verified: ${coimbatoreMasterHospitals.length} Tertiary Hospitals Active in Coimbatore`;
 
-    async function loadCoimbatoreHospitals() {
-      const badge = document.getElementById('hospital-count-badge');
+    async function loadAllCoimbatoreNeighborhoodClinics() {
       const query = `
         [out:json][timeout:25];
         area["name"="Coimbatore"]->.a;
@@ -1334,12 +1454,12 @@
           node["amenity"="hospital"](area.a);
           node["amenity"="clinic"](area.a);
         );
-        out center 120;
+        out center 140;
       `;
       try {
         const res = await fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`);
         const data = await res.json();
-        let total = majorHospitals.length;
+        let total = coimbatoreMasterHospitals.length;
 
         if (data && data.elements) {
           data.elements.forEach(el => {
@@ -1347,14 +1467,15 @@
             const lon = el.lon || (el.center && el.center.lon);
             const name = (el.tags && el.tags.name) ? el.tags.name : "Coimbatore Clinic / Health Center";
 
-            if (lat && lon) {
+            const exists = coimbatoreMasterHospitals.some(mh => mh.name.toLowerCase() === name.toLowerCase());
+            if (lat && lon && !exists) {
               total++;
               const pop = `
                 <div class="popup-title">${name}</div>
-                <div class="popup-loc">📍 Coimbatore Registry Pin</div>
+                <div class="popup-loc">📍 Coimbatore Municipal Registry</div>
                 <div class="popup-slot">🟢 Open Outpatient Slots</div>
                 <div class="popup-actions">
-                  <a href="#book" class="popup-btn" onclick="selectHospitalFromMap('${name.replace(/'/g, "\\'")}')">Select Clinic</a>
+                  <a href="#book" class="popup-btn" onclick="preselectHospitalFromMap('${name.replace(/'/g, "\\'")}')">Select Clinic</a>
                   <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" class="popup-btn nav-btn">📍 Route</a>
                 </div>
               `;
@@ -1362,88 +1483,20 @@
             }
           });
         }
-        map.addLayer(markers);
-        badge.textContent = `Live: ${total}+ Healthcare Centers Verified Across Coimbatore`;
+        document.getElementById('hospital-count-badge').textContent = `Live: ${total}+ Hospitals & Clinics Online across Coimbatore`;
       } catch (e) {
-        map.addLayer(markers);
-        badge.textContent = `Coimbatore Core: ${majorHospitals.length} Tertiary Centers Online`;
+        // Fallback safely to master directory
       }
     }
-    loadCoimbatoreHospitals();
+    loadAllCoimbatoreNeighborhoodClinics();
 
-    // 2. RedBus-Style Hospital Slot Data & Engine
-    const REDBUS_HOSPITAL_DATA = {
-      "Cardiology": [
-        { name: "GKNM Hospital", loc: "PN Palayam", doc: "Dr. R. Sundaram, MD, DM", wait: "8m wait", slots: ["10:15 AM", "11:00 AM", "12:15 PM"] },
-        { name: "Royal Care Hospital", loc: "Neelambur", doc: "Dr. V. Chockalingam, MCh", wait: "5m wait", slots: ["09:45 AM", "11:30 AM", "04:15 PM"] },
-        { name: "KMCH", loc: "Avinashi Road", doc: "Dr. K. Nithyanand, DM", wait: "12m wait", slots: ["10:30 AM", "01:00 PM", "05:00 PM"] }
-      ],
-      "Orthopaedics": [
-        { name: "PSG Hospitals", loc: "Peelamedu", doc: "Dr. S. Rajasekaran, MS Ortho", wait: "6m wait", slots: ["09:30 AM", "11:15 AM", "02:00 PM"] },
-        { name: "Sri Ramakrishna Hospital", loc: "Avarampalayam", doc: "Dr. T. Mohan, D.Ortho", wait: "10m wait", slots: ["10:00 AM", "12:00 PM", "04:30 PM"] },
-        { name: "KMCH", loc: "Avinashi Road", doc: "Dr. M. Arumugam, FRCS", wait: "8m wait", slots: ["11:00 AM", "01:15 PM", "05:15 PM"] }
-      ],
-      "Neurology": [
-        { name: "Sri Ramakrishna Hospital", loc: "Avarampalayam", doc: "Dr. A. Murugesan, DM Neuro", wait: "7m wait", slots: ["10:15 AM", "11:45 AM", "03:30 PM"] },
-        { name: "KMCH", loc: "Avinashi Road", doc: "Dr. G. Venkatesh, MCh", wait: "14m wait", slots: ["09:15 AM", "12:30 PM", "04:00 PM"] }
-      ],
-      "Pulmonology": [
-        { name: "Royal Care Hospital", loc: "Neelambur", doc: "Dr. P. Ravichandran, DTCD", wait: "4m wait", slots: ["10:00 AM", "11:30 AM", "03:15 PM"] },
-        { name: "PSG Hospitals", loc: "Peelamedu", doc: "Dr. R. Karthik, MD Pulm", wait: "9m wait", slots: ["09:45 AM", "12:15 PM", "04:45 PM"] }
-      ],
-      "Paediatrics": [
-        { name: "PSG Hospitals", loc: "Peelamedu", doc: "Dr. K. Sumathi, DCH, MD", wait: "5m wait", slots: ["09:30 AM", "10:45 AM", "12:00 PM"] },
-        { name: "GKNM Hospital", loc: "PN Palayam", doc: "Dr. J. Meenakshi, DNB", wait: "8m wait", slots: ["11:00 AM", "01:30 PM", "04:00 PM"] }
-      ],
-      "General Medicine / Triage": [
-        { name: "CMCH (Govt. Hospital)", loc: "Trichy Road", doc: "Dr. S. Sivakumar, MD (Triage)", wait: "12m wait", slots: ["09:00 AM", "10:30 AM", "11:45 AM"] },
-        { name: "Sri Ramakrishna Hospital", loc: "Avarampalayam", doc: "Dr. P. Anand, MBBS", wait: "5m wait", slots: ["09:30 AM", "11:00 AM", "02:30 PM"] },
-        { name: "GKNM Hospital", loc: "PN Palayam", doc: "Dr. E. Rajesh, MD", wait: "7m wait", slots: ["10:15 AM", "12:45 PM", "04:15 PM"] }
-      ]
-    };
-
-    function renderRedBusSlots(dept) {
-      const container = document.getElementById('redbusStack');
-      const hospList = REDBUS_HOSPITAL_DATA[dept] || REDBUS_HOSPITAL_DATA["General Medicine / Triage"];
-      container.innerHTML = '';
-
-      hospList.forEach(h => {
-        const card = document.createElement('div');
-        card.className = 'redbus-card';
-        card.innerHTML = `
-          <div class="redbus-hosp-info">
-            <h4>${h.name} • <span style="font-size:13px; font-weight:400; color:var(--text-muted);">${h.loc}</span></h4>
-            <div class="redbus-doc">👨‍⚕️ ${h.doc}</div>
-            <div class="redbus-slot-pills">
-              ${h.slots.map(s => `<button type="button" class="slot-pill" onclick="pickSlotPill(event, '${h.name}', '${s}')">${s}</button>`).join('')}
-            </div>
-          </div>
-          <div>
-            <span class="redbus-dwell-badge">🟢 ${h.wait}</span>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function pickSlotPill(e, hospName, slotTime) {
-      e.stopPropagation();
-      document.querySelectorAll('.slot-pill').forEach(btn => btn.classList.remove('active'));
-      e.target.classList.add('active');
-
-      document.getElementById('selectedHospitalInput').value = hospName;
-      document.getElementById('selectedSlotInput').value = slotTime;
-    }
-
-    function selectHospitalFromMap(name) {
-      document.getElementById('selectedHospitalInput').value = name;
+    function preselectHospitalFromMap(name) {
       document.getElementById('book').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('selectedHospitalInput').value = name;
+      alert(`Hospital Selected: ${name}\nPlease fill in Patient Details & Description in Step 1 to proceed to timings.`);
     }
 
-    // Initialize with default RedBus list
-    renderRedBusSlots("General Medicine / Triage");
-
-    // 3. NLP Symptom Classifier
+    // NLP Symptom Classifier
     const CLINICAL_LEXICON = [
       {
         dept: "Cardiology",
@@ -1451,20 +1504,24 @@
         critical: true
       },
       {
-        dept: "Orthopaedics",
+        dept: "Orthopaedics & Trauma",
         keywords: ["fracture", "bone", "joint", "knee", "back pain", "ankle", "sprain", "shoulder", "swelling", "ligament", "fall"]
       },
       {
-        dept: "Neurology",
+        dept: "Gastroenterology & GI",
+        keywords: ["stomach pain", "acid", "gas", "indigestion", "diarrhea", "vomiting", "ulcer", "liver"]
+      },
+      {
+        dept: "Neurology & Stroke",
         keywords: ["seizure", "stroke", "numbness", "face drooping", "speech blur", "dizziness", "blackout", "migraine", "paralysis"],
         critical: true
       },
       {
-        dept: "Pulmonology",
+        dept: "Pulmonology & Chest",
         keywords: ["cough", "wheeze", "asthma", "phlegm", "breathlessness", "lung", "inhaler"]
       },
       {
-        dept: "Paediatrics",
+        dept: "Paediatrics & Child Care",
         keywords: ["baby", "child", "infant", "toddler", "vaccine", "teething"]
       }
     ];
@@ -1477,9 +1534,8 @@
 
       if (!q) {
         hud.className = 'triage-hud';
-        status.innerHTML = '🧠 Clinical NLP Ready: Describe your symptoms below to discover available hospitals &amp; times.';
+        status.innerHTML = '🧠 Step 1 Active: Enter patient credentials and describe symptoms to generate available hospitals.';
         deptSelect.value = 'General Medicine / Triage';
-        renderRedBusSlots('General Medicine / Triage');
         return;
       }
 
@@ -1488,7 +1544,6 @@
         hud.className = 'triage-hud critical';
         status.innerHTML = '🚨 CRITICAL RED FLAG DETECTED: Immediate 1 km Emergency Ambulance SOS Recommended!';
         deptSelect.value = 'Emergency & Trauma Care';
-        renderRedBusSlots('General Medicine / Triage');
         return;
       }
 
@@ -1507,47 +1562,171 @@
       }
 
       hud.className = 'triage-hud';
-      status.innerHTML = `✅ Triage Matched: <strong>${matched}</strong> — Live Hospital Timings Updated Below`;
+      status.innerHTML = `✅ Triage Matched: <strong>${matched}</strong> — Click 'Generate Matching Hospitals List' below.`;
       deptSelect.value = matched;
-      renderRedBusSlots(matched);
     }
 
     function applySymptomQuickChip(symptom, dept) {
       document.getElementById('symptomsText').value = symptom;
       processSymptomInput(symptom);
       document.getElementById('deptSelect').value = dept;
-      renderRedBusSlots(dept);
       document.getElementById('book').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // 4. Interactive Radar Canvas Simulation (1 km Geofence)
-    const canvas = document.getElementById('radar-canvas');
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
+    // 2. RedBus-Style Hospital Catalog with Specialists & Timings
+    const REDBUS_SPECIALTY_HOSPITALS = {
+      "Cardiology": [
+        { name: "KG Hospital", loc: "Arts College Road", doc: "Dr. G. Bakthavathsalam, MS, FICS (Chief Cardiologist)", wait: "4m avg wait", slots: ["09:30 AM", "10:15 AM", "11:45 AM", "04:30 PM"] },
+        { name: "GKNM Hospital", loc: "PN Palayam", doc: "Dr. R. Sundaram, MD, DM (Cardiology)", wait: "7m avg wait", slots: ["10:00 AM", "11:30 AM", "12:15 PM", "05:00 PM"] },
+        { name: "Royal Care Hospital", loc: "Neelambur", doc: "Dr. V. Chockalingam, MCh (Cardiothoracic Surgeon)", wait: "5m avg wait", slots: ["09:45 AM", "11:00 AM", "02:30 PM", "04:15 PM"] },
+        { name: "KMCH", loc: "Avinashi Road", doc: "Dr. K. Nithyanand, DM (Interventional Cardiologist)", wait: "11m avg wait", slots: ["10:30 AM", "01:00 PM", "03:45 PM", "05:15 PM"] }
+      ],
+      "Orthopaedics & Trauma": [
+        { name: "Ganga Hospital", loc: "Mettupalayam Road", doc: "Dr. S. Raja Sabapathy, MS, MCh (Trauma & Reconstructive Surgery)", wait: "6m avg wait", slots: ["09:15 AM", "10:45 AM", "12:00 PM", "03:30 PM"] },
+        { name: "PSG Hospitals", loc: "Peelamedu", doc: "Dr. S. Rajasekaran, MS Ortho (Orthopaedic Surgeon)", wait: "5m avg wait", slots: ["09:30 AM", "11:15 AM", "02:00 PM", "04:30 PM"] },
+        { name: "Rex Ortho Hospital", loc: "RS Puram", doc: "Dr. Rex C. Stephen, MS Ortho (Joint Replacement Specialist)", wait: "4m avg wait", slots: ["10:00 AM", "11:30 AM", "04:00 PM"] },
+        { name: "Manu Hospital", loc: "Siddhapudur", doc: "Dr. M. Soundarapandian, D.Ortho (Trauma Consultant)", wait: "8m avg wait", slots: ["10:15 AM", "12:30 PM", "05:00 PM"] }
+      ],
+      "Gastroenterology & GI": [
+        { name: "GEM Hospital", loc: "Ramanathapuram", doc: "Dr. C. Palanivelu, MS, MCh (GI Laparoscopic Specialist)", wait: "6m avg wait", slots: ["09:30 AM", "11:00 AM", "12:15 PM", "04:00 PM"] },
+        { name: "NG Hospital", loc: "Singanallur", doc: "Dr. N. Gurusamy, MS (Surgical Gastroenterologist)", wait: "5m avg wait", slots: ["10:15 AM", "11:45 AM", "03:30 PM"] },
+        { name: "KMCH", loc: "Avinashi Road", doc: "Dr. P. Eswaramurthi, DNB (Medical Gastroenterology)", wait: "9m avg wait", slots: ["10:00 AM", "01:15 PM", "04:45 PM"] }
+      ],
+      "Neurology & Stroke": [
+        { name: "Sri Ramakrishna Hospital", loc: "Avarampalayam", doc: "Dr. A. Murugesan, DM Neuro (Senior Neurologist)", wait: "6m avg wait", slots: ["10:15 AM", "11:45 AM", "03:30 PM"] },
+        { name: "GKNM Hospital", loc: "PN Palayam", doc: "Dr. C. Ramasubramanian, DM (Neuro Specialist)", wait: "8m avg wait", slots: ["09:45 AM", "11:15 AM", "04:15 PM"] },
+        { name: "KMCH", loc: "Avinashi Road", doc: "Dr. G. Venkatesh, MCh (Neurosurgeon)", wait: "12m avg wait", slots: ["09:15 AM", "12:30 PM", "04:00 PM"] }
+      ],
+      "Pulmonology & Chest": [
+        { name: "Royal Care Hospital", loc: "Neelambur", doc: "Dr. P. Ravichandran, DTCD (Chest Specialist)", wait: "4m avg wait", slots: ["10:00 AM", "11:30 AM", "03:15 PM"] },
+        { name: "PSG Hospitals", loc: "Peelamedu", doc: "Dr. R. Karthik, MD Pulm (Pulmonologist)", wait: "8m avg wait", slots: ["09:45 AM", "12:15 PM", "04:45 PM"] }
+      ],
+      "Paediatrics & Child Care": [
+        { name: "PSG Hospitals", loc: "Peelamedu", doc: "Dr. K. Sumathi, DCH, MD (Senior Paediatrician)", wait: "5m avg wait", slots: ["09:30 AM", "10:45 AM", "12:00 PM"] },
+        { name: "GKNM Hospital", loc: "PN Palayam", doc: "Dr. J. Meenakshi, DNB (Pediatric Specialist)", wait: "7m avg wait", slots: ["11:00 AM", "01:30 PM", "04:00 PM"] }
+      ],
+      "General Medicine / Triage": [
+        { name: "CMCH (Govt. Hospital)", loc: "Trichy Road", doc: "Dr. S. Sivakumar, MD (Chief Triage Physician)", wait: "10m avg wait", slots: ["09:00 AM", "10:30 AM", "11:45 AM", "03:00 PM"] },
+        { name: "Sri Ramakrishna Hospital", loc: "Avarampalayam", doc: "Dr. P. Anand, MBBS (Consultant Physician)", wait: "5m avg wait", slots: ["09:30 AM", "11:00 AM", "02:30 PM", "04:15 PM"] },
+        { name: "Kongunad Hospital", loc: "Tatabad", doc: "Dr. K. Rajendran, MBBS (Senior Resident Physician)", wait: "6m avg wait", slots: ["10:00 AM", "12:15 PM", "03:45 PM"] }
+      ]
+    };
+
+    // 2. STRICT WORKFLOW IMPLEMENTATION
+    // Unlock Step 2 ONLY after details and description
+    function unlockStage2Hospitals() {
+      const name = document.getElementById('patientName').value.trim();
+      const phone = document.getElementById('patientPhone').value.trim();
+      const date = document.getElementById('bookingDate').value;
+      const symptoms = document.getElementById('symptomsText').value.trim();
+
+      if (!name || !phone || !date || !symptoms) {
+        alert("⚠️ Complete Step 1 First:\nPlease enter your full name, phone number, consultation date, and a description of your symptoms.");
+        return;
+      }
+
+      const dept = document.getElementById('deptSelect').value;
+      const list = REDBUS_SPECIALTY_HOSPITALS[dept] || REDBUS_SPECIALTY_HOSPITALS["General Medicine / Triage"];
+      const container = document.getElementById('redbusStack');
+      container.innerHTML = '';
+
+      // Reset Step 3
+      document.getElementById('stage-3-specialist-timing').style.display = 'none';
+      document.getElementById('badge-step-3').classList.remove('active');
+      document.getElementById('selectedSlotInput').value = '';
+
+      list.forEach(h => {
+        const card = document.createElement('div');
+        card.className = 'redbus-card';
+        card.onclick = () => selectHospitalToRevealSpecialist(h, card);
+
+        card.innerHTML = `
+          <div class="redbus-hosp-info">
+            <h4>${h.name}</h4>
+            <p>📍 ${h.loc}, Coimbatore</p>
+            <div class="redbus-click-hint">👉 Click to view on-duty specialist &amp; timings</div>
+          </div>
+          <div>
+            <span class="redbus-dwell-badge">🟢 ${h.wait}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('stage-2-hospitals').style.display = 'block';
+      document.getElementById('badge-step-2').classList.add('active');
+      document.getElementById('triageStatus').innerHTML = `✅ Step 2 Unlocked: <strong>${list.length} Hospitals available</strong> for ${dept}. Click a hospital below to reveal specialist and times.`;
+      
+      document.getElementById('stage-2-hospitals').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Unlock Step 3 (Specialist & Timings) ONLY after clicking a hospital
+    function selectHospitalToRevealSpecialist(hospitalObj, cardEl) {
+      document.querySelectorAll('.redbus-card').forEach(c => c.classList.remove('selected'));
+      cardEl.classList.add('selected');
+      document.getElementById('selectedHospitalInput').value = hospitalObj.name;
+
+      const displayCard = document.getElementById('specialistDisplayCard');
+      displayCard.innerHTML = `
+        <div class="specialist-meta">
+          <div style="font-size:12px; font-weight:800; color:var(--teal-light); text-transform:uppercase; letter-spacing:0.8px;">
+            🏥 ${hospitalObj.name} • On-Duty Specialist
+          </div>
+          <h3 style="margin-top:4px;">${hospitalObj.doc}</h3>
+          <p>Estimated queue dwell time: ${hospitalObj.wait}</p>
+        </div>
+        <div style="font-size:13px; font-weight:700; color:#FFFFFF; margin-top:12px;">
+          Select Available Consultation Window:
+        </div>
+        <div class="redbus-slot-pills">
+          ${hospitalObj.slots.map(s => `<button type="button" class="slot-pill" onclick="selectSlotPill(event, '${hospitalObj.name}', '${hospitalObj.doc}', '${s}', this)">${s}</button>`).join('')}
+        </div>
+      `;
+
+      document.getElementById('stage-3-specialist-timing').style.display = 'block';
+      document.getElementById('badge-step-3').classList.add('active');
+      document.getElementById('triageStatus').innerHTML = `🎯 Step 3 Unlocked: Specialist <strong>${hospitalObj.doc}</strong> ready at <strong>${hospitalObj.name}</strong>. Choose an available slot pill.`;
+      document.getElementById('stage-3-specialist-timing').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function selectSlotPill(event, hospName, docName, slotTime, pillEl) {
+      event.stopPropagation();
+      document.querySelectorAll('.slot-pill').forEach(p => p.classList.remove('active'));
+      pillEl.classList.add('active');
+
+      document.getElementById('selectedSlotInput').value = `${slotTime} | ${docName} (${hospName})`;
+      document.getElementById('selectedHospitalInput').dataset.doc = docName;
+      document.getElementById('selectedHospitalInput').dataset.time = slotTime;
+    }
+
+    // 6. Interactive Radar Canvas Simulation (1 km Geofence)
+    const radar = document.getElementById('radar-canvas');
+    if (radar) {
+      const rctx = radar.getContext('2d');
       let angle = 0;
 
       function drawRadar() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        rctx.clearRect(0, 0, radar.width, radar.height);
         const cx = 110, cy = 110, r = 90;
 
-        ctx.strokeStyle = 'rgba(239, 68, 68, 0.25)';
-        ctx.lineWidth = 1;
+        rctx.strokeStyle = 'rgba(239, 68, 68, 0.25)';
+        rctx.lineWidth = 1;
         for (let i = 1; i <= 3; i++) {
-          ctx.beginPath();
-          ctx.arc(cx, cy, (r / 3) * i, 0, Math.PI * 2);
-          ctx.stroke();
+          rctx.beginPath();
+          rctx.arc(cx, cy, (r / 3) * i, 0, Math.PI * 2);
+          rctx.stroke();
         }
 
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(angle);
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(r, 0);
-        ctx.strokeStyle = 'rgba(239, 68, 68, 0.8)';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        ctx.restore();
+        rctx.save();
+        rctx.translate(cx, cy);
+        rctx.rotate(angle);
+        rctx.beginPath();
+        rctx.moveTo(0, 0);
+        rctx.lineTo(r, 0);
+        rctx.strokeStyle = 'rgba(239, 68, 68, 0.8)';
+        rctx.lineWidth = 2;
+        rctx.stroke();
+        rctx.restore();
 
         const nodes = [
           { x: cx + 45 * Math.cos(angle * 0.5), y: cy + 45 * Math.sin(angle * 0.5) },
@@ -1556,98 +1735,16 @@
         ];
 
         nodes.forEach(n => {
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, 4, 0, Math.PI * 2);
-          ctx.fillStyle = '#EF4444';
-          ctx.fill();
+          rctx.beginPath();
+          rctx.arc(n.x, n.y, 4, 0, Math.PI * 2);
+          rctx.fillStyle = '#EF4444';
+          rctx.fill();
         });
 
         angle += 0.03;
         requestAnimationFrame(drawRadar);
       }
       drawRadar();
-    }
-
-    // 5. Animated Cross & Particle Canvas for Connected Hospital Network
-    const hospCanvas = document.getElementById('hospital-network-canvas');
-    if (hospCanvas) {
-      const hctx = hospCanvas.getContext('2d');
-      let width, height;
-      let particles = [];
-
-      function resizeHospCanvas() {
-        width = hospCanvas.width = hospCanvas.offsetWidth;
-        height = hospCanvas.height = hospCanvas.offsetHeight;
-      }
-      window.addEventListener('resize', resizeHospCanvas);
-      resizeHospCanvas();
-
-      for (let i = 0; i < 40; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.8,
-          vy: (Math.random() - 0.5) * 0.8,
-          size: Math.random() * 8 + 6,
-          isCross: Math.random() > 0.5
-        });
-      }
-
-      function drawHospNetwork() {
-        hctx.clearRect(0, 0, width, height);
-
-        // Draw connections
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-
-            if (dist < 120) {
-              hctx.strokeStyle = `rgba(29, 187, 155, ${0.2 * (1 - dist / 120)})`;
-              hctx.lineWidth = 1;
-              hctx.beginPath();
-              hctx.moveTo(particles[i].x, particles[i].y);
-              hctx.lineTo(particles[j].x, particles[j].y);
-              hctx.stroke();
-            }
-          }
-        }
-
-        // Draw particles & moving medical crosses
-        particles.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
-
-          if (p.x < 0) p.x = width;
-          if (p.x > width) p.x = 0;
-          if (p.y < 0) p.y = height;
-          if (p.y > height) p.y = 0;
-
-          if (p.isCross) {
-            hctx.fillStyle = 'rgba(29, 187, 155, 0.35)';
-            const s = p.size;
-            hctx.fillRect(p.x - s / 6, p.y - s / 2, s / 3, s);
-            hctx.fillRect(p.x - s / 2, p.y - s / 6, s, s / 3);
-          } else {
-            hctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
-            hctx.beginPath();
-            hctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
-            hctx.fill();
-          }
-        });
-
-        requestAnimationFrame(drawHospNetwork);
-      }
-      drawHospNetwork();
-    }
-
-    // 6. 3D Pop Effect on About Us Cards
-    function triggerCardPop(el) {
-      el.style.transform = 'translateY(-16px) scale(1.06)';
-      setTimeout(() => {
-        el.style.transform = '';
-      }, 500);
     }
 
     // 7. Emergency SOS Trigger
@@ -1662,24 +1759,33 @@
       }
     }
 
-    // 8. Booking Handler & Digital Gate Pass Generation
+    // 8. Gate Pass Modal Generation
     function handleAppointmentBooking(e) {
       e.preventDefault();
       const patient = document.getElementById('patientName').value;
-      const hospital = document.getElementById('selectedHospitalInput').value || "GKNM Hospital";
-      const time = document.getElementById('selectedSlotInput').value || "10:15 AM";
+      const hospital = document.getElementById('selectedHospitalInput').value;
+      const slotVal = document.getElementById('selectedSlotInput').value;
+      const doc = document.getElementById('selectedHospitalInput').dataset.doc || "On-Duty Specialist";
+      const time = document.getElementById('selectedHospitalInput').dataset.time || "10:15 AM";
+
+      if (!hospital || !slotVal) {
+        alert("Please select a hospital and an available time slot pill before confirming.");
+        return;
+      }
+
       const token = `#QD-CBE-${Math.floor(1000 + Math.random() * 9000)}`;
 
       document.getElementById('modalPatient').textContent = patient;
       document.getElementById('modalHospital').textContent = hospital;
+      document.getElementById('modalSpecialist').textContent = doc;
       document.getElementById('modalToken').textContent = `TOKEN: ${token}`;
-      document.getElementById('modalTime').textContent = `Slot Time: ${time}`;
+      document.getElementById('modalTime').textContent = `Slot: ${time}`;
 
       const qr = document.getElementById('qrCanvas');
       const qctx = qr.getContext('2d');
       qctx.fillStyle = "#FFFFFF";
       qctx.fillRect(0, 0, 130, 130);
-      qctx.fillStyle = "#07172B";
+      qctx.fillStyle = "#040D1A";
 
       for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
@@ -1702,23 +1808,28 @@
 
       document.getElementById('passModal').style.display = 'flex';
       e.target.reset();
+      
+      document.getElementById('stage-2-hospitals').style.display = 'none';
+      document.getElementById('stage-3-specialist-timing').style.display = 'none';
+      document.getElementById('badge-step-2').classList.remove('active');
+      document.getElementById('badge-step-3').classList.remove('active');
     }
 
     function closeGatePassModal() {
       document.getElementById('passModal').style.display = 'none';
     }
 
-    // 9. Inquiry Handler
+    // 9. Professional Inquiry Handler
     function handleInquiry(e) {
       e.preventDefault();
-      alert("Inquiry transmitted to quickdoc.med@gmail.com. Swathi S and the team will respond promptly.");
+      alert("Inquiry transmitted to quickdoc.med@gmail.com. Swathi S will respond promptly.");
       e.target.reset();
     }
 
-    // 10. Left 3D Sidebar Active Dot Scroll Tracking
+    // 10. Left 3D Sidebar Active Page Tracking on Scroll
     window.addEventListener('scroll', () => {
       const sections = document.querySelectorAll('section');
-      const dots = document.querySelectorAll('.nav-dot-left');
+      const navLinks = document.querySelectorAll('.nav-dock-link');
       let current = '';
 
       sections.forEach(sec => {
@@ -1728,10 +1839,10 @@
         }
       });
 
-      dots.forEach(dot => {
-        dot.classList.remove('active');
-        if (dot.getAttribute('href') === `#${current}`) {
-          dot.classList.add('active');
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
         }
       });
     });
