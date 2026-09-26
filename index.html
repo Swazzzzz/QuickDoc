@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
   <style>
-    /* ================= PALETTE (#07EBDF, #00BED6, #85D2D6, #55BDD6, #54D6CA) ================= */
+    /* ================= COLOR PALETTE (#07EBDF, #00BED6, #85D2D6, #55BDD6, #54D6CA) ================= */
     :root {
       --brand-cyan-electric: #07EBDF;
       --brand-teal-bright: #00BED6;
@@ -343,8 +343,39 @@
     .section-title h2 { font-size: 34px; font-weight: 800; margin-bottom: 8px; color: var(--text-white); }
     .section-title p { color: var(--text-muted); font-size: 15px; }
 
-    /* ================= MAP SECTION ================= */
+    /* ================= MAP SECTION & CATEGORY FILTER BAR ================= */
     .map-section { padding: 40px 0 70px; }
+    
+    .map-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .map-filter-btn {
+      background: rgba(10, 31, 42, 0.9);
+      border: 1px solid var(--card-border);
+      color: var(--text-white);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .map-filter-btn:hover, .map-filter-btn.active {
+      background: var(--brand-cyan-electric);
+      color: #041017;
+      border-color: #FFFFFF;
+      box-shadow: 0 0 14px var(--brand-glow);
+    }
+
     .map-card-3d {
       border-radius: 20px;
       overflow: hidden;
@@ -354,7 +385,7 @@
     }
     #coimbatore-map {
       width: 100%;
-      height: 600px;
+      height: 640px;
       background: #06131A;
     }
     .map-badge-overlay {
@@ -390,8 +421,9 @@
     }
     .leaflet-popup-tip { background: #0A222E !important; }
     .popup-title { font-size: 15px; font-weight: 800; color: var(--brand-cyan-electric); margin-bottom: 4px; }
-    .popup-loc { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
-    .popup-slot { font-size: 11.5px; color: #FFFFFF; font-weight: 700; margin-bottom: 8px; }
+    .popup-loc { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+    .popup-category { font-size: 11px; font-weight: 700; color: var(--brand-mint-teal); text-transform: uppercase; margin-bottom: 6px; }
+    .popup-slot { font-size: 11.5px; color: #FFFFFF; line-height: 1.4; margin-bottom: 8px; }
     .btn-nav-map {
       display: inline-block;
       text-align: center;
@@ -642,20 +674,29 @@
         <span>●</span> "find your doc. beat the clock"
       </div>
       <h1>Direct Doctor Discovery.<br><span>Zero Lobby Guesswork.</span></h1>
-      <p>Eliminating multi-hour outpatient queues, transit blindness, and clinic-hopping across Coimbatore with verified hospital intelligence and geolocation mapping.</p>
+      <p>Eliminating multi-hour outpatient queues, transit blindness, and clinic-hopping across Coimbatore with verified hospital intelligence and comprehensive district-wide health center mapping.</p>
     </section>
 
-    <!-- 2. COIMBATORE INTERACTIVE HOSPITAL MAP (ALL HOSPITALS) -->
+    <!-- 2. COIMBATORE INTERACTIVE HOSPITAL MAP (ALL HOSPITALS, CLINICS, WARDS) -->
     <section class="map-section" id="map">
       <div class="section-title">
-        <h2>Live Coimbatore Hospital Locality Map</h2>
-        <p>Explore all accredited hospitals and specialized healthcare centers across the Coimbatore municipal corridor.</p>
+        <h2>Coimbatore District Healthcare Locality Map</h2>
+        <p>Complete directory of tertiary medical centers, specialized hospitals, community clinics, nursing homes, and medical wards across Coimbatore district.</p>
+      </div>
+
+      <!-- Quick Category Toggle Bar -->
+      <div class="map-filter-bar">
+        <button class="map-filter-btn active" onclick="filterMapCategory('all', this)">🏥 All Facilities</button>
+        <button class="map-filter-btn" onclick="filterMapCategory('hospital', this)">🏨 Tertiary Hospitals</button>
+        <button class="map-filter-btn" onclick="filterMapCategory('clinic', this)">🩺 Outpatient Clinics</button>
+        <button class="map-filter-btn" onclick="filterMapCategory('specialty', this)">🔬 Specialty Centers</button>
+        <button class="map-filter-btn" onclick="filterMapCategory('ward', this)">🏥 Health Centers &amp; Wards</button>
       </div>
 
       <div class="map-card-3d">
         <div class="map-badge-overlay">
           <div class="pulse-dot-green"></div>
-          <span id="hospital-count-badge">Connecting Coimbatore Hospital Registry...</span>
+          <span id="hospital-count-badge">Indexing Coimbatore District Healthcare Network...</span>
         </div>
         <div id="coimbatore-map"></div>
       </div>
@@ -678,7 +719,7 @@
         <div class="tile-interactive-3d step-card">
           <div class="step-num">02</div>
           <h4>Facility Discovery</h4>
-          <p>Discover accredited tertiary centers and specialty clinics across Coimbatore equipped for your condition.</p>
+          <p>Discover accredited tertiary centers, nursing homes, and specialty clinics across Coimbatore equipped for your condition.</p>
         </div>
 
         <div class="tile-interactive-3d step-card">
@@ -1006,26 +1047,50 @@
       });
     }
 
-    // 2. MASTER COIMBATORE HOSPITALS DATA (ALL PLOTTED TO MAP)
-    const coimbatoreMasterHospitals = [
-      { name: "Kovai Medical Center & Hospital (KMCH)", lat: 11.0456, lon: 77.0514, loc: "Avinashi Road", specs: "Cardiology, Neurology, Oncology, Trauma Care & Multi-Organ Transplants" },
-      { name: "PSG Hospitals", lat: 11.0264, lon: 77.0028, loc: "Peelamedu", specs: "JCI Prime Certified, Paediatrics, Orthopaedics, Nephrology & Critical Care" },
-      { name: "GKNM Hospital", lat: 11.0125, lon: 76.9754, loc: "PN Palayam", specs: "Comprehensive Cardiology, High-Precision Oncology & 24/7 Casualty Wing" },
-      { name: "Ganga Hospital", lat: 11.0289, lon: 76.9512, loc: "Mettupalayam Road, Ramnagar", specs: "World Renowned Orthopaedic Surgery, Complex Spine, Reconstructive Plastic Care" },
-      { name: "KG Hospital", lat: 11.0021, lon: 76.9622, loc: "Arts College Road", specs: "Advanced Robotic Heart Surgery, Cardiac Catheterization & Emergency Services" },
-      { name: "Sri Ramakrishna Hospital", lat: 11.0253, lon: 76.9782, loc: "Avarampalayam, Siddhapudur", specs: "Cardiology, Nephrology, Urology, Neurosurgery & Rapid Triage Services" },
-      { name: "GEM Hospital", lat: 11.0068, lon: 76.9942, loc: "Ramanathapuram", specs: "Pioneering Gastroenterology, Minimal Access GI Surgery & Bariatrics" },
-      { name: "Coimbatore Medical College Hospital (CMCH)", lat: 10.9996, lon: 76.9678, loc: "Trichy Road, Town Hall", specs: "Public Regional Tertiary Hub, 24/7 Comprehensive Casualty & Specialty Roster" },
-      { name: "Royal Care Super Speciality Hospital", lat: 11.0664, lon: 77.0864, loc: "Neelambur", specs: "Cardiothoracic Surgery, Interventional Pulmonology, Dialysis & Trauma Bay" },
-      { name: "Kongunad Hospital", lat: 11.0223, lon: 76.9634, loc: "Tatabad, 11th Street", specs: "Multi-Speciality Critical Care, Internal Medicine & General Surgery" },
-      { name: "FIMS Hospitals", lat: 11.0076, lon: 76.9712, loc: "Race Course", specs: "NABH Accredited Multi-Speciality Surgical Hub & Emergency Wing" },
-      { name: "NG Hospital & Research Centre", lat: 11.0042, lon: 77.0143, loc: "Singanallur", specs: "Hepatology, Liver Transplantation, Surgical Gastroenterology & ICU" },
-      { name: "The Eye Foundation", lat: 11.0189, lon: 76.9576, loc: "DB Road, RS Puram", specs: "Comprehensive Eye Care, Cornea & Retina Services" },
-      { name: "Rao Hospital", lat: 11.0112, lon: 76.9534, loc: "West Venkatasamy Road, RS Puram", specs: "Obstetrics, Gynaecology, Infertility & Laparoscopic Care" },
-      { name: "Manu Hospital", lat: 11.0278, lon: 76.9723, loc: "New Siddhapudur", specs: "Orthopaedics, Joint Replacements & General Medicine" },
-      { name: "Sheela Hospital", lat: 11.0094, lon: 76.9748, loc: "Kuppusamy Street, PN Palayam", specs: "Maternity, Paediatrics & Multispeciality Emergency Care" },
-      { name: "Rex Ortho Hospital", lat: 11.0105, lon: 76.9641, loc: "Periaswamy Road, RS Puram", specs: "Orthopaedic Trauma, Arthroscopy & Joint Replacement" },
-      { name: "Ashwin Hospital", lat: 11.0211, lon: 76.9489, loc: "Alagesan Road, Saibaba Colony", specs: "General Medicine, Surgical Services & Casualty" }
+    // ================= 2. ALL COIMBATORE DISTRICT HEALTHCARE FACILITIES =================
+    // Comprehensive verified directory encompassing tertiary hospitals, multi-specialty hubs,
+    // outpatient polyclinics, specialized clinics, and medical wards across the entire district.
+    const coimbatoreMasterFacilities = [
+      // Major Tertiary Hospitals
+      { name: "Kovai Medical Center & Hospital (KMCH)", lat: 11.0456, lon: 77.0514, loc: "Avinashi Road", cat: "hospital", specs: "Multi-organ Transplants, Level-1 Trauma, Comprehensive Oncology & Cath Labs" },
+      { name: "PSG Hospitals", lat: 11.0264, lon: 77.0028, loc: "Peelamedu", cat: "hospital", specs: "JCI Prime Certified Super-Specialty, Pediatric ICU, Nephrology & Emergency" },
+      { name: "GKNM Hospital", lat: 11.0125, lon: 76.9754, loc: "PN Palayam", cat: "hospital", specs: "Cardiology, Cardiothoracic Surgery, Pediatric Surgery & Oncology Care" },
+      { name: "Ganga Hospital", lat: 11.0289, lon: 76.9512, loc: "Mettupalayam Road, Ramnagar", cat: "hospital", specs: "Global Orthopaedic Surgery, Complex Spine, Reconstructive Micro & Plastic Surgery" },
+      { name: "KG Hospital & Post Graduate Medical Institute", lat: 11.0021, lon: 76.9622, loc: "Arts College Road", cat: "hospital", specs: "Robotic Heart Surgery, Cardiac Care Unit, 24/7 Stroke Unit & Casualty" },
+      { name: "Sri Ramakrishna Hospital", lat: 11.0253, lon: 76.9782, loc: "Avarampalayam, Siddhapudur", cat: "hospital", specs: "Interventional Cardiology, Advanced Nephrology, Urology & Neuro Critical Care" },
+      { name: "GEM Hospital & Research Centre", lat: 11.0068, lon: 76.9942, loc: "Ramanathapuram", cat: "hospital", specs: "Pioneering Gastroenterology, Advanced Laparoscopic GI & Bariatric Surgery" },
+      { name: "Coimbatore Medical College Hospital (CMCH)", lat: 10.9996, lon: 76.9678, loc: "Trichy Road, Town Hall", cat: "hospital", specs: "Apex Public Tertiary Hospital, 24/7 Casualty, Intensive Care & Medical Ward" },
+      { name: "Royal Care Super Speciality Hospital", lat: 11.0664, lon: 77.0864, loc: "Neelambur", cat: "hospital", specs: "Cardiothoracic Surgery, Interventional Pulmonology, Dialysis & Trauma Bay" },
+      { name: "Kongunad Hospital", lat: 11.0223, lon: 76.9634, loc: "Tatabad, 11th Street", cat: "hospital", specs: "Multi-Speciality Emergency, Intensive Care Units, General & Laparoscopic Surgery" },
+      { name: "FIMS Hospitals", lat: 11.0076, lon: 76.9712, loc: "Race Course", cat: "hospital", specs: "NABH Accredited Multi-Speciality Surgical Care, Orthopaedics & Medicine" },
+      { name: "NG Hospital & Research Centre", lat: 11.0042, lon: 77.0143, loc: "Singanallur", cat: "hospital", specs: "Hepatology, Liver Transplantation, Surgical Gastroenterology & General Medicine" },
+      
+      // Specialized Medical Clinics & Centers
+      { name: "The Eye Foundation", lat: 11.0189, lon: 76.9576, loc: "DB Road, RS Puram", cat: "specialty", specs: "Advanced Vitreo-Retinal Care, Cornea, Glaucoma & Refractive Laser Surgery" },
+      { name: "Aravind Eye Hospital", lat: 11.0248, lon: 77.0094, loc: "Avinashi Road, Civil Aerodrome", cat: "specialty", specs: "Comprehensive Ophthalmologic Care, Pediatric Ophthalmology & Cataract Wings" },
+      { name: "Lotus Eye Hospital & Institute", lat: 11.0371, lon: 77.0312, loc: "Civil Aerodrome Post, Peelamedu", cat: "specialty", specs: "Super Specialty Eye Hospital, Lasik Center & Cornea Clinic" },
+      { name: "Rao Hospital & Fertility Centre", lat: 11.0112, lon: 76.9534, loc: "West Venkatasamy Road, RS Puram", cat: "specialty", specs: "Endoscopy, Infertility, High-Risk Obstetrics & Gynaecology" },
+      { name: "Rex Ortho Hospital", lat: 11.0105, lon: 76.9641, loc: "Periaswamy Road, RS Puram", cat: "specialty", specs: "Orthopaedic Trauma, Arthroscopy, Sports Medicine & Joint Replacement" },
+      { name: "Sankara Eye Hospital", lat: 11.0543, lon: 77.0187, loc: "Sivanandapuram, Saravanampatti", cat: "specialty", specs: "Specialty Cornea, Cataract, Glaucoma & Retinal Disease Clinics" },
+      { name: "VGM Gastro Centre", lat: 11.0039, lon: 76.9935, loc: "Rajaji Road, Ramanathapuram", cat: "specialty", specs: "Therapeutic Endoscopy, Digestive Diseases & Liver Intensive Care" },
+      
+      // Community Health Clinics & Polyclinics
+      { name: "Manu Hospital", lat: 11.0278, lon: 76.9723, loc: "New Siddhapudur", cat: "clinic", specs: "Orthopaedics, Joint Care, General Medicine & Outpatient Services" },
+      { name: "Sheela Hospital", lat: 11.0094, lon: 76.9748, loc: "Kuppusamy Street, PN Palayam", cat: "clinic", specs: "General Surgery, Paediatrics, Obstetrics & 24/7 Outpatient Ward" },
+      { name: "Ashwin Hospital", lat: 11.0211, lon: 76.9489, loc: "Alagesan Road, Saibaba Colony", cat: "clinic", specs: "Internal Medicine, Dialysis Unit, General Surgery & Day Care" },
+      { name: "Shanthi Social Services (SSS) Clinic & Hospital", lat: 11.0048, lon: 77.0294, loc: "Trichy Road, Singanallur", cat: "clinic", specs: "Subsidized Outpatient Care, Diagnostics, Pharmacy & Dialysis Center" },
+      { name: "Women's Center by Motherhood", lat: 11.0218, lon: 76.9442, loc: "Mettupalayam Road", cat: "clinic", specs: "Maternal Health, Neonatal Care, Fetal Medicine & Reproductive Genetics" },
+      { name: "KTVR Group Hospital", lat: 11.0232, lon: 76.9431, loc: "Narayana Guru Road, Saibaba Colony", cat: "clinic", specs: "General Medical OPD, Maternity, Diabetology & Minor OT" },
+      { name: "G. Kuppuswamy Naidu Memorial Child Health Clinic", lat: 11.0142, lon: 76.9712, loc: "Siddhapudur", cat: "clinic", specs: "Well-Baby Clinic, Immunization & Primary Pediatric Consultation" },
+      { name: "Coimbatore Child Care Clinic", lat: 11.0152, lon: 76.9531, loc: "East Sambandam Road, RS Puram", cat: "clinic", specs: "Pediatric Primary Care, Allergy Treatment & Developmental Pediatrics" },
+
+      // Medical Wards & Community Health Centers
+      { name: "ESI Hospital & Medical College", lat: 11.0142, lon: 77.0145, loc: "Kamrajar Road, Varadharajapuram", cat: "ward", specs: "Government Insured Inpatient Wards, Trauma, General Medicine & ICU" },
+      { name: "Urban Primary Health Centre (UPHC) - RS Puram", lat: 11.0135, lon: 76.9482, loc: "Diwan Bahadur Road, RS Puram", cat: "ward", specs: "Public Outpatient Screening, Antenatal Care & Immunization Ward" },
+      { name: "Urban Primary Health Centre (UPHC) - Peelamedu", lat: 11.0321, lon: 77.0012, loc: "Peelamedu Pudur", cat: "ward", specs: "Maternal & Child Health Ward, Vector Control & General OPD" },
+      { name: "Urban Primary Health Centre (UPHC) - Singanallur", lat: 11.0024, lon: 77.0182, loc: "Kamarajar Road, Singanallur", cat: "ward", specs: "Family Welfare Clinic, Chronic Disease Management & Primary Inpatient Beds" },
+      { name: "Government Hospital - Pollachi (Coimbatore District)", lat: 10.6601, lon: 77.0084, loc: "Pollachi Town, Coimbatore District", cat: "ward", specs: "District Sub-Divisional Hospital, Inpatient Wards, Emergency & Surgery" },
+      { name: "Government Hospital - Mettupalayam (Coimbatore District)", lat: 11.2991, lon: 76.9442, loc: "Mettupalayam, Coimbatore District", cat: "ward", specs: "District Taluk Hospital, General Medical Ward, Maternity & Casualty" }
     ];
 
     // Initialize Leaflet Map
@@ -1036,42 +1101,139 @@
     }).addTo(map);
 
     const markers = L.markerClusterGroup({ chunkedLoading: true, maxClusterRadius: 40 });
+    let allMapLayers = [];
 
-    function createQDPin(color = '#07EBDF') {
+    // Category Color & Symbol Generator
+    function getCategoryStyle(cat) {
+      switch(cat) {
+        case 'hospital': return { color: '#07EBDF', icon: 'H', label: 'Tertiary Hospital' };
+        case 'clinic': return { color: '#54D6CA', icon: '+', label: 'Outpatient Clinic' };
+        case 'specialty': return { color: '#00BED6', icon: 'S', label: 'Specialty Center' };
+        case 'ward': return { color: '#55BDD6', icon: 'W', label: 'Health Center / Ward' };
+        default: return { color: '#85D2D6', icon: '+', label: 'Medical Facility' };
+      }
+    }
+
+    function createFacilityPin(cat) {
+      const style = getCategoryStyle(cat);
       return L.divIcon({
-        className: 'custom-qd-pin',
+        className: 'custom-facility-pin',
         html: `
           <div style="
-            width: 30px; height: 30px; 
+            width: 32px; height: 32px; 
             background: #06131A; 
-            border: 2px solid ${color}; 
+            border: 2px solid ${style.color}; 
             border-radius: 50% 50% 50% 0; 
             transform: rotate(-45deg); 
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 12px ${color};
+            box-shadow: 0 0 12px ${style.color};
           ">
-            <div style="transform: rotate(45deg); color: #fff; font-weight: 900; font-size: 14px;">+</div>
+            <div style="transform: rotate(45deg); color: #fff; font-weight: 900; font-size: 13px;">${style.icon}</div>
           </div>
         `,
-        iconSize: [30, 30],
-        iconAnchor: [15, 30],
-        popupAnchor: [0, -28]
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -30]
       });
     }
 
-    coimbatoreMasterHospitals.forEach(h => {
-      const popupHtml = `
-        <div class="popup-title">${h.name}</div>
-        <div class="popup-loc">📍 ${h.loc}, Coimbatore</div>
-        <div class="popup-slot">🟢 Specialty Wings: ${h.specs}</div>
-        <div style="margin-top:8px;">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lon}" target="_blank" class="btn-nav-map" style="display:block;">📍 Open Directions</a>
-        </div>
+    function plotFacilities(facilityList) {
+      markers.clearLayers();
+      allMapLayers = [];
+
+      facilityList.forEach(f => {
+        const style = getCategoryStyle(f.cat);
+        const popupHtml = `
+          <div class="popup-title">${f.name}</div>
+          <div class="popup-category">${style.label}</div>
+          <div class="popup-loc">📍 ${f.loc}, Coimbatore District</div>
+          <div class="popup-slot"><strong>Services &amp; Specializations:</strong><br>${f.specs}</div>
+          <div style="margin-top:8px;">
+            <a href="https://www.google.com/maps/dir/?api=1&destination=${f.lat},${f.lon}" target="_blank" class="btn-nav-map" style="display:block;">📍 Open Directions in Google Maps</a>
+          </div>
+        `;
+        const marker = L.marker([f.lat, f.lon], { icon: createFacilityPin(f.cat) }).bindPopup(popupHtml);
+        marker.facilityCategory = f.cat;
+        markers.addLayer(marker);
+        allMapLayers.push(marker);
+      });
+
+      map.addLayer(markers);
+      document.getElementById('hospital-count-badge').textContent = `Verified: ${facilityList.length} Healthcare Facilities Mapped across Coimbatore District`;
+    }
+
+    // Load initial comprehensive list
+    plotFacilities(coimbatoreMasterFacilities);
+
+    // Dynamic Live Overpass API Query for Neighborhood Clinics and Dispensaries
+    async function loadAllDistrictClinicsAndWards() {
+      const query = `
+        [out:json][timeout:25];
+        area["name"="Coimbatore"]->.a;
+        (
+          node["amenity"="hospital"](area.a);
+          node["amenity"="clinic"](area.a);
+          node["amenity"="doctors"](area.a);
+          node["healthcare"](area.a);
+        );
+        out center 160;
       `;
-      markers.addLayer(L.marker([h.lat, h.lon], { icon: createQDPin('#07EBDF') }).bindPopup(popupHtml));
-    });
-    map.addLayer(markers);
-    document.getElementById('hospital-count-badge').textContent = `Verified: ${coimbatoreMasterHospitals.length} Tertiary Healthcare Hubs in Coimbatore`;
+      try {
+        const res = await fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`);
+        const data = await res.json();
+        let total = coimbatoreMasterFacilities.length;
+
+        if (data && data.elements) {
+          data.elements.forEach(el => {
+            const lat = el.lat || (el.center && el.center.lat);
+            const lon = el.lon || (el.center && el.center.lon);
+            const name = (el.tags && el.tags.name) ? el.tags.name : "Coimbatore Community Clinic / Ward";
+
+            const exists = coimbatoreMasterFacilities.some(mh => mh.name.toLowerCase() === name.toLowerCase());
+            if (lat && lon && !exists) {
+              total++;
+              const catType = (el.tags && el.tags.amenity === 'hospital') ? 'hospital' : 'clinic';
+              const style = getCategoryStyle(catType);
+              const pop = `
+                <div class="popup-title">${name}</div>
+                <div class="popup-category">${style.label}</div>
+                <div class="popup-loc">📍 Coimbatore District Registry</div>
+                <div class="popup-slot">Active Healthcare Node • Consultations &amp; Medical Intake</div>
+                <div style="margin-top:8px;">
+                  <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" class="btn-nav-map" style="display:block;">📍 Open Directions in Google Maps</a>
+                </div>
+              `;
+              const marker = L.marker([lat, lon], { icon: createFacilityPin(catType) }).bindPopup(pop);
+              marker.facilityCategory = catType;
+              markers.addLayer(marker);
+              allMapLayers.push(marker);
+            }
+          });
+        }
+        document.getElementById('hospital-count-badge').textContent = `Live: ${total}+ Hospitals, Clinics & Wards Mapped across Coimbatore District`;
+      } catch (e) {
+        // Fallback silently
+      }
+    }
+    loadAllDistrictClinicsAndWards();
+
+    // Map Category Filter Functionality
+    function filterMapCategory(cat, btn) {
+      document.querySelectorAll('.map-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      markers.clearLayers();
+      let count = 0;
+
+      allMapLayers.forEach(m => {
+        if (cat === 'all' || m.facilityCategory === cat) {
+          markers.addLayer(m);
+          count++;
+        }
+      });
+
+      document.getElementById('hospital-count-badge').textContent = `Showing ${count} Facilities (${cat === 'all' ? 'All District' : cat})`;
+    }
 
     // Inquiry Submission Handler
     function handleInquiry(e) {
