@@ -412,7 +412,7 @@
       box-shadow: 0 0 12px var(--brand-glow);
     }
 
-    /* Cluster styling matching theme */
+    /* Cluster bubble customization to match palette */
     .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large {
       background-color: rgba(0, 190, 214, 0.45) !important;
     }
@@ -515,7 +515,7 @@
     }
     .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
 
-    /* ================= CONTACT ================= */
+    /* ================= CONTACT & PARTNERSHIP (DIRECT WHATSAPP TEXT) ================= */
     .contact-section { padding: 40px 0 80px; }
     .contact-card-3d {
       max-width: 860px; margin: 0 auto; background: var(--card-bg);
@@ -822,11 +822,11 @@
       </div>
     </section>
 
-    <!-- 7. HOSPITAL PARTNERING & CONTACT -->
+    <!-- 7. HOSPITAL PARTNERING & CONTACT (DIRECT WHATSAPP TEXT INTEGRATION) -->
     <section class="contact-section" id="contact">
       <div class="section-title">
-        <h2>Hospital Onboarding &amp; Professional Contact</h2>
-        <p>Direct communication channels for hospital partnerships, medical directors, and technology collaboration.</p>
+        <h2>Hospital Onboarding &amp; Direct Messaging</h2>
+        <p>Connect instantly with QuickDoc leadership via direct text message.</p>
       </div>
 
       <div class="contact-card-3d">
@@ -851,20 +851,22 @@
         </div>
 
         <div>
-          <form onsubmit="handleInquiry(event)">
+          <form onsubmit="sendViaWhatsApp(event)">
             <div style="margin-bottom:14px;">
               <label style="font-size:12px; font-weight:700; color:var(--brand-cyan-electric); text-transform:uppercase;">Full Name / Medical Designation</label>
-              <input type="text" placeholder="Dr. / Administrator / Director" required />
+              <input type="text" id="senderName" placeholder="Dr. / Administrator / Director" required />
             </div>
             <div style="margin-bottom:14px;">
-              <label style="font-size:12px; font-weight:700; color:var(--brand-cyan-electric); text-transform:uppercase;">Official Email</label>
-              <input type="email" placeholder="name@hospital.org" required />
+              <label style="font-size:12px; font-weight:700; color:var(--brand-cyan-electric); text-transform:uppercase;">Hospital / Facility Name</label>
+              <input type="text" id="senderHospital" placeholder="e.g. Apex Clinic, Coimbatore" required />
             </div>
             <div style="margin-bottom:14px;">
-              <label style="font-size:12px; font-weight:700; color:var(--brand-cyan-electric); text-transform:uppercase;">Partnership Message / Facility Details</label>
-              <textarea rows="3" placeholder="Inquire about onboarding your hospital or clinic..." required></textarea>
+              <label style="font-size:12px; font-weight:700; color:var(--brand-cyan-electric); text-transform:uppercase;">Partnership Message / Query</label>
+              <textarea id="senderMsg" rows="3" placeholder="Inquire about onboarding your hospital or clinic..." required></textarea>
             </div>
-            <button type="submit" class="btn-partnership" style="width:100%; border:none; cursor:pointer; padding:12px;">SUBMIT INTEGRATION INQUIRY</button>
+            <button type="submit" class="btn-partnership" style="width:100%; border:none; cursor:pointer; padding:12px; display:flex; align-items:center; justify-content:center; gap:8px;">
+              <span>💬 SEND DIRECT TEXT TO FOUNDER</span>
+            </button>
           </form>
         </div>
       </div>
@@ -1268,11 +1270,20 @@
 
     loadFullCoimbatoreDistrictHealthcare();
 
-    // Inquiry Submission Handler
-    function handleInquiry(e) {
+    // ================= 3. DIRECT WHATSAPP MESSAGING INTEGRATION =================
+    function sendViaWhatsApp(e) {
       e.preventDefault();
-      alert("Partnership inquiry transmitted to quickdoc.med@gmail.com. Swathi S and the team will get in touch with your hospital.");
-      e.target.reset();
+      const name = encodeURIComponent(document.getElementById('senderName').value.trim());
+      const hospital = encodeURIComponent(document.getElementById('senderHospital').value.trim());
+      const msg = encodeURIComponent(document.getElementById('senderMsg').value.trim());
+
+      // Set your 10-digit phone number with country code (91)
+      const myPhoneNumber = "919876543210";
+
+      const formattedMessage = `Hello Swathi (QuickDoc),%0A%0A*Name / Designation:* ${name}%0A*Facility / Hospital:* ${hospital}%0A*Message:* ${msg}%0A%0A_Sent via QuickDoc Hospital Integration Portal_`;
+      const whatsappUrl = `https://wa.me/${myPhoneNumber}?text=${formattedMessage}`;
+
+      window.open(whatsappUrl, '_blank');
     }
 
     // Scroll Tracking
