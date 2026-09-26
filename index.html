@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
   <style>
+    /* ================= QUICKDOC BRAND COLOR SYSTEM ================= */
     :root {
       --brand-cyan-electric: #07EBDF;
       --brand-teal-bright: #00BED6;
@@ -24,7 +25,9 @@
       --brand-glow: rgba(7, 235, 223, 0.55);
 
       --danger-red: #EF4444;
-      --danger-glow: rgba(239, 68, 68, 0.65);
+      --danger-red-glow: rgba(239, 68, 68, 0.7);
+      --danger-red-soft: rgba(239, 68, 68, 0.2);
+      
       --text-white: #E6FAFB;
       --text-muted: #85D2D6;
     }
@@ -49,29 +52,27 @@
       width: 100%;
     }
 
-    /* ================= CONTINUOUS VISIBLE FLOATING SYMBOLS BACKGROUND ================= */
+    /* ================= 1 & 2. PERSISTENT FULL-VIEWPORT MEDICAL CANVAS ================= */
     #global-motion-canvas {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 1;
+      z-index: 2; /* Sits behind page-wrapper (z-index: 10) and modal content (z-index: 6000) */
       opacity: 0.95;
     }
 
     .ambient-glow-mesh {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100vw;
       height: 100vh;
       background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
                   radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
                   radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
       pointer-events: none;
-      z-index: 2;
+      z-index: 1;
       animation: ambientShift 22s ease-in-out infinite alternate;
     }
 
@@ -814,29 +815,49 @@
       position: relative; z-index: 10;
     }
 
-    /* ================= DIGITAL GATE PASS MODAL ================= */
+    /* ================= 1. FAST QR GATE PASS MODAL WITH RED CROSS BACKGROUND ================= */
     .modal-backdrop {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(4, 14, 20, 0.82); backdrop-filter: blur(8px);
-      z-index: 6000; display: none; align-items: center; justify-content: center;
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      /* Translucent overlay so background canvas (z-index: 2) glows cleanly through */
+      background: rgba(4, 14, 20, 0.85);
+      backdrop-filter: blur(6px);
+      z-index: 5500;
+      display: none;
+      align-items: center;
+      justify-content: center;
     }
 
     .gate-pass-card {
-      background: #0A222E; border: 2px solid var(--brand-cyan-electric); border-radius: 24px;
-      padding: 35px; width: 90%; max-width: 480px; text-align: center;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 30px var(--brand-glow);
+      background: #0A222E;
+      border: 2px solid var(--brand-cyan-electric);
+      border-radius: 24px;
+      padding: 35px;
+      width: 90%;
+      max-width: 480px;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.85), 0 0 35px var(--brand-glow);
       position: relative;
+      z-index: 6000; /* Stays above canvas and backdrop */
     }
 
     .qr-box {
-      width: 150px; height: 150px; margin: 20px auto;
-      background: #fff; border-radius: 12px; padding: 10px;
-      display: flex; align-items: center; justify-content: center;
+      width: 150px;
+      height: 150px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
 
     .pass-btn-group { display: flex; gap: 10px; margin-top: 20px; }
 
-    /* Keyframes */
     @keyframes emergencyPulse {
       0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
       70% { box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
@@ -871,6 +892,11 @@
       .phone-mockup-3d, .hospital-hub-3d { transform: none !important; }
       #radar-canvas { display: none; }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      #global-motion-canvas { opacity: 0.45; }
+    }
   </style>
 </head>
 <body>
@@ -878,7 +904,7 @@
   <!-- Screen Red Emergency Flash Frame -->
   <div class="sos-flash-overlay" id="sosFlash"></div>
 
-  <!-- Continuous Floating Materials Background Canvas (#07EBDF Palette) -->
+  <!-- Continuous Full-Document Floating Canvas Background Layer -->
   <canvas id="global-motion-canvas"></canvas>
   <div class="ambient-glow-mesh"></div>
 
@@ -1344,10 +1370,10 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
   <script>
-    // State flag: When true, floating canvas switches to rapid red crosses
+    // State flag controlling background transformation
     let isRedCrossEmergencyMode = false;
 
-    // 1. FLOATING SYMBOLS BACKGROUND WITH DYNAMIC RED CROSS SWITCH
+    // 1. FLOATING SYMBOLS BACKGROUND ENGINE
     const motionCanvas = document.getElementById('global-motion-canvas');
     if (motionCanvas) {
       const mctx = motionCanvas.getContext('2d');
@@ -1389,7 +1415,7 @@
 
             if (dist < 140) {
               mctx.strokeStyle = isRedCrossEmergencyMode
-                ? `rgba(239, 68, 68, ${0.25 * (1 - dist / 140)})`
+                ? `rgba(239, 68, 68, ${0.28 * (1 - dist / 140)})`
                 : `rgba(7, 235, 223, ${0.18 * (1 - dist / 140)})`;
               mctx.lineWidth = 1;
               mctx.beginPath();
@@ -1417,12 +1443,15 @@
           mctx.rotate(ent.angle);
 
           if (isRedCrossEmergencyMode) {
-            // When gate pass displays, ALL background symbols turn into vibrant RED moving crosses
-            mctx.fillStyle = `rgba(239, 68, 68, ${ent.alpha * 1.5})`;
-            const s = ent.size * 1.2;
+            // When QR Modal opens, all symbols become moving, glowing RED medical crosses
+            mctx.fillStyle = `rgba(239, 68, 68, ${ent.alpha * 1.55})`;
+            mctx.shadowColor = 'rgba(239, 68, 68, 0.8)';
+            mctx.shadowBlur = 10;
+            const s = ent.size * 1.25;
             mctx.fillRect(-s / 6, -s / 2, s / 3, s);
             mctx.fillRect(-s / 2, -s / 6, s, s / 3);
           } else {
+            mctx.shadowBlur = 0;
             if (ent.type === 'cross') {
               mctx.fillStyle = `rgba(7, 235, 223, ${ent.alpha})`;
               const s = ent.size;
@@ -1700,7 +1729,6 @@
       ]
     };
 
-    // Unlock Step 2 ONLY after details and description
     function unlockStage2Hospitals() {
       const name = document.getElementById('patientName').value.trim();
       const phone = document.getElementById('patientPhone').value.trim();
@@ -1746,7 +1774,6 @@
       document.getElementById('stage-2-hospitals').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Unlock Step 3 ONLY after selecting hospital
     function selectHospitalToRevealSpecialist(hospitalObj, cardEl) {
       document.querySelectorAll('.hospital-entry-card').forEach(c => c.classList.remove('selected'));
       cardEl.classList.add('selected');
@@ -1845,7 +1872,7 @@
       }
     }
 
-    // 7. INSTANT APPOINTMENT HANDLER & FAST QR DISPLAY + RED CROSS BACKGROUND
+    // 7. INSTANT QR CODE GENERATION & ACTIVATE FLOATING RED CROSSES
     function handleAppointmentBooking(e) {
       e.preventDefault();
       const patient = document.getElementById('patientName').value;
@@ -1867,14 +1894,13 @@
       document.getElementById('modalToken').textContent = `TOKEN: ${token}`;
       document.getElementById('modalTime').textContent = `Slot: ${time}`;
 
-      // Instant Synchronous QR Code Rendering (Zero latency)
+      // Synchronous instant QR rendering before modal display
       const qr = document.getElementById('qrCanvas');
       const qctx = qr.getContext('2d');
       qctx.fillStyle = "#FFFFFF";
       qctx.fillRect(0, 0, 130, 130);
       qctx.fillStyle = "#06131A";
 
-      // Render algorithmic matrix blocks
       for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
           if ((i + j) % 2 === 0 || (i * j) % 3 === 0) {
@@ -1882,7 +1908,6 @@
           }
         }
       }
-      // Target Corner Anchors
       qctx.fillRect(10, 10, 28, 28);
       qctx.clearRect(15, 15, 18, 18);
       qctx.fillRect(19, 19, 10, 10);
@@ -1895,10 +1920,10 @@
       qctx.clearRect(15, 97, 18, 18);
       qctx.fillRect(19, 101, 10, 10);
 
-      // Trigger Red Cross Rapid Motion in Background Canvas
+      // Instantly switch canvas background symbols to moving red crosses
       isRedCrossEmergencyMode = true;
 
-      // Display Modal Immediately
+      // Show modal immediately
       document.getElementById('passModal').style.display = 'flex';
       e.target.reset();
       
@@ -1910,7 +1935,7 @@
 
     function closeGatePassModal() {
       document.getElementById('passModal').style.display = 'none';
-      // Reset background back to ambient medical teal/cyan symbols
+      // Restore background canvas back to normal cyan symbols
       isRedCrossEmergencyMode = false;
     }
 
