@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
   <style>
-    /* ================= QUICKDOC BRAND COLOR SYSTEM ================= */
+    /* ================= PALETTE (#07EBDF, #00BED6, #85D2D6, #55BDD6, #54D6CA) ================= */
     :root {
       --brand-cyan-electric: #07EBDF;
       --brand-teal-bright: #00BED6;
@@ -20,14 +20,12 @@
       --brand-mint-teal: #54D6CA;
 
       --bg-dark: #06131A;
-      --card-bg: rgba(10, 31, 42, 0.78);
-      --card-border: rgba(7, 235, 223, 0.28);
+      --card-bg: rgba(10, 31, 42, 0.82);
+      --card-border: rgba(7, 235, 223, 0.32);
       --brand-glow: rgba(7, 235, 223, 0.55);
 
       --danger-red: #EF4444;
-      --danger-red-glow: rgba(239, 68, 68, 0.7);
-      --danger-red-soft: rgba(239, 68, 68, 0.2);
-      
+      --danger-glow: rgba(239, 68, 68, 0.65);
       --text-white: #E6FAFB;
       --text-muted: #85D2D6;
     }
@@ -52,14 +50,14 @@
       width: 100%;
     }
 
-    /* ================= 1 & 2. PERSISTENT FULL-VIEWPORT MEDICAL CANVAS ================= */
+    /* ================= PERSISTENT MULTI-PAGE ADAPTIVE HOSPITAL ANIMATED CANVAS ================= */
     #global-motion-canvas {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 2; /* Sits behind page-wrapper (z-index: 10) and modal content (z-index: 6000) */
+      z-index: 1;
       opacity: 0.95;
     }
 
@@ -72,7 +70,7 @@
                   radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
                   radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
       pointer-events: none;
-      z-index: 1;
+      z-index: 2;
       animation: ambientShift 22s ease-in-out infinite alternate;
     }
 
@@ -263,7 +261,7 @@
       transform: scale(1.35);
     }
 
-    /* ================= CENTERED OVERALL PAGE LAYOUT ================= */
+    /* ================= CENTERED PAGE WRAPPER ================= */
     .page-wrapper {
       position: relative;
       z-index: 10;
@@ -383,7 +381,7 @@
       box-shadow: 0 0 14px rgba(7, 235, 223, 0.3);
     }
 
-    /* ================= SEQUENTIAL BOOKING ENGINE ================= */
+    /* ================= SEQUENTIAL BOOKING ENGINE & VISUAL CALENDAR ================= */
     .booking-section { padding: 35px 0 70px; }
     .section-title { text-align: center; margin-bottom: 25px; }
     .section-title h2 { font-size: 34px; font-weight: 800; margin-bottom: 8px; color: var(--text-white); }
@@ -434,6 +432,88 @@
     }
     .triage-status { font-size: 13.5px; font-weight: 700; color: var(--brand-cyan-electric); }
     .triage-hud.critical .triage-status { color: #FCA5A5; }
+
+    /* Visual Interactive Calendar Styles */
+    .calendar-card {
+      background: rgba(8, 26, 36, 0.94);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-top: 6px;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .calendar-header span {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--brand-cyan-electric);
+    }
+    .cal-nav-btn {
+      background: rgba(7, 235, 223, 0.15);
+      border: 1px solid var(--card-border);
+      color: var(--brand-cyan-electric);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cal-nav-btn:hover {
+      background: var(--brand-cyan-electric);
+      color: #041017;
+    }
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .calendar-days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+    .cal-day-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      background: rgba(14, 39, 52, 0.6);
+      border: 1px solid transparent;
+      color: var(--text-white);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cal-day-cell:hover:not(.disabled) {
+      border-color: var(--brand-cyan-electric);
+      background: rgba(7, 235, 223, 0.2);
+      transform: translateY(-1px);
+    }
+    .cal-day-cell.selected {
+      background: var(--brand-cyan-electric) !important;
+      color: #041017 !important;
+      font-weight: 800;
+      box-shadow: 0 0 10px var(--brand-glow);
+    }
+    .cal-day-cell.today {
+      border-color: var(--brand-teal-bright);
+    }
+    .cal-day-cell.disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+      background: transparent;
+    }
 
     #stage-2-hospitals, #stage-3-specialist-timing {
       display: none;
@@ -815,13 +895,12 @@
       position: relative; z-index: 10;
     }
 
-    /* ================= 1. FAST QR GATE PASS MODAL WITH RED CROSS BACKGROUND ================= */
+    /* ================= DIGITAL GATE PASS MODAL WITH RED CROSS PERSISTENCE ================= */
     .modal-backdrop {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
-      /* Translucent overlay so background canvas (z-index: 2) glows cleanly through */
       background: rgba(4, 14, 20, 0.85);
       backdrop-filter: blur(6px);
       z-index: 5500;
@@ -840,7 +919,7 @@
       text-align: center;
       box-shadow: 0 25px 60px rgba(0,0,0,0.85), 0 0 35px var(--brand-glow);
       position: relative;
-      z-index: 6000; /* Stays above canvas and backdrop */
+      z-index: 6000;
     }
 
     .qr-box {
@@ -904,7 +983,7 @@
   <!-- Screen Red Emergency Flash Frame -->
   <div class="sos-flash-overlay" id="sosFlash"></div>
 
-  <!-- Continuous Full-Document Floating Canvas Background Layer -->
+  <!-- Continuous Multi-Page Hospital Floating Canvas Background Layer -->
   <canvas id="global-motion-canvas"></canvas>
   <div class="ambient-glow-mesh"></div>
 
@@ -1018,7 +1097,7 @@
 
         <div class="triage-hud" id="triageHud">
           <div class="triage-status" id="triageStatus">
-            Step 1 Active: Enter your credentials and describe your symptoms below to generate available hospitals.
+            Step 1 Active: Enter your credentials and select date via the visual calendar to proceed.
           </div>
         </div>
 
@@ -1037,9 +1116,23 @@
                 <input type="tel" id="patientPhone" placeholder="+91 98765 43210" required />
               </div>
 
+              <!-- VISUAL INTERACTIVE CALENDAR -->
               <div class="form-group full">
-                <label>Preferred Consultation Date</label>
-                <input type="date" id="bookingDate" required />
+                <label>Preferred Consultation Date (Visual Calendar Selection)</label>
+                <input type="hidden" id="bookingDate" required />
+                <div class="calendar-card">
+                  <div class="calendar-header">
+                    <button type="button" class="cal-nav-btn" onclick="prevMonth()">&lt; Prev</button>
+                    <span id="calMonthYear">September 2026</span>
+                    <button type="button" class="cal-nav-btn" onclick="nextMonth()">Next &gt;</button>
+                  </div>
+                  <div class="calendar-weekdays">
+                    <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                  </div>
+                  <div class="calendar-days-grid" id="calDaysGrid">
+                    <!-- Populated dynamically via JS -->
+                  </div>
+                </div>
               </div>
 
               <div class="form-group full">
@@ -1370,10 +1463,12 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
   <script>
-    // State flag controlling background transformation
+    // State flag controlling background transformation:
+    // false = normal cyan medical elements, true = QR Gate Pass active with glowing RED moving crosses
     let isRedCrossEmergencyMode = false;
+    let currentNavSection = 'hero';
 
-    // 1. FLOATING SYMBOLS BACKGROUND ENGINE
+    // 1. ADAPTIVE HOSPITAL-THEMED FLOATING BACKGROUND ENGINE (ALL PAGES & SCROLL RESPONSIVE)
     const motionCanvas = document.getElementById('global-motion-canvas');
     if (motionCanvas) {
       const mctx = motionCanvas.getContext('2d');
@@ -1387,26 +1482,29 @@
       window.addEventListener('resize', resizeMotionCanvas);
       resizeMotionCanvas();
 
-      const types = ['cross', 'hospital', 'emergency'];
+      // Hospital Theme Elements:
+      // 'cross' = Medical Cross (+), 'hospital' = Hospital Symbol [H], 'emergency' = Ambulance Beacon Dot,
+      // 'capsule' = Rx Pill/Capsule, 'heart' = ECG Heartbeat Node, 'stethoscope' = Stethoscope loop element
+      const hospitalThemes = ['cross', 'hospital', 'emergency', 'capsule', 'heart', 'stethoscope'];
 
-      for (let i = 0; i < 70; i++) {
+      for (let i = 0; i < 75; i++) {
         floatingEntities.push({
           x: Math.random() * w,
           y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 0.7,
-          vy: (Math.random() - 0.5) * 0.7,
+          vx: (Math.random() - 0.5) * 0.75,
+          vy: (Math.random() - 0.5) * 0.75,
           size: Math.random() * 12 + 10,
-          type: types[i % 3],
+          type: hospitalThemes[i % hospitalThemes.length],
           alpha: Math.random() * 0.4 + 0.22,
           angle: Math.random() * Math.PI * 2,
-          va: (Math.random() - 0.5) * 0.015
+          va: (Math.random() - 0.5) * 0.018
         });
       }
 
       function drawFloatingMesh() {
         mctx.clearRect(0, 0, w, h);
 
-        // Synapse Connectors
+        // Synapse Connection Lines
         for (let i = 0; i < floatingEntities.length; i++) {
           for (let j = i + 1; j < floatingEntities.length; j++) {
             const dx = floatingEntities[i].x - floatingEntities[j].x;
@@ -1426,7 +1524,7 @@
           }
         }
 
-        // Draw Floating Symbols
+        // Draw Floating Hospital Themed Symbols
         floatingEntities.forEach(ent => {
           const speedMultiplier = isRedCrossEmergencyMode ? 2.2 : 1;
           ent.x += ent.vx * speedMultiplier;
@@ -1443,7 +1541,7 @@
           mctx.rotate(ent.angle);
 
           if (isRedCrossEmergencyMode) {
-            // When QR Modal opens, all symbols become moving, glowing RED medical crosses
+            // When QR Modal opens: ALL symbols transform into moving glowing RED medical crosses
             mctx.fillStyle = `rgba(239, 68, 68, ${ent.alpha * 1.55})`;
             mctx.shadowColor = 'rgba(239, 68, 68, 0.8)';
             mctx.shadowBlur = 10;
@@ -1453,11 +1551,13 @@
           } else {
             mctx.shadowBlur = 0;
             if (ent.type === 'cross') {
+              // Electric Cyan Medical Cross (+)
               mctx.fillStyle = `rgba(7, 235, 223, ${ent.alpha})`;
               const s = ent.size;
               mctx.fillRect(-s / 6, -s / 2, s / 3, s);
               mctx.fillRect(-s / 2, -s / 6, s, s / 3);
             } else if (ent.type === 'hospital') {
+              // Hospital [H] Sign
               const s = ent.size * 1.3;
               mctx.strokeStyle = `rgba(133, 210, 214, ${ent.alpha * 0.9})`;
               mctx.lineWidth = 1.5;
@@ -1468,7 +1568,45 @@
               mctx.textAlign = 'center';
               mctx.textBaseline = 'middle';
               mctx.fillText('H', 0, 0);
+            } else if (ent.type === 'capsule') {
+              // Rx Capsule / Medicine Pill
+              const s = ent.size;
+              mctx.strokeStyle = `rgba(84, 214, 202, ${ent.alpha * 0.9})`;
+              mctx.lineWidth = 1.4;
+              mctx.beginPath();
+              mctx.roundRect(-s * 0.6, -s * 0.3, s * 1.2, s * 0.6, s * 0.3);
+              mctx.stroke();
+              mctx.beginPath();
+              mctx.moveTo(0, -s * 0.3);
+              mctx.lineTo(0, s * 0.3);
+              mctx.stroke();
+            } else if (ent.type === 'heart') {
+              // ECG Heart Pulse
+              const s = ent.size * 0.8;
+              mctx.strokeStyle = `rgba(7, 235, 223, ${ent.alpha * 0.95})`;
+              mctx.lineWidth = 1.4;
+              mctx.beginPath();
+              mctx.moveTo(-s, 0);
+              mctx.lineTo(-s * 0.4, 0);
+              mctx.lineTo(-s * 0.2, -s * 0.6);
+              mctx.lineTo(s * 0.1, s * 0.6);
+              mctx.lineTo(s * 0.4, 0);
+              mctx.lineTo(s, 0);
+              mctx.stroke();
+            } else if (ent.type === 'stethoscope') {
+              // Stethoscope Head loop
+              const s = ent.size * 0.5;
+              mctx.strokeStyle = `rgba(0, 190, 214, ${ent.alpha * 0.85})`;
+              mctx.lineWidth = 1.4;
+              mctx.beginPath();
+              mctx.arc(0, 0, s, 0, Math.PI * 2);
+              mctx.stroke();
+              mctx.fillStyle = `rgba(7, 235, 223, ${ent.alpha})`;
+              mctx.beginPath();
+              mctx.arc(0, 0, s * 0.4, 0, Math.PI * 2);
+              mctx.fill();
             } else {
+              // Emergency Beacon Node
               mctx.fillStyle = `rgba(239, 68, 68, ${ent.alpha * 1.1})`;
               mctx.beginPath();
               mctx.arc(0, 0, ent.size * 0.28, 0, Math.PI * 2);
@@ -1490,7 +1628,93 @@
       drawFloatingMesh();
     }
 
-    // 2. COIMBATORE LEAFLET MAP DIRECTORY
+    // Scroll & Navigation Trigger: Adjusts gentle drift momentum on each section transition
+    function triggerScrollSurge() {
+      floatingEntities.forEach(ent => {
+        ent.vy += (Math.random() - 0.5) * 0.9;
+        ent.vx += (Math.random() - 0.5) * 0.9;
+        // Limit velocity so movement remains elegant
+        ent.vx = Math.max(-2, Math.min(2, ent.vx));
+        ent.vy = Math.max(-2, Math.min(2, ent.vy));
+      });
+    }
+
+    // ================= VISUAL CALENDAR CONTROLLER =================
+    // Initialized to the system context date: September 2026
+    let calDate = new Date(2026, 8, 26);
+    let selectedBookingDate = '2026-09-26';
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    function renderCalendar() {
+      const year = calDate.getFullYear();
+      const month = calDate.getMonth();
+
+      document.getElementById('calMonthYear').textContent = `${monthNames[month]} ${year}`;
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const totalDays = new Date(year, month + 1, 0).getDate();
+      const grid = document.getElementById('calDaysGrid');
+      grid.innerHTML = '';
+
+      // Today baseline (2026-09-26)
+      const todayBaseline = new Date(2026, 8, 26);
+
+      // Leading blank spaces
+      for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'cal-day-cell disabled';
+        grid.appendChild(empty);
+      }
+
+      // Day cells
+      for (let day = 1; day <= totalDays; day++) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-day-cell';
+        cell.textContent = day;
+
+        const cellDate = new Date(year, month, day);
+        const yyyy = year;
+        const mm = String(month + 1).padStart(2, '0');
+        const dd = String(day).padStart(2, '0');
+        const formatted = `${yyyy}-${mm}-${dd}`;
+
+        // Disable past dates prior to current context date (September 26, 2026)
+        if (cellDate < new Date(2026, 8, 26)) {
+          cell.classList.add('disabled');
+        } else {
+          if (formatted === selectedBookingDate) {
+            cell.classList.add('selected');
+          }
+          if (formatted === '2026-09-26') {
+            cell.classList.add('today');
+          }
+          cell.onclick = () => {
+            selectedBookingDate = formatted;
+            document.getElementById('bookingDate').value = formatted;
+            renderCalendar();
+          };
+        }
+        grid.appendChild(cell);
+      }
+
+      document.getElementById('bookingDate').value = selectedBookingDate;
+    }
+
+    function prevMonth() {
+      calDate.setMonth(calDate.getMonth() - 1);
+      renderCalendar();
+    }
+
+    function nextMonth() {
+      calDate.setMonth(calDate.getMonth() + 1);
+      renderCalendar();
+    }
+
+    // Initialize calendar immediately
+    renderCalendar();
+
+    // ================= COIMBATORE LEAFLET MAP DIRECTORY =================
     const map = L.map('coimbatore-map', {
       scrollWheelZoom: false
     }).setView([11.0168, 76.9558], 12);
@@ -1872,7 +2096,7 @@
       }
     }
 
-    // 7. INSTANT QR CODE GENERATION & ACTIVATE FLOATING RED CROSSES
+    // 7. INSTANT ZERO-LATENCY QR GATE PASS GENERATOR & BACKGROUND RED CROSS TRANSFORMATION
     function handleAppointmentBooking(e) {
       e.preventDefault();
       const patient = document.getElementById('patientName').value;
@@ -1894,7 +2118,7 @@
       document.getElementById('modalToken').textContent = `TOKEN: ${token}`;
       document.getElementById('modalTime').textContent = `Slot: ${time}`;
 
-      // Synchronous instant QR rendering before modal display
+      // Instant Synchronous QR Canvas Render
       const qr = document.getElementById('qrCanvas');
       const qctx = qr.getContext('2d');
       qctx.fillStyle = "#FFFFFF";
@@ -1920,10 +2144,10 @@
       qctx.clearRect(15, 97, 18, 18);
       qctx.fillRect(19, 101, 10, 10);
 
-      // Instantly switch canvas background symbols to moving red crosses
+      // Trigger Red Medical Cross Transformation in Full Background Canvas
       isRedCrossEmergencyMode = true;
 
-      // Show modal immediately
+      // Show Gate Pass Modal Immediately
       document.getElementById('passModal').style.display = 'flex';
       e.target.reset();
       
@@ -1935,7 +2159,7 @@
 
     function closeGatePassModal() {
       document.getElementById('passModal').style.display = 'none';
-      // Restore background canvas back to normal cyan symbols
+      // Restore background canvas to normal cyan/teal hospital elements
       isRedCrossEmergencyMode = false;
     }
 
@@ -1946,7 +2170,7 @@
       e.target.reset();
     }
 
-    // 9. ACTIVE DOCK LINK TRACKER
+    // 9. ACTIVE DOCK LINK TRACKER & PAGE SCROLL SURGE
     window.addEventListener('scroll', () => {
       const sections = document.querySelectorAll('section');
       const navLinks = document.querySelectorAll('.nav-dock-link');
@@ -1959,11 +2183,23 @@
         }
       });
 
+      if (current && current !== currentNavSection) {
+        currentNavSection = current;
+        triggerScrollSurge(); // Floats elements with an active surge whenever a new page section is traversed
+      }
+
       navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === `#${current}`) {
           link.classList.add('active');
         }
+      });
+    });
+
+    // Also trigger the floating surge on dock click navigation
+    document.querySelectorAll('.nav-dock-link').forEach(link => {
+      link.addEventListener('click', () => {
+        setTimeout(triggerScrollSurge, 150);
       });
     });
   </script>
