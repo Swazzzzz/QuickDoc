@@ -153,7 +153,6 @@
       box-shadow: 0 0 22px var(--brand-cyan-electric);
     }
 
-    /* Informative Corridor Ticker */
     .telemetry-ticker {
       background: #030C12;
       border-bottom: 1px solid var(--card-border);
@@ -183,7 +182,7 @@
       z-index: 4500;
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 8px;
       background: rgba(6, 19, 26, 0.94);
       backdrop-filter: blur(20px);
       border: 1px solid var(--card-border);
@@ -213,7 +212,7 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      padding: 6px 10px;
+      padding: 7px 10px;
       border-radius: 8px;
       transition: all 0.25s ease;
       color: var(--text-muted);
@@ -340,127 +339,9 @@
       margin: 0 auto 30px;
     }
 
-    .quick-chips {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    .chip-btn {
-      background: rgba(14, 39, 52, 0.85);
-      border: 1px solid var(--card-border);
-      color: var(--text-white);
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .chip-btn:hover {
-      border-color: var(--brand-cyan-electric);
-      background: rgba(7, 235, 223, 0.18);
-      transform: translateY(-2px);
-      box-shadow: 0 0 14px rgba(7, 235, 223, 0.3);
-    }
-
-    /* ================= INTELLIGENT SYMPTOM TRIAGE EXPLORER ================= */
-    .triage-section { padding: 40px 0 70px; }
     .section-title { text-align: center; margin-bottom: 25px; }
     .section-title h2 { font-size: 34px; font-weight: 800; margin-bottom: 8px; color: var(--text-white); }
     .section-title p { color: var(--text-muted); font-size: 15px; }
-
-    .triage-explorer-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 35px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .triage-input-box {
-      width: 100%;
-      background: rgba(6, 19, 26, 0.95);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 14px 18px;
-      color: #fff;
-      font-size: 15px;
-      outline: none;
-      transition: border-color 0.25s, box-shadow 0.25s;
-      margin-bottom: 18px;
-    }
-    .triage-input-box:focus {
-      border-color: var(--brand-cyan-electric);
-      box-shadow: 0 0 16px rgba(7, 235, 223, 0.35);
-    }
-
-    .triage-result-banner {
-      background: rgba(8, 26, 36, 0.95);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 18px 22px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-    .result-text h4 { font-size: 17px; color: var(--brand-cyan-electric); margin-bottom: 2px; }
-    .result-text p { font-size: 13px; color: var(--text-muted); margin: 0; }
-
-    /* ================= COIMBATORE HOSPITAL DIRECTORY ================= */
-    .hospital-deck-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-    .hospital-deck-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: all 0.3s ease;
-    }
-    .hospital-deck-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--brand-cyan-electric);
-      box-shadow: 0 12px 30px rgba(7, 235, 223, 0.2);
-    }
-    .deck-header h3 { font-size: 18px; color: #fff; margin-bottom: 4px; }
-    .deck-header .deck-location { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
-    .deck-specialties {
-      font-size: 12.5px;
-      color: #E6FAFB;
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-    .deck-specialties strong { color: var(--brand-mint-teal); }
-    .btn-nav-map {
-      display: inline-block;
-      text-align: center;
-      background: rgba(7, 235, 223, 0.15);
-      border: 1px solid var(--card-border);
-      color: var(--brand-cyan-electric);
-      text-decoration: none;
-      font-size: 12.5px;
-      font-weight: 700;
-      padding: 8px 14px;
-      border-radius: 8px;
-      transition: all 0.25s ease;
-    }
-    .btn-nav-map:hover {
-      background: var(--brand-cyan-electric);
-      color: #041017;
-      box-shadow: 0 0 12px var(--brand-glow);
-    }
 
     /* ================= MAP SECTION ================= */
     .map-section { padding: 40px 0 70px; }
@@ -473,7 +354,7 @@
     }
     #coimbatore-map {
       width: 100%;
-      height: 580px;
+      height: 600px;
       background: #06131A;
     }
     .map-badge-overlay {
@@ -511,6 +392,24 @@
     .popup-title { font-size: 15px; font-weight: 800; color: var(--brand-cyan-electric); margin-bottom: 4px; }
     .popup-loc { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
     .popup-slot { font-size: 11.5px; color: #FFFFFF; font-weight: 700; margin-bottom: 8px; }
+    .btn-nav-map {
+      display: inline-block;
+      text-align: center;
+      background: rgba(7, 235, 223, 0.15);
+      border: 1px solid var(--card-border);
+      color: var(--brand-cyan-electric);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 12px;
+      border-radius: 6px;
+      transition: all 0.25s ease;
+    }
+    .btn-nav-map:hover {
+      background: var(--brand-cyan-electric);
+      color: #041017;
+      box-shadow: 0 0 12px var(--brand-glow);
+    }
 
     /* ================= HOW IT WORKS ================= */
     .workflow-section { padding: 40px 0 80px; }
@@ -708,37 +607,29 @@
       <div class="dot-circle"></div>
       <span>1. Home Overview</span>
     </a>
-    <a href="#triage" class="nav-dock-link">
-      <div class="dot-circle"></div>
-      <span>2. Symptom Explorer</span>
-    </a>
-    <a href="#hospitals-deck" class="nav-dock-link">
-      <div class="dot-circle"></div>
-      <span>3. Hospital Directory</span>
-    </a>
     <a href="#map" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span>4. Coimbatore Map</span>
+      <span>2. Coimbatore Map</span>
     </a>
     <a href="#how-it-works" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span>5. How It Works</span>
+      <span>3. How It Works</span>
     </a>
     <a href="#solutions" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span>6. Problem &amp; Rates</span>
+      <span>4. Problem &amp; Rates</span>
     </a>
     <a href="#hospitals-sync" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span>7. Connected HIMS</span>
+      <span>5. Connected HIMS</span>
     </a>
     <a href="#about" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span>8. About Us</span>
+      <span>6. About Us</span>
     </a>
     <a href="#contact" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span>9. Hospital Partnering</span>
+      <span>7. Hospital Partnering</span>
     </a>
   </aside>
 
@@ -751,57 +642,14 @@
         <span>●</span> "find your doc. beat the clock"
       </div>
       <h1>Direct Doctor Discovery.<br><span>Zero Lobby Guesswork.</span></h1>
-      <p>Eliminating multi-hour outpatient queues, transit blindness, and clinic-hopping across Coimbatore with intelligent symptom classification and hospital network intelligence.</p>
-
-      <div class="quick-chips">
-        <button class="chip-btn" onclick="applySymptomQuickChip('Chest heaviness and sweating', 'Cardiology')">🫀 Chest Pain / Heaviness</button>
-        <button class="chip-btn" onclick="applySymptomQuickChip('Sudden twisting knee fracture with swelling', 'Orthopaedics &amp; Trauma')">🦴 Knee / Bone Injury</button>
-        <button class="chip-btn" onclick="applySymptomQuickChip('Persistent wheezing and breathlessness', 'Pulmonology &amp; Chest')">🫁 Asthma / Breathing</button>
-        <button class="chip-btn" onclick="applySymptomQuickChip('Toddler high fever with dehydration', 'Paediatrics &amp; Child Care')">👶 Child / Toddler Fever</button>
-        <button class="chip-btn" onclick="applySymptomQuickChip('Severe abdominal pain and acid vomiting', 'Gastroenterology &amp; GI')">🩺 Abdominal / Stomach Pain</button>
-      </div>
+      <p>Eliminating multi-hour outpatient queues, transit blindness, and clinic-hopping across Coimbatore with verified hospital intelligence and geolocation mapping.</p>
     </section>
 
-    <!-- 2. INTELLIGENT SYMPTOM TRIAGE EXPLORER -->
-    <section class="triage-section" id="triage">
-      <div class="section-title">
-        <h2>Intelligent Clinical Triage Explorer</h2>
-        <p>Type your symptoms below to discover the exact medical specialty and corresponding department you require.</p>
-      </div>
-
-      <div class="triage-explorer-card">
-        <label style="display:block; font-size:13px; font-weight:700; color:var(--brand-cyan-electric); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">Describe Medical Concern / Symptoms</label>
-        <input type="text" id="triageInput" class="triage-input-box" placeholder="e.g. sharp joint pain with swelling, chronic morning wheezing, acid reflux..." oninput="processSymptomTriage(this.value)" />
-
-        <div class="triage-result-banner" id="triageBanner">
-          <div class="result-text">
-            <h4 id="matchedDeptTitle">Recommended Department: General Medicine / Primary Triage</h4>
-            <p id="matchedDeptDesc">Consult a primary care physician for routine evaluation and initial laboratory screening.</p>
-          </div>
-          <div>
-            <a href="#hospitals-deck" class="btn-nav-map" style="padding:10px 18px; font-size:13px;">View Matching Hospitals &darr;</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. COIMBATORE HOSPITAL DIRECTORY DECK -->
-    <section id="hospitals-deck" style="padding: 40px 0 70px;">
-      <div class="section-title">
-        <h2>Coimbatore Healthcare Centers &amp; Tertiary Wings</h2>
-        <p>Verified institutional profiles, primary clinical departments, and exact navigation coordinates.</p>
-      </div>
-
-      <div class="hospital-deck-grid" id="hospitalDeckGrid">
-        <!-- Rendered via JavaScript -->
-      </div>
-    </section>
-
-    <!-- 4. COIMBATORE INTERACTIVE HOSPITAL MAP -->
+    <!-- 2. COIMBATORE INTERACTIVE HOSPITAL MAP (ALL HOSPITALS) -->
     <section class="map-section" id="map">
       <div class="section-title">
         <h2>Live Coimbatore Hospital Locality Map</h2>
-        <p>Touch or zoom any hospital pin to view exact real-world locations, active departments, and directions.</p>
+        <p>Explore all accredited hospitals and specialized healthcare centers across the Coimbatore municipal corridor.</p>
       </div>
 
       <div class="map-card-3d">
@@ -813,7 +661,7 @@
       </div>
     </section>
 
-    <!-- 5. HOW IT WORKS -->
+    <!-- 3. HOW IT WORKS -->
     <section class="workflow-section" id="how-it-works">
       <div class="section-title">
         <h2>How QuickDoc Transforms Patient Navigation</h2>
@@ -847,7 +695,7 @@
       </div>
     </section>
 
-    <!-- 6. PROBLEM & SOLUTION (88% MEASURED PROOF) -->
+    <!-- 4. PROBLEM & SOLUTION (88% MEASURED PROOF) -->
     <section class="metrics-section" id="solutions">
       <div class="section-title">
         <h2>The Clinical Friction vs. QuickDoc Efficiency</h2>
@@ -893,7 +741,7 @@
       </div>
     </section>
 
-    <!-- 7. CONNECTED HOSPITALS (ENTERPRISE ARCHITECTURE) -->
+    <!-- 5. CONNECTED HOSPITALS (ENTERPRISE ARCHITECTURE) -->
     <section class="hospitals-section" id="hospitals-sync">
       <div class="section-title">
         <h2>Hospital Information Management System (HIMS) Sync</h2>
@@ -925,7 +773,7 @@
       </div>
     </section>
 
-    <!-- 8. ABOUT US (FOUNDER SWATHI S) -->
+    <!-- 6. ABOUT US (FOUNDER SWATHI S) -->
     <section class="about-section" id="about">
       <div class="section-title">
         <h2>About QuickDoc</h2>
@@ -963,7 +811,7 @@
       </div>
     </section>
 
-    <!-- 9. HOSPITAL PARTNERING & CONTACT -->
+    <!-- 7. HOSPITAL PARTNERING & CONTACT -->
     <section class="contact-section" id="contact">
       <div class="section-title">
         <h2>Hospital Onboarding &amp; Professional Contact</h2>
@@ -1158,7 +1006,7 @@
       });
     }
 
-    // 2. MASTER COIMBATORE HOSPITALS DATA
+    // 2. MASTER COIMBATORE HOSPITALS DATA (ALL PLOTTED TO MAP)
     const coimbatoreMasterHospitals = [
       { name: "Kovai Medical Center & Hospital (KMCH)", lat: 11.0456, lon: 77.0514, loc: "Avinashi Road", specs: "Cardiology, Neurology, Oncology, Trauma Care & Multi-Organ Transplants" },
       { name: "PSG Hospitals", lat: 11.0264, lon: 77.0028, loc: "Peelamedu", specs: "JCI Prime Certified, Paediatrics, Orthopaedics, Nephrology & Critical Care" },
@@ -1171,28 +1019,14 @@
       { name: "Royal Care Super Speciality Hospital", lat: 11.0664, lon: 77.0864, loc: "Neelambur", specs: "Cardiothoracic Surgery, Interventional Pulmonology, Dialysis & Trauma Bay" },
       { name: "Kongunad Hospital", lat: 11.0223, lon: 76.9634, loc: "Tatabad, 11th Street", specs: "Multi-Speciality Critical Care, Internal Medicine & General Surgery" },
       { name: "FIMS Hospitals", lat: 11.0076, lon: 76.9712, loc: "Race Course", specs: "NABH Accredited Multi-Speciality Surgical Hub & Emergency Wing" },
-      { name: "NG Hospital & Research Centre", lat: 11.0042, lon: 77.0143, loc: "Singanallur", specs: "Hepatology, Liver Transplantation, Surgical Gastroenterology & ICU" }
+      { name: "NG Hospital & Research Centre", lat: 11.0042, lon: 77.0143, loc: "Singanallur", specs: "Hepatology, Liver Transplantation, Surgical Gastroenterology & ICU" },
+      { name: "The Eye Foundation", lat: 11.0189, lon: 76.9576, loc: "DB Road, RS Puram", specs: "Comprehensive Eye Care, Cornea & Retina Services" },
+      { name: "Rao Hospital", lat: 11.0112, lon: 76.9534, loc: "West Venkatasamy Road, RS Puram", specs: "Obstetrics, Gynaecology, Infertility & Laparoscopic Care" },
+      { name: "Manu Hospital", lat: 11.0278, lon: 76.9723, loc: "New Siddhapudur", specs: "Orthopaedics, Joint Replacements & General Medicine" },
+      { name: "Sheela Hospital", lat: 11.0094, lon: 76.9748, loc: "Kuppusamy Street, PN Palayam", specs: "Maternity, Paediatrics & Multispeciality Emergency Care" },
+      { name: "Rex Ortho Hospital", lat: 11.0105, lon: 76.9641, loc: "Periaswamy Road, RS Puram", specs: "Orthopaedic Trauma, Arthroscopy & Joint Replacement" },
+      { name: "Ashwin Hospital", lat: 11.0211, lon: 76.9489, loc: "Alagesan Road, Saibaba Colony", specs: "General Medicine, Surgical Services & Casualty" }
     ];
-
-    // Render Hospital Directory Cards
-    const deckGrid = document.getElementById('hospitalDeckGrid');
-    coimbatoreMasterHospitals.forEach(h => {
-      const card = document.createElement('div');
-      card.className = 'hospital-deck-card';
-      card.innerHTML = `
-        <div class="deck-header">
-          <h3>${h.name}</h3>
-          <div class="deck-location">📍 ${h.loc}, Coimbatore</div>
-        </div>
-        <div class="deck-specialties">
-          <strong>Key Specialty Wings:</strong><br>${h.specs}
-        </div>
-        <div>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lon}" target="_blank" class="btn-nav-map" style="width:100%;">📍 Directions via Google Maps</a>
-        </div>
-      `;
-      deckGrid.appendChild(card);
-    });
 
     // Initialize Leaflet Map
     const map = L.map('coimbatore-map', { scrollWheelZoom: false }).setView([11.0168, 76.9558], 12);
@@ -1231,87 +1065,13 @@
         <div class="popup-loc">📍 ${h.loc}, Coimbatore</div>
         <div class="popup-slot">🟢 Specialty Wings: ${h.specs}</div>
         <div style="margin-top:8px;">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lon}" target="_blank" class="btn-nav-map" style="display:block; padding:6px 10px;">📍 Open Directions</a>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lon}" target="_blank" class="btn-nav-map" style="display:block;">📍 Open Directions</a>
         </div>
       `;
       markers.addLayer(L.marker([h.lat, h.lon], { icon: createQDPin('#07EBDF') }).bindPopup(popupHtml));
     });
     map.addLayer(markers);
     document.getElementById('hospital-count-badge').textContent = `Verified: ${coimbatoreMasterHospitals.length} Tertiary Healthcare Hubs in Coimbatore`;
-
-    // 3. CLINICAL TRIAGE NLP LOGIC
-    const CLINICAL_LEXICON = [
-      {
-        dept: "Cardiology & Cardiothoracic Surgery",
-        desc: "Recommended for chest pressure, radiating arm discomfort, palpitations, or unexplained cardiac stress.",
-        keywords: ["chest pain", "chest pressure", "heart", "palpitation", "left arm", "fluttering", "breathless", "bp spike", "nenju"]
-      },
-      {
-        dept: "Orthopaedics, Spine & Trauma Care",
-        desc: "Recommended for fractures, acute knee/joint injuries, severe ligament sprains, or post-accident trauma.",
-        keywords: ["fracture", "bone", "joint", "knee", "back pain", "ankle", "sprain", "shoulder", "swelling", "ligament", "fall"]
-      },
-      {
-        dept: "Gastroenterology & Hepatology",
-        desc: "Recommended for persistent abdominal distress, reflux, jaundice, gastric ulcers, or GI issues.",
-        keywords: ["stomach pain", "acid", "gas", "indigestion", "diarrhea", "vomiting", "ulcer", "liver"]
-      },
-      {
-        dept: "Neurology & Neurosurgery",
-        desc: "Recommended for acute migraines, facial numbness, seizures, unexplained dizziness, or sensory deficits.",
-        keywords: ["seizure", "stroke", "numbness", "face drooping", "speech blur", "dizziness", "blackout", "migraine", "paralysis"]
-      },
-      {
-        dept: "Pulmonology & Respiratory Medicine",
-        desc: "Recommended for chronic coughing, asthma exacerbations, wheezing, or bronchial complications.",
-        keywords: ["cough", "wheeze", "asthma", "phlegm", "breathlessness", "lung", "inhaler"]
-      },
-      {
-        dept: "Paediatrics & Neonatal Care",
-        desc: "Recommended for infant fevers, paediatric dehydration, childhood respiratory symptoms, or routine growth screening.",
-        keywords: ["baby", "child", "infant", "toddler", "vaccine", "teething"]
-      }
-    ];
-
-    function processSymptomTriage(text) {
-      const q = text.toLowerCase().trim();
-      const title = document.getElementById('matchedDeptTitle');
-      const desc = document.getElementById('matchedDeptDesc');
-
-      if (!q) {
-        title.textContent = 'Recommended Department: General Medicine / Primary Triage';
-        desc.textContent = 'Consult a primary care physician for routine evaluation and initial laboratory screening.';
-        return;
-      }
-
-      let matched = null;
-      let highestScore = 0;
-
-      for (const item of CLINICAL_LEXICON) {
-        let score = 0;
-        for (const kw of item.keywords) {
-          if (q.includes(kw)) score++;
-        }
-        if (score > highestScore) {
-          highestScore = score;
-          matched = item;
-        }
-      }
-
-      if (matched) {
-        title.textContent = `Recommended Department: ${matched.dept}`;
-        desc.textContent = matched.desc;
-      } else {
-        title.textContent = 'Recommended Department: General Internal Medicine';
-        desc.textContent = 'Your symptoms suggest an evaluation by a General Physician for preliminary diagnosis.';
-      }
-    }
-
-    function applySymptomQuickChip(symptom, dept) {
-      document.getElementById('triageInput').value = symptom;
-      processSymptomTriage(symptom);
-      document.getElementById('triage').scrollIntoView({ behavior: 'smooth' });
-    }
 
     // Inquiry Submission Handler
     function handleInquiry(e) {
