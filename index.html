@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
   <style>
-    /* ================= NEW COLOR THEME: #07EBDF, #00BED6, #85D2D6, #55BDD6, #54D6CA ================= */
     :root {
       --brand-cyan-electric: #07EBDF;
       --brand-teal-bright: #00BED6;
@@ -19,7 +18,7 @@
       --brand-sky-vibrant: #55BDD6;
       --brand-mint-teal: #54D6CA;
 
-      --bg-dark: #06131A;          /* Deep Dark Cyan/Navy Tint */
+      --bg-dark: #06131A;
       --card-bg: rgba(10, 31, 42, 0.78);
       --card-border: rgba(7, 235, 223, 0.28);
       --brand-glow: rgba(7, 235, 223, 0.55);
@@ -82,7 +81,6 @@
       100% { transform: scale(1) translate(15px, -15px); }
     }
 
-    /* Scrollbar */
     ::-webkit-scrollbar { width: 9px; }
     ::-webkit-scrollbar-track { background: #030B10; }
     ::-webkit-scrollbar-thumb {
@@ -172,7 +170,6 @@
       box-shadow: 0 0 22px var(--brand-cyan-electric);
     }
 
-    /* Full-width Telemetry Ticker */
     .telemetry-ticker {
       background: #030C12;
       border-bottom: 1px solid var(--card-border);
@@ -274,7 +271,6 @@
       padding: 0 20px;
     }
 
-    /* Transparent Sections to Keep Floating Background Alive */
     section {
       position: relative;
       z-index: 10;
@@ -385,86 +381,8 @@
       transform: translateY(-2px);
       box-shadow: 0 0 14px rgba(7, 235, 223, 0.3);
     }
-    #global-motion-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.95;
-    }
-
-    .ambient-glow-mesh {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
-                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
-                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 2;
-      animation: ambientShift 22s ease-in-out infinite alternate;
-    }
-
-    @keyframes ambientShift {
-      0% { transform: scale(1) translate(0, 0); }
-      50% { transform: scale(1.06) translate(-15px, 15px); }
-      100% { transform: scale(1) translate(15px, -15px); }
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 9px; }
-    ::-webkit-scrollbar-track { background: #030B10; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
 
     /* ================= SEQUENTIAL BOOKING ENGINE ================= */
-    #global-motion-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.95;
-    }
-
-    .ambient-glow-mesh {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
-                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
-                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 2;
-      animation: ambientShift 22s ease-in-out infinite alternate;
-    }
-
-    @keyframes ambientShift {
-      0% { transform: scale(1) translate(0, 0); }
-      50% { transform: scale(1.06) translate(-15px, 15px); }
-      100% { transform: scale(1) translate(15px, -15px); }
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 9px; }
-    ::-webkit-scrollbar-track { background: #030B10; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .booking-section { padding: 35px 0 70px; }
     .section-title { text-align: center; margin-bottom: 25px; }
     .section-title h2 { font-size: 34px; font-weight: 800; margin-bottom: 8px; color: var(--text-white); }
@@ -631,45 +549,6 @@
     .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px var(--brand-cyan-electric); }
 
     /* ================= COIMBATORE MAP ================= */
-    #global-motion-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.95;
-    }
-
-    .ambient-glow-mesh {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
-                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
-                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 2;
-      animation: ambientShift 22s ease-in-out infinite alternate;
-    }
-
-    @keyframes ambientShift {
-      0% { transform: scale(1) translate(0, 0); }
-      50% { transform: scale(1.06) translate(-15px, 15px); }
-      100% { transform: scale(1) translate(15px, -15px); }
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 9px; }
-    ::-webkit-scrollbar-track { background: #030B10; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .map-section { padding: 30px 0 70px; }
     .map-card-3d {
       border-radius: 20px;
@@ -732,45 +611,6 @@
     }
 
     /* ================= EMERGENCY RADAR ================= */
-    #global-motion-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.95;
-    }
-
-    .ambient-glow-mesh {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
-                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
-                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 2;
-      animation: ambientShift 22s ease-in-out infinite alternate;
-    }
-
-    @keyframes ambientShift {
-      0% { transform: scale(1) translate(0, 0); }
-      50% { transform: scale(1.06) translate(-15px, 15px); }
-      100% { transform: scale(1) translate(15px, -15px); }
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 9px; }
-    ::-webkit-scrollbar-track { background: #030B10; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .emergency-banner {
       background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(10, 31, 42, 0.95) 100%);
       border: 2px solid var(--danger-red);
@@ -852,45 +692,6 @@
     }
 
     /* ================= HOW IT WORKS ================= */
-    #global-motion-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.95;
-    }
-
-    .ambient-glow-mesh {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
-                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
-                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 2;
-      animation: ambientShift 22s ease-in-out infinite alternate;
-    }
-
-    @keyframes ambientShift {
-      0% { transform: scale(1) translate(0, 0); }
-      50% { transform: scale(1.06) translate(-15px, 15px); }
-      100% { transform: scale(1) translate(15px, -15px); }
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 9px; }
-    ::-webkit-scrollbar-track { background: #030B10; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .workflow-section { padding: 40px 0 80px; }
     .workflow-steps {
       display: grid;
@@ -909,45 +710,6 @@
     }
 
     /* ================= PROBLEM & SOLUTION ================= */
-    #global-motion-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.95;
-    }
-
-    .ambient-glow-mesh {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
-                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
-                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 2;
-      animation: ambientShift 22s ease-in-out infinite alternate;
-    }
-
-    @keyframes ambientShift {
-      0% { transform: scale(1) translate(0, 0); }
-      50% { transform: scale(1.06) translate(-15px, 15px); }
-      100% { transform: scale(1) translate(15px, -15px); }
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 9px; }
-    ::-webkit-scrollbar-track { background: #030B10; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .metrics-section { padding: 40px 0 80px; }
     .comparison-grid {
       display: grid;
@@ -970,45 +732,6 @@
     }
 
     /* ================= CONNECTED HOSPITALS ================= */
-    #global-motion-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.95;
-    }
-
-    .ambient-glow-mesh {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
-                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
-                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 2;
-      animation: ambientShift 22s ease-in-out infinite alternate;
-    }
-
-    @keyframes ambientShift {
-      0% { transform: scale(1) translate(0, 0); }
-      50% { transform: scale(1.06) translate(-15px, 15px); }
-      100% { transform: scale(1) translate(15px, -15px); }
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 9px; }
-    ::-webkit-scrollbar-track { background: #030B10; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .hospitals-section {
       padding: 60px 0 90px;
       position: relative;
@@ -1056,45 +779,6 @@
     .hospital-hub-3d:hover { transform: rotateY(0deg) translateZ(40px); }
 
     /* ================= ABOUT US ================= */
-    #global-motion-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.95;
-    }
-
-    .ambient-glow-mesh {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
-                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
-                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 2;
-      animation: ambientShift 22s ease-in-out infinite alternate;
-    }
-
-    @keyframes ambientShift {
-      0% { transform: scale(1) translate(0, 0); }
-      50% { transform: scale(1.06) translate(-15px, 15px); }
-      100% { transform: scale(1) translate(15px, -15px); }
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 9px; }
-    ::-webkit-scrollbar-track { background: #030B10; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .about-section { padding: 40px 0 80px; }
     
     .founder-banner {
@@ -1112,45 +796,6 @@
     .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
 
     /* ================= CONTACT ================= */
-    #global-motion-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.95;
-    }
-
-    .ambient-glow-mesh {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
-                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
-                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 2;
-      animation: ambientShift 22s ease-in-out infinite alternate;
-    }
-
-    @keyframes ambientShift {
-      0% { transform: scale(1) translate(0, 0); }
-      50% { transform: scale(1.06) translate(-15px, 15px); }
-      100% { transform: scale(1) translate(15px, -15px); }
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 9px; }
-    ::-webkit-scrollbar-track { background: #030B10; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .contact-section { padding: 40px 0 80px; }
     .contact-card-3d {
       max-width: 860px; margin: 0 auto; background: var(--card-bg);
@@ -1170,48 +815,9 @@
     }
 
     /* ================= DIGITAL GATE PASS MODAL ================= */
-    #global-motion-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.95;
-    }
-
-    .ambient-glow-mesh {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
-                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
-                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 2;
-      animation: ambientShift 22s ease-in-out infinite alternate;
-    }
-
-    @keyframes ambientShift {
-      0% { transform: scale(1) translate(0, 0); }
-      50% { transform: scale(1.06) translate(-15px, 15px); }
-      100% { transform: scale(1) translate(15px, -15px); }
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 9px; }
-    ::-webkit-scrollbar-track { background: #030B10; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .modal-backdrop {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(4, 14, 20, 0.9); backdrop-filter: blur(14px);
+      background: rgba(4, 14, 20, 0.82); backdrop-filter: blur(8px);
       z-index: 6000; display: none; align-items: center; justify-content: center;
     }
 
@@ -1738,7 +1344,10 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
   <script>
-    // 1. FLOATING SYMBOLS BACKGROUND VISIBLE ACROSS ALL PAGES
+    // State flag: When true, floating canvas switches to rapid red crosses
+    let isRedCrossEmergencyMode = false;
+
+    // 1. FLOATING SYMBOLS BACKGROUND WITH DYNAMIC RED CROSS SWITCH
     const motionCanvas = document.getElementById('global-motion-canvas');
     if (motionCanvas) {
       const mctx = motionCanvas.getContext('2d');
@@ -1779,7 +1388,9 @@
             const dist = Math.sqrt(dx * dx + dy * dy);
 
             if (dist < 140) {
-              mctx.strokeStyle = `rgba(7, 235, 223, ${0.18 * (1 - dist / 140)})`;
+              mctx.strokeStyle = isRedCrossEmergencyMode
+                ? `rgba(239, 68, 68, ${0.25 * (1 - dist / 140)})`
+                : `rgba(7, 235, 223, ${0.18 * (1 - dist / 140)})`;
               mctx.lineWidth = 1;
               mctx.beginPath();
               mctx.moveTo(floatingEntities[i].x, floatingEntities[i].y);
@@ -1791,9 +1402,10 @@
 
         // Draw Floating Symbols
         floatingEntities.forEach(ent => {
-          ent.x += ent.vx;
-          ent.y += ent.vy;
-          ent.angle += ent.va;
+          const speedMultiplier = isRedCrossEmergencyMode ? 2.2 : 1;
+          ent.x += ent.vx * speedMultiplier;
+          ent.y += ent.vy * speedMultiplier;
+          ent.angle += ent.va * speedMultiplier;
 
           if (ent.x < -30) ent.x = w + 30;
           if (ent.x > w + 30) ent.x = -30;
@@ -1804,36 +1416,41 @@
           mctx.translate(ent.x, ent.y);
           mctx.rotate(ent.angle);
 
-          if (ent.type === 'cross') {
-            // Cyan Medical Cross
-            mctx.fillStyle = `rgba(7, 235, 223, ${ent.alpha})`;
-            const s = ent.size;
+          if (isRedCrossEmergencyMode) {
+            // When gate pass displays, ALL background symbols turn into vibrant RED moving crosses
+            mctx.fillStyle = `rgba(239, 68, 68, ${ent.alpha * 1.5})`;
+            const s = ent.size * 1.2;
             mctx.fillRect(-s / 6, -s / 2, s / 3, s);
             mctx.fillRect(-s / 2, -s / 6, s, s / 3);
-          } else if (ent.type === 'hospital') {
-            // Hospital Sign [H]
-            const s = ent.size * 1.3;
-            mctx.strokeStyle = `rgba(133, 210, 214, ${ent.alpha * 0.9})`;
-            mctx.lineWidth = 1.5;
-            mctx.strokeRect(-s / 2, -s / 2, s, s);
-
-            mctx.fillStyle = `rgba(133, 210, 214, ${ent.alpha})`;
-            mctx.font = `bold ${Math.floor(s * 0.7)}px sans-serif`;
-            mctx.textAlign = 'center';
-            mctx.textBaseline = 'middle';
-            mctx.fillText('H', 0, 0);
           } else {
-            // Emergency Beacon
-            mctx.fillStyle = `rgba(239, 68, 68, ${ent.alpha * 1.1})`;
-            mctx.beginPath();
-            mctx.arc(0, 0, ent.size * 0.28, 0, Math.PI * 2);
-            mctx.fill();
+            if (ent.type === 'cross') {
+              mctx.fillStyle = `rgba(7, 235, 223, ${ent.alpha})`;
+              const s = ent.size;
+              mctx.fillRect(-s / 6, -s / 2, s / 3, s);
+              mctx.fillRect(-s / 2, -s / 6, s, s / 3);
+            } else if (ent.type === 'hospital') {
+              const s = ent.size * 1.3;
+              mctx.strokeStyle = `rgba(133, 210, 214, ${ent.alpha * 0.9})`;
+              mctx.lineWidth = 1.5;
+              mctx.strokeRect(-s / 2, -s / 2, s, s);
 
-            mctx.strokeStyle = `rgba(239, 68, 68, ${ent.alpha * 0.6})`;
-            mctx.lineWidth = 1;
-            mctx.beginPath();
-            mctx.arc(0, 0, ent.size * 0.6, 0, Math.PI * 2);
-            mctx.stroke();
+              mctx.fillStyle = `rgba(133, 210, 214, ${ent.alpha})`;
+              mctx.font = `bold ${Math.floor(s * 0.7)}px sans-serif`;
+              mctx.textAlign = 'center';
+              mctx.textBaseline = 'middle';
+              mctx.fillText('H', 0, 0);
+            } else {
+              mctx.fillStyle = `rgba(239, 68, 68, ${ent.alpha * 1.1})`;
+              mctx.beginPath();
+              mctx.arc(0, 0, ent.size * 0.28, 0, Math.PI * 2);
+              mctx.fill();
+
+              mctx.strokeStyle = `rgba(239, 68, 68, ${ent.alpha * 0.6})`;
+              mctx.lineWidth = 1;
+              mctx.beginPath();
+              mctx.arc(0, 0, ent.size * 0.6, 0, Math.PI * 2);
+              mctx.stroke();
+            }
           }
 
           mctx.restore();
@@ -2228,7 +1845,7 @@
       }
     }
 
-    // 7. APPOINTMENT HANDLER & GATE PASS GENERATOR
+    // 7. INSTANT APPOINTMENT HANDLER & FAST QR DISPLAY + RED CROSS BACKGROUND
     function handleAppointmentBooking(e) {
       e.preventDefault();
       const patient = document.getElementById('patientName').value;
@@ -2250,12 +1867,14 @@
       document.getElementById('modalToken').textContent = `TOKEN: ${token}`;
       document.getElementById('modalTime').textContent = `Slot: ${time}`;
 
+      // Instant Synchronous QR Code Rendering (Zero latency)
       const qr = document.getElementById('qrCanvas');
       const qctx = qr.getContext('2d');
       qctx.fillStyle = "#FFFFFF";
       qctx.fillRect(0, 0, 130, 130);
       qctx.fillStyle = "#06131A";
 
+      // Render algorithmic matrix blocks
       for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
           if ((i + j) % 2 === 0 || (i * j) % 3 === 0) {
@@ -2263,6 +1882,7 @@
           }
         }
       }
+      // Target Corner Anchors
       qctx.fillRect(10, 10, 28, 28);
       qctx.clearRect(15, 15, 18, 18);
       qctx.fillRect(19, 19, 10, 10);
@@ -2275,6 +1895,10 @@
       qctx.clearRect(15, 97, 18, 18);
       qctx.fillRect(19, 101, 10, 10);
 
+      // Trigger Red Cross Rapid Motion in Background Canvas
+      isRedCrossEmergencyMode = true;
+
+      // Display Modal Immediately
       document.getElementById('passModal').style.display = 'flex';
       e.target.reset();
       
@@ -2286,6 +1910,8 @@
 
     function closeGatePassModal() {
       document.getElementById('passModal').style.display = 'none';
+      // Reset background back to ambient medical teal/cyan symbols
+      isRedCrossEmergencyMode = false;
     }
 
     // 8. PROFESSIONAL CONTACT HANDLER
