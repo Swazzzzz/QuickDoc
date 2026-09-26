@@ -381,7 +381,7 @@
       box-shadow: 0 0 14px rgba(7, 235, 223, 0.3);
     }
 
-    /* ================= SEQUENTIAL BOOKING ENGINE & VISUAL CALENDAR ================= */
+    /* ================= SEQUENTIAL BOOKING ENGINE & COMPACT CALENDAR ================= */
     .booking-section { padding: 35px 0 70px; }
     .section-title { text-align: center; margin-bottom: 25px; }
     .section-title h2 { font-size: 34px; font-weight: 800; margin-bottom: 8px; color: var(--text-white); }
@@ -433,22 +433,24 @@
     .triage-status { font-size: 13.5px; font-weight: 700; color: var(--brand-cyan-electric); }
     .triage-hud.critical .triage-status { color: #FCA5A5; }
 
-    /* Visual Interactive Calendar Styles */
+    /* Compact Calendar Styling */
     .calendar-card {
-      background: rgba(8, 26, 36, 0.94);
+      background: rgba(8, 26, 36, 0.95);
       border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 16px 20px;
-      margin-top: 6px;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 8px auto 0;
+      max-width: 310px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
     .calendar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
     .calendar-header span {
-      font-size: 15px;
+      font-size: 13.5px;
       font-weight: 800;
       color: var(--brand-cyan-electric);
     }
@@ -456,12 +458,12 @@
       background: rgba(7, 235, 223, 0.15);
       border: 1px solid var(--card-border);
       color: var(--brand-cyan-electric);
-      border-radius: 6px;
-      padding: 4px 10px;
-      font-size: 10px;
-      font-weight: 500;
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 800;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: all 0.2s;
     }
     .cal-nav-btn:hover {
       background: var(--brand-cyan-electric);
@@ -469,50 +471,58 @@
     }
     .calendar-weekdays {
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
+      grid-template-columns: 24px repeat(7, 1fr);
       text-align: center;
-      font-size: 8.5px;
-      font-weight: 500;
-      color: var(--text-muted);
-      margin-bottom: 8px;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: var(--brand-teal-soft);
+      margin-bottom: 4px;
     }
     .calendar-days-grid {
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
+      grid-template-columns: 24px repeat(7, 1fr);
+      row-gap: 3px;
+      column-gap: 2px;
+      align-items: center;
+    }
+    .cal-cw-cell {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: rgba(133, 210, 214, 0.45);
+      text-align: center;
+      user-select: none;
     }
     .cal-day-cell {
-      aspect-ratio: 1;
+      height: 25px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 8px;
-      font-weight: 500;
-      border-radius: 8px;
-      background: rgba(14, 39, 52, 0.6);
-      border: 1px solid transparent;
+      font-size: 11.5px;
+      font-weight: 600;
+      border-radius: 5px;
+      background: transparent;
       color: var(--text-white);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s ease;
     }
     .cal-day-cell:hover:not(.disabled) {
-      border-color: var(--brand-cyan-electric);
-      background: rgba(7, 235, 223, 0.2);
-      transform: translateY(-1px);
+      background: rgba(7, 235, 223, 0.25);
+      color: var(--brand-cyan-electric);
+      transform: scale(1.08);
     }
     .cal-day-cell.selected {
       background: var(--brand-cyan-electric) !important;
       color: #041017 !important;
-      font-weight: 500;
+      font-weight: 800;
       box-shadow: 0 0 10px var(--brand-glow);
     }
     .cal-day-cell.today {
-      border-color: var(--brand-teal-bright);
+      border: 1px solid var(--brand-teal-bright);
     }
     .cal-day-cell.disabled {
-      opacity: 0.25;
+      opacity: 0.2;
       cursor: not-allowed;
-      background: transparent;
+      pointer-events: none;
     }
 
     #stage-2-hospitals, #stage-3-specialist-timing {
@@ -895,7 +905,7 @@
       position: relative; z-index: 10;
     }
 
-    /* ================= DIGITAL GATE PASS MODAL WITH RED CROSS PERSISTENCE ================= */
+    /* ================= DIGITAL GATE PASS MODAL ================= */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -1116,7 +1126,7 @@
                 <input type="tel" id="patientPhone" placeholder="+91 98765 43210" required />
               </div>
 
-              <!-- VISUAL INTERACTIVE CALENDAR -->
+              <!-- COMPACT VISUAL CALENDAR -->
               <div class="form-group full">
                 <label>Preferred Consultation Date (Visual Calendar Selection)</label>
                 <input type="hidden" id="bookingDate" required />
@@ -1127,7 +1137,7 @@
                     <button type="button" class="cal-nav-btn" onclick="nextMonth()">Next &gt;</button>
                   </div>
                   <div class="calendar-weekdays">
-                    <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                    <div>CW</div><div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
                   </div>
                   <div class="calendar-days-grid" id="calDaysGrid">
                     <!-- Populated dynamically via JS -->
@@ -1463,12 +1473,10 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
   <script>
-    // State flag controlling background transformation:
-    // false = normal cyan medical elements, true = QR Gate Pass active with glowing RED moving crosses
     let isRedCrossEmergencyMode = false;
     let currentNavSection = 'hero';
 
-    // 1. ADAPTIVE HOSPITAL-THEMED FLOATING BACKGROUND ENGINE (ALL PAGES & SCROLL RESPONSIVE)
+    // 1. HOSPITAL THEMED FLOATING CANVAS BACKGROUND (PERSISTS ACROSS ALL PAGES AND SCROLL)
     const motionCanvas = document.getElementById('global-motion-canvas');
     if (motionCanvas) {
       const mctx = motionCanvas.getContext('2d');
@@ -1482,9 +1490,6 @@
       window.addEventListener('resize', resizeMotionCanvas);
       resizeMotionCanvas();
 
-      // Hospital Theme Elements:
-      // 'cross' = Medical Cross (+), 'hospital' = Hospital Symbol [H], 'emergency' = Ambulance Beacon Dot,
-      // 'capsule' = Rx Pill/Capsule, 'heart' = ECG Heartbeat Node, 'stethoscope' = Stethoscope loop element
       const hospitalThemes = ['cross', 'hospital', 'emergency', 'capsule', 'heart', 'stethoscope'];
 
       for (let i = 0; i < 75; i++) {
@@ -1504,7 +1509,7 @@
       function drawFloatingMesh() {
         mctx.clearRect(0, 0, w, h);
 
-        // Synapse Connection Lines
+        // Synapse Connectors
         for (let i = 0; i < floatingEntities.length; i++) {
           for (let j = i + 1; j < floatingEntities.length; j++) {
             const dx = floatingEntities[i].x - floatingEntities[j].x;
@@ -1524,7 +1529,7 @@
           }
         }
 
-        // Draw Floating Hospital Themed Symbols
+        // Draw Individual Floating Hospital Symbols
         floatingEntities.forEach(ent => {
           const speedMultiplier = isRedCrossEmergencyMode ? 2.2 : 1;
           ent.x += ent.vx * speedMultiplier;
@@ -1541,7 +1546,7 @@
           mctx.rotate(ent.angle);
 
           if (isRedCrossEmergencyMode) {
-            // When QR Modal opens: ALL symbols transform into moving glowing RED medical crosses
+            // When QR Modal opens: ALL symbols turn into glowing RED medical crosses
             mctx.fillStyle = `rgba(239, 68, 68, ${ent.alpha * 1.55})`;
             mctx.shadowColor = 'rgba(239, 68, 68, 0.8)';
             mctx.shadowBlur = 10;
@@ -1551,13 +1556,13 @@
           } else {
             mctx.shadowBlur = 0;
             if (ent.type === 'cross') {
-              // Electric Cyan Medical Cross (+)
+              // Medical Cross (+)
               mctx.fillStyle = `rgba(7, 235, 223, ${ent.alpha})`;
               const s = ent.size;
               mctx.fillRect(-s / 6, -s / 2, s / 3, s);
               mctx.fillRect(-s / 2, -s / 6, s, s / 3);
             } else if (ent.type === 'hospital') {
-              // Hospital [H] Sign
+              // Hospital Emblem [H]
               const s = ent.size * 1.3;
               mctx.strokeStyle = `rgba(133, 210, 214, ${ent.alpha * 0.9})`;
               mctx.lineWidth = 1.5;
@@ -1569,7 +1574,7 @@
               mctx.textBaseline = 'middle';
               mctx.fillText('H', 0, 0);
             } else if (ent.type === 'capsule') {
-              // Rx Capsule / Medicine Pill
+              // Rx Capsule
               const s = ent.size;
               mctx.strokeStyle = `rgba(84, 214, 202, ${ent.alpha * 0.9})`;
               mctx.lineWidth = 1.4;
@@ -1594,7 +1599,7 @@
               mctx.lineTo(s, 0);
               mctx.stroke();
             } else if (ent.type === 'stethoscope') {
-              // Stethoscope Head loop
+              // Stethoscope Head Loop
               const s = ent.size * 0.5;
               mctx.strokeStyle = `rgba(0, 190, 214, ${ent.alpha * 0.85})`;
               mctx.lineWidth = 1.4;
@@ -1633,18 +1638,24 @@
       floatingEntities.forEach(ent => {
         ent.vy += (Math.random() - 0.5) * 0.9;
         ent.vx += (Math.random() - 0.5) * 0.9;
-        // Limit velocity so movement remains elegant
         ent.vx = Math.max(-2, Math.min(2, ent.vx));
         ent.vy = Math.max(-2, Math.min(2, ent.vy));
       });
     }
 
-    // ================= VISUAL CALENDAR CONTROLLER =================
-    // Initialized to the system context date: September 2026
+    // ================= 2. COMPACT VISUAL CALENDAR CONTROLLER WITH CW COLUMN =================
     let calDate = new Date(2026, 8, 26);
     let selectedBookingDate = '2026-09-26';
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    function getCalendarWeekNumber(date) {
+      const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      const dayNum = d.getUTCDay() || 7;
+      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    }
 
     function renderCalendar() {
       const year = calDate.getFullYear();
@@ -1657,45 +1668,54 @@
       const grid = document.getElementById('calDaysGrid');
       grid.innerHTML = '';
 
-      // Today baseline (2026-09-26)
-      const todayBaseline = new Date(2026, 8, 26);
+      let dayCounter = 1;
+      let rowFirstDate = new Date(year, month, 1);
 
-      // Leading blank spaces
-      for (let i = 0; i < firstDay; i++) {
-        const empty = document.createElement('div');
-        empty.className = 'cal-day-cell disabled';
-        grid.appendChild(empty);
-      }
+      // Render week rows matching the compact calendar layout
+      while (dayCounter <= totalDays) {
+        // 1. Calendar Week (CW) Column
+        const cwCell = document.createElement('div');
+        cwCell.className = 'cal-cw-cell';
+        cwCell.textContent = getCalendarWeekNumber(new Date(year, month, Math.min(dayCounter, totalDays)));
+        grid.appendChild(cwCell);
 
-      // Day cells
-      for (let day = 1; day <= totalDays; day++) {
-        const cell = document.createElement('div');
-        cell.className = 'cal-day-cell';
-        cell.textContent = day;
+        // 2. Days for this week (Su to Sa)
+        for (let col = 0; col < 7; col++) {
+          if ((dayCounter === 1 && col < firstDay) || dayCounter > totalDays) {
+            const empty = document.createElement('div');
+            empty.className = 'cal-day-cell disabled';
+            grid.appendChild(empty);
+          } else {
+            const cell = document.createElement('div');
+            cell.className = 'cal-day-cell';
+            cell.textContent = dayCounter;
 
-        const cellDate = new Date(year, month, day);
-        const yyyy = year;
-        const mm = String(month + 1).padStart(2, '0');
-        const dd = String(day).padStart(2, '0');
-        const formatted = `${yyyy}-${mm}-${dd}`;
+            const thisDay = dayCounter;
+            const cellDate = new Date(year, month, thisDay);
+            const yyyy = year;
+            const mm = String(month + 1).padStart(2, '0');
+            const dd = String(thisDay).padStart(2, '0');
+            const formatted = `${yyyy}-${mm}-${dd}`;
 
-        // Disable past dates prior to current context date (September 26, 2026)
-        if (cellDate < new Date(2026, 8, 26)) {
-          cell.classList.add('disabled');
-        } else {
-          if (formatted === selectedBookingDate) {
-            cell.classList.add('selected');
+            if (cellDate < new Date(2026, 8, 26)) {
+              cell.classList.add('disabled');
+            } else {
+              if (formatted === selectedBookingDate) {
+                cell.classList.add('selected');
+              }
+              if (formatted === '2026-09-26') {
+                cell.classList.add('today');
+              }
+              cell.onclick = () => {
+                selectedBookingDate = formatted;
+                document.getElementById('bookingDate').value = formatted;
+                renderCalendar();
+              };
+            }
+            grid.appendChild(cell);
+            dayCounter++;
           }
-          if (formatted === '2026-09-26') {
-            cell.classList.add('today');
-          }
-          cell.onclick = () => {
-            selectedBookingDate = formatted;
-            document.getElementById('bookingDate').value = formatted;
-            renderCalendar();
-          };
         }
-        grid.appendChild(cell);
       }
 
       document.getElementById('bookingDate').value = selectedBookingDate;
@@ -1711,7 +1731,6 @@
       renderCalendar();
     }
 
-    // Initialize calendar immediately
     renderCalendar();
 
     // ================= COIMBATORE LEAFLET MAP DIRECTORY =================
@@ -1837,7 +1856,7 @@
       alert(`Hospital Selected: ${name}\nPlease fill in Patient Details & Description in Step 1 to proceed to on-duty specialist and timings.`);
     }
 
-    // 3. CLINICAL TRIAGE NLP CLASSIFIER
+    // NLP Clinical Classifier
     const CLINICAL_LEXICON = [
       {
         dept: "Cardiology",
@@ -1914,7 +1933,7 @@
       document.getElementById('book').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // 4. SPECIALTY DATA MATRIX WITH SPECIALISTS & SLOTS
+    // Specialty Data Matrix with Specialists & Slots
     const SPECIALTY_HOSPITAL_DATA = {
       "Cardiology": [
         { name: "KG Hospital", loc: "Arts College Road", doc: "Dr. G. Bakthavathsalam, MS, FICS (Chief Cardiologist)", wait: "4m avg wait", slots: ["09:30 AM", "10:15 AM", "11:45 AM", "04:30 PM"] },
@@ -1960,7 +1979,7 @@
       const symptoms = document.getElementById('symptomsText').value.trim();
 
       if (!name || !phone || !date || !symptoms) {
-        alert("⚠️ Complete Step 1 First:\nPlease enter your full name, phone number, consultation date, and a description of your symptoms.");
+        alert("⚠️ Complete Step 1 First:\nPlease enter your full name, phone number, select a date from the calendar, and describe your symptoms.");
         return;
       }
 
@@ -2096,7 +2115,7 @@
       }
     }
 
-    // 7. INSTANT ZERO-LATENCY QR GATE PASS GENERATOR & BACKGROUND RED CROSS TRANSFORMATION
+    // 7. INSTANT QR CODE GENERATION & ACTIVATE FLOATING RED CROSSES
     function handleAppointmentBooking(e) {
       e.preventDefault();
       const patient = document.getElementById('patientName').value;
@@ -2118,7 +2137,7 @@
       document.getElementById('modalToken').textContent = `TOKEN: ${token}`;
       document.getElementById('modalTime').textContent = `Slot: ${time}`;
 
-      // Instant Synchronous QR Canvas Render
+      // Synchronous instant QR rendering before modal display
       const qr = document.getElementById('qrCanvas');
       const qctx = qr.getContext('2d');
       qctx.fillStyle = "#FFFFFF";
@@ -2144,10 +2163,10 @@
       qctx.clearRect(15, 97, 18, 18);
       qctx.fillRect(19, 101, 10, 10);
 
-      // Trigger Red Medical Cross Transformation in Full Background Canvas
+      // Instantly switch canvas background symbols to moving red crosses
       isRedCrossEmergencyMode = true;
 
-      // Show Gate Pass Modal Immediately
+      // Show modal immediately
       document.getElementById('passModal').style.display = 'flex';
       e.target.reset();
       
@@ -2159,7 +2178,6 @@
 
     function closeGatePassModal() {
       document.getElementById('passModal').style.display = 'none';
-      // Restore background canvas to normal cyan/teal hospital elements
       isRedCrossEmergencyMode = false;
     }
 
@@ -2196,7 +2214,6 @@
       });
     });
 
-    // Also trigger the floating surge on dock click navigation
     document.querySelectorAll('.nav-dock-link').forEach(link => {
       link.addEventListener('click', () => {
         setTimeout(triggerScrollSurge, 150);
