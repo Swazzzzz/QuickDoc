@@ -385,8 +385,86 @@
       transform: translateY(-2px);
       box-shadow: 0 0 14px rgba(7, 235, 223, 0.3);
     }
+    #global-motion-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.95;
+    }
+
+    .ambient-glow-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
+                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 2;
+      animation: ambientShift 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientShift {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.06) translate(-15px, 15px); }
+      100% { transform: scale(1) translate(15px, -15px); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-track { background: #030B10; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
 
     /* ================= SEQUENTIAL BOOKING ENGINE ================= */
+    #global-motion-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.95;
+    }
+
+    .ambient-glow-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
+                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 2;
+      animation: ambientShift 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientShift {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.06) translate(-15px, 15px); }
+      100% { transform: scale(1) translate(15px, -15px); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-track { background: #030B10; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .booking-section { padding: 35px 0 70px; }
     .section-title { text-align: center; margin-bottom: 25px; }
     .section-title h2 { font-size: 34px; font-weight: 800; margin-bottom: 8px; color: var(--text-white); }
@@ -553,6 +631,45 @@
     .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px var(--brand-cyan-electric); }
 
     /* ================= COIMBATORE MAP ================= */
+    #global-motion-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.95;
+    }
+
+    .ambient-glow-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
+                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 2;
+      animation: ambientShift 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientShift {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.06) translate(-15px, 15px); }
+      100% { transform: scale(1) translate(15px, -15px); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-track { background: #030B10; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .map-section { padding: 30px 0 70px; }
     .map-card-3d {
       border-radius: 20px;
@@ -615,6 +732,45 @@
     }
 
     /* ================= EMERGENCY RADAR ================= */
+    #global-motion-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.95;
+    }
+
+    .ambient-glow-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
+                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 2;
+      animation: ambientShift 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientShift {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.06) translate(-15px, 15px); }
+      100% { transform: scale(1) translate(15px, -15px); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-track { background: #030B10; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .emergency-banner {
       background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(10, 31, 42, 0.95) 100%);
       border: 2px solid var(--danger-red);
@@ -696,6 +852,45 @@
     }
 
     /* ================= HOW IT WORKS ================= */
+    #global-motion-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.95;
+    }
+
+    .ambient-glow-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
+                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 2;
+      animation: ambientShift 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientShift {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.06) translate(-15px, 15px); }
+      100% { transform: scale(1) translate(15px, -15px); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-track { background: #030B10; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .workflow-section { padding: 40px 0 80px; }
     .workflow-steps {
       display: grid;
@@ -714,6 +909,45 @@
     }
 
     /* ================= PROBLEM & SOLUTION ================= */
+    #global-motion-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.95;
+    }
+
+    .ambient-glow-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
+                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 2;
+      animation: ambientShift 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientShift {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.06) translate(-15px, 15px); }
+      100% { transform: scale(1) translate(15px, -15px); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-track { background: #030B10; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .metrics-section { padding: 40px 0 80px; }
     .comparison-grid {
       display: grid;
@@ -736,6 +970,45 @@
     }
 
     /* ================= CONNECTED HOSPITALS ================= */
+    #global-motion-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.95;
+    }
+
+    .ambient-glow-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
+                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 2;
+      animation: ambientShift 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientShift {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.06) translate(-15px, 15px); }
+      100% { transform: scale(1) translate(15px, -15px); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-track { background: #030B10; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .hospitals-section {
       padding: 60px 0 90px;
       position: relative;
@@ -783,6 +1056,45 @@
     .hospital-hub-3d:hover { transform: rotateY(0deg) translateZ(40px); }
 
     /* ================= ABOUT US ================= */
+    #global-motion-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.95;
+    }
+
+    .ambient-glow-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
+                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 2;
+      animation: ambientShift 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientShift {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.06) translate(-15px, 15px); }
+      100% { transform: scale(1) translate(15px, -15px); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-track { background: #030B10; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .about-section { padding: 40px 0 80px; }
     
     .founder-banner {
@@ -800,6 +1112,45 @@
     .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
 
     /* ================= CONTACT ================= */
+    #global-motion-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.95;
+    }
+
+    .ambient-glow-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
+                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 2;
+      animation: ambientShift 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientShift {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.06) translate(-15px, 15px); }
+      100% { transform: scale(1) translate(15px, -15px); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-track { background: #030B10; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .contact-section { padding: 40px 0 80px; }
     .contact-card-3d {
       max-width: 860px; margin: 0 auto; background: var(--card-bg);
@@ -819,6 +1170,45 @@
     }
 
     /* ================= DIGITAL GATE PASS MODAL ================= */
+    #global-motion-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.95;
+    }
+
+    .ambient-glow-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 18% 25%, rgba(7, 235, 223, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 82% 75%, rgba(0, 190, 214, 0.16) 0%, transparent 55%),
+                  radial-gradient(circle at 50% 50%, rgba(84, 214, 202, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 2;
+      animation: ambientShift 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientShift {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.06) translate(-15px, 15px); }
+      100% { transform: scale(1) translate(15px, -15px); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-track { background: #030B10; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--brand-cyan-electric), var(--brand-teal-bright));
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brand-mint-teal); }
     .modal-backdrop {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: rgba(4, 14, 20, 0.9); backdrop-filter: blur(14px);
