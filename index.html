@@ -382,7 +382,7 @@
     }
 
     /* ================= SEQUENTIAL BOOKING ENGINE & COMPACT CALENDAR ================= */
-    .booking-section { padding: 35px 0 70px; }
+    .booking-section { padding: 35px 0 50px; }
     .section-title { text-align: center; margin-bottom: 25px; }
     .section-title h2 { font-size: 34px; font-weight: 800; margin-bottom: 8px; color: var(--text-white); }
     .section-title p { color: var(--text-muted); font-size: 15px; }
@@ -638,6 +638,69 @@
       margin-top: 12px;
     }
     .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px var(--brand-cyan-electric); }
+
+    /* ================= REAL-TIME OPD ENGINE STYLES (#live-network) ================= */
+    .opd-doctor-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      transition: all 0.3s ease;
+    }
+    .opd-doctor-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(7, 235, 223, 0.18);
+    }
+    .opd-doctor-card.available { border-left: 6px solid #10B981; }
+    .opd-doctor-card.next-window { border-left: 6px solid #F59E0B; }
+    .opd-doctor-card.delayed { border-left: 6px solid #E06D53; }
+
+    .opd-badge {
+      font-weight: 700;
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      display: inline-block;
+    }
+    .opd-badge.green { background: rgba(16, 185, 129, 0.2); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .opd-badge.yellow { background: rgba(245, 158, 11, 0.2); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .opd-badge.red { background: rgba(224, 109, 83, 0.2); color: #F87171; border: 1px solid rgba(224, 109, 83, 0.4); }
+
+    .opd-action-btn {
+      color: #041017;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-block;
+      transition: all 0.25s ease;
+    }
+    .opd-action-btn.primary {
+      background: linear-gradient(135deg, var(--brand-teal-bright), var(--brand-cyan-electric));
+      box-shadow: 0 0 12px var(--brand-glow);
+    }
+    .opd-action-btn.primary:hover {
+      box-shadow: 0 0 18px var(--brand-cyan-electric);
+      transform: translateY(-2px);
+    }
+    .opd-action-btn.alert {
+      background: #E06D53;
+      color: #fff;
+    }
+    .opd-action-btn.alert:hover {
+      background: #DC2626;
+      box-shadow: 0 0 14px rgba(224, 109, 83, 0.5);
+      transform: translateY(-2px);
+    }
 
     /* ================= COIMBATORE MAP ================= */
     .map-section { padding: 30px 0 70px; }
@@ -1028,7 +1091,7 @@
     </div>
   </div>
 
-  <!-- ================= FIXED LEFT-SIDE NAVIGATION DOCK ================= -->
+  <!-- ================= FIXED LEFT-SIDE NAVIGATION DOCK (10 SECTIONS) ================= -->
   <aside class="sidebar-left-nav">
     <div class="nav-dock-header">
       <span>QuickDoc Pages</span>
@@ -1041,33 +1104,37 @@
       <div class="dot-circle"></div>
       <span>2. Triage &amp; Booking</span>
     </a>
+    <a href="#live-network" class="nav-dock-link">
+      <div class="dot-circle" style="background:#10B981; border-color:#34D399;"></div>
+      <span style="color:#A7F3D0;">3. Live OPD Network</span>
+    </a>
     <a href="#map" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span>3. Coimbatore Map</span>
+      <span>4. Coimbatore Map</span>
     </a>
     <a href="#emergency" class="nav-dock-link">
       <div class="dot-circle" style="background:var(--danger-red); border-color:#EF4444;"></div>
-      <span style="color:#FCA5A5;">4. 1 km Emergency</span>
+      <span style="color:#FCA5A5;">5. 1 km Emergency</span>
     </a>
     <a href="#how-it-works" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span>5. How It Works</span>
+      <span>6. How It Works</span>
     </a>
     <a href="#solutions" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span>6. Problem &amp; Rates</span>
+      <span>7. Problem &amp; Rates</span>
     </a>
     <a href="#hospitals" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span>7. Connected Hospitals</span>
+      <span>8. Connected Hospitals</span>
     </a>
     <a href="#about" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span>8. About Us</span>
+      <span>9. About Us</span>
     </a>
     <a href="#contact" class="nav-dock-link">
       <div class="dot-circle"></div>
-      <span>9. Professional Contact</span>
+      <span>10. Contact</span>
     </a>
   </aside>
 
@@ -1206,7 +1273,57 @@
       </div>
     </section>
 
-    <!-- 3. COIMBATORE INTERACTIVE HOSPITAL MAP -->
+    <!-- 3. QUICKDOC REAL-TIME OPD AVAILABILITY ENGINE (INTEGRATED SECTION) -->
+    <section id="live-network" style="padding: 40px 0 60px;">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <span style="background: rgba(7, 235, 223, 0.16); color: var(--brand-cyan-electric); padding: 5px 14px; font-size: 11px; font-weight: 800; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; border: 1px solid var(--card-border);">Live Telemetry Active</span>
+          <h2 style="color: var(--text-white); font-size: 32px; font-weight: 800; margin: 12px 0 6px 0;">Coimbatore OPD Network Status</h2>
+          <p style="color: var(--text-muted); font-size: 14.5px; margin: 0;">Physical physician presence verified directly from clinic intake switchboards.</p>
+        </div>
+
+        <!-- Doctor 1: Available Now -->
+        <div class="opd-doctor-card available">
+          <div>
+            <span class="opd-badge green">🟢 AVAILABLE NOW</span>
+            <h3 style="margin: 8px 0 4px 0; color: #FFFFFF; font-size: 18px; font-weight: 800;">Dr. R. Sundaram, MD (Pediatrics)</h3>
+            <p style="margin: 0; color: var(--text-muted); font-size: 13.5px;">Apex Children’s Clinic • RS Puram, Coimbatore (2.4 km away)</p>
+            <p style="margin: 6px 0 0 0; color: #E6FAFB; font-size: 12.5px;">Current queue dwell: <strong style="color:var(--brand-cyan-electric);">~6 mins</strong> | Intake: <strong style="color:#34D399;">Open</strong></p>
+          </div>
+          <div>
+            <a href="#book" class="opd-action-btn primary" onclick="applySymptomQuickChip('Toddler high fever with dehydration', 'Paediatrics &amp; Child Care')">Calibrate Arrival</a>
+          </div>
+        </div>
+
+        <!-- Doctor 2: Next Window -->
+        <div class="opd-doctor-card next-window">
+          <div>
+            <span class="opd-badge yellow">🟡 NEXT WINDOW: 4:45 PM</span>
+            <h3 style="margin: 8px 0 4px 0; color: #FFFFFF; font-size: 18px; font-weight: 800;">Dr. Priya Natarajan, DNB (Cardiology)</h3>
+            <p style="margin: 0; color: var(--text-muted); font-size: 13.5px;">Coimbatore Heart Hub • Trichy Road (6.1 km away)</p>
+            <p style="margin: 6px 0 0 0; color: #E6FAFB; font-size: 12.5px;">Doctor currently on IP rounds | Dynamic Staging: <strong style="color:#FBBF24;">4:35 PM – 4:50 PM</strong></p>
+          </div>
+          <div>
+            <a href="#book" class="opd-action-btn primary" onclick="applySymptomQuickChip('Chest heaviness and sweating', 'Cardiology')">Join Virtual Buffer</a>
+          </div>
+        </div>
+
+        <!-- Doctor 3: Delayed -->
+        <div class="opd-doctor-card delayed">
+          <div>
+            <span class="opd-badge red">🔴 DELAYED (+20 MIN)</span>
+            <h3 style="margin: 8px 0 4px 0; color: #FFFFFF; font-size: 18px; font-weight: 800;">Dr. K. Mahesh, MS (Orthopedics)</h3>
+            <p style="margin: 0; color: var(--text-muted); font-size: 13.5px;">City Trauma Pavilion • Peelamedu (4.2 km away)</p>
+            <p style="margin: 6px 0 0 0; color: #E6FAFB; font-size: 12.5px;">In emergent trauma reduction | Departure notification: <strong style="color:#F87171;">Recalibrated</strong></p>
+          </div>
+          <div>
+            <a href="#book" class="opd-action-btn alert" onclick="applySymptomQuickChip('Sudden twisting knee fracture with swelling', 'Orthopaedics &amp; Trauma')">Alert When Open</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. COIMBATORE INTERACTIVE HOSPITAL MAP -->
     <section class="map-section" id="map">
       <div class="section-title">
         <h2>Live Coimbatore Hospital Locality Map</h2>
@@ -1222,7 +1339,7 @@
       </div>
     </section>
 
-    <!-- 4. EMERGENCY RADAR (SAFETY 1ST 1 KM) -->
+    <!-- 5. EMERGENCY RADAR (SAFETY 1ST 1 KM) -->
     <section class="emergency-banner" id="emergency">
       <div class="emergency-content">
         <h3>🚨 Safety 1st: Instant Emergency Dispatch</h3>
@@ -1241,7 +1358,7 @@
       </button>
     </section>
 
-    <!-- 5. HOW IT WORKS -->
+    <!-- 6. HOW IT WORKS -->
     <section class="workflow-section" id="how-it-works">
       <div class="section-title">
         <h2>How QuickDoc Works</h2>
@@ -1275,7 +1392,7 @@
       </div>
     </section>
 
-    <!-- 6. PROBLEM & SOLUTION (88% MEASURED PROOF) -->
+    <!-- 7. PROBLEM & SOLUTION (88% MEASURED PROOF) -->
     <section class="metrics-section" id="solutions">
       <div class="section-title">
         <h2>The Clinical Friction vs. QuickDoc Efficiency</h2>
@@ -1321,7 +1438,7 @@
       </div>
     </section>
 
-    <!-- 7. CONNECTED HOSPITALS -->
+    <!-- 8. CONNECTED HOSPITALS -->
     <section class="hospitals-section" id="hospitals">
       <div class="section-title">
         <h2>Connected Hospital Network</h2>
@@ -1353,7 +1470,7 @@
       </div>
     </section>
 
-    <!-- 8. ABOUT US (FOUNDER SWATHI S) -->
+    <!-- 9. ABOUT US (FOUNDER SWATHI S) -->
     <section class="about-section" id="about">
       <div class="section-title">
         <h2>About QuickDoc</h2>
@@ -1391,7 +1508,7 @@
       </div>
     </section>
 
-    <!-- 9. CONTACT -->
+    <!-- 10. CONTACT -->
     <section class="contact-section" id="contact">
       <div class="section-title">
         <h2>Professional Contact &amp; Correspondence</h2>
@@ -1633,7 +1750,7 @@
       drawFloatingMesh();
     }
 
-    // Scroll & Navigation Trigger: Adjusts gentle drift momentum on each section transition
+    // Scroll Momentum Surge
     function triggerScrollSurge() {
       floatingEntities.forEach(ent => {
         ent.vy += (Math.random() - 0.5) * 0.9;
@@ -1641,418 +1758,6 @@
         ent.vx = Math.max(-2, Math.min(2, ent.vx));
         ent.vy = Math.max(-2, Math.min(2, ent.vy));
       });
-    }
-
-    // ================= 2. COMPACT VISUAL CALENDAR CONTROLLER WITH CW COLUMN =================
-    let calDate = new Date(2026, 8, 26);
-    let selectedBookingDate = '2026-09-26';
-
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-    function getCalendarWeekNumber(date) {
-      const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-      const dayNum = d.getUTCDay() || 7;
-      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-      return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-    }
-
-    function renderCalendar() {
-      const year = calDate.getFullYear();
-      const month = calDate.getMonth();
-
-      document.getElementById('calMonthYear').textContent = `${monthNames[month]} ${year}`;
-
-      const firstDay = new Date(year, month, 1).getDay();
-      const totalDays = new Date(year, month + 1, 0).getDate();
-      const grid = document.getElementById('calDaysGrid');
-      grid.innerHTML = '';
-
-      let dayCounter = 1;
-      let rowFirstDate = new Date(year, month, 1);
-
-      // Render week rows matching the compact calendar layout
-      while (dayCounter <= totalDays) {
-        // 1. Calendar Week (CW) Column
-        const cwCell = document.createElement('div');
-        cwCell.className = 'cal-cw-cell';
-        cwCell.textContent = getCalendarWeekNumber(new Date(year, month, Math.min(dayCounter, totalDays)));
-        grid.appendChild(cwCell);
-
-        // 2. Days for this week (Su to Sa)
-        for (let col = 0; col < 7; col++) {
-          if ((dayCounter === 1 && col < firstDay) || dayCounter > totalDays) {
-            const empty = document.createElement('div');
-            empty.className = 'cal-day-cell disabled';
-            grid.appendChild(empty);
-          } else {
-            const cell = document.createElement('div');
-            cell.className = 'cal-day-cell';
-            cell.textContent = dayCounter;
-
-            const thisDay = dayCounter;
-            const cellDate = new Date(year, month, thisDay);
-            const yyyy = year;
-            const mm = String(month + 1).padStart(2, '0');
-            const dd = String(thisDay).padStart(2, '0');
-            const formatted = `${yyyy}-${mm}-${dd}`;
-
-            if (cellDate < new Date(2026, 8, 26)) {
-              cell.classList.add('disabled');
-            } else {
-              if (formatted === selectedBookingDate) {
-                cell.classList.add('selected');
-              }
-              if (formatted === '2026-09-26') {
-                cell.classList.add('today');
-              }
-              cell.onclick = () => {
-                selectedBookingDate = formatted;
-                document.getElementById('bookingDate').value = formatted;
-                renderCalendar();
-              };
-            }
-            grid.appendChild(cell);
-            dayCounter++;
-          }
-        }
-      }
-
-      document.getElementById('bookingDate').value = selectedBookingDate;
-    }
-
-    function prevMonth() {
-      calDate.setMonth(calDate.getMonth() - 1);
-      renderCalendar();
-    }
-
-    function nextMonth() {
-      calDate.setMonth(calDate.getMonth() + 1);
-      renderCalendar();
-    }
-
-    renderCalendar();
-
-    // ================= COIMBATORE LEAFLET MAP DIRECTORY =================
-    const map = L.map('coimbatore-map', {
-      scrollWheelZoom: false
-    }).setView([11.0168, 76.9558], 12);
-
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-
-    const markers = L.markerClusterGroup({
-      chunkedLoading: true,
-      maxClusterRadius: 40
-    });
-
-    function createQDPin(color = '#07EBDF') {
-      return L.divIcon({
-        className: 'custom-qd-pin',
-        html: `
-          <div style="
-            width: 30px; height: 30px; 
-            background: #06131A; 
-            border: 2px solid ${color}; 
-            border-radius: 50% 50% 50% 0; 
-            transform: rotate(-45deg); 
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 12px ${color};
-          ">
-            <div style="transform: rotate(45deg); color: #fff; font-weight: 900; font-size: 14px;">+</div>
-          </div>
-        `,
-        iconSize: [30, 30],
-        iconAnchor: [15, 30],
-        popupAnchor: [0, -28]
-      });
-    }
-
-    const coimbatoreMasterHospitals = [
-      { name: "Kovai Medical Center & Hospital (KMCH)", lat: 11.0456, lon: 77.0514, loc: "Avinashi Road", slots: "Comprehensive ER, Cardiac, Neuro & Multi-specialty" },
-      { name: "PSG Hospitals", lat: 11.0264, lon: 77.0028, loc: "Peelamedu", slots: "Tamil Nadu's Only JCI Prime Certified Multi-Speciality Hospital" },
-      { name: "GKNM Hospital", lat: 11.0125, lon: 76.9754, loc: "PN Palayam", slots: "Cardiology, Oncology & 24/7 ER Ready" },
-      { name: "Ganga Hospital", lat: 11.0289, lon: 76.9512, loc: "Mettupalayam Road, Ramnagar", slots: "World Renowned Ortho, Trauma, Spine & Plastic Surgery" },
-      { name: "KG Hospital", lat: 11.0021, lon: 76.9622, loc: "Arts College Road", slots: "Advanced Robotic Heart & Cardiac Center" },
-      { name: "Sri Ramakrishna Hospital", lat: 11.0253, lon: 76.9782, loc: "Avarampalayam, Siddhapudur", slots: "Cardio, Nephro, Urology & Rapid Triage" },
-      { name: "GEM Hospital", lat: 11.0068, lon: 76.9942, loc: "Ramanathapuram", slots: "Pioneering Gastroenterology & Laparoscopic Hub" },
-      { name: "Coimbatore Medical College Hospital (CMCH)", lat: 10.9996, lon: 76.9678, loc: "Trichy Road, Town Hall", slots: "24/7 Public Trauma & Casualty Command" },
-      { name: "Royal Care Super Speciality Hospital", lat: 11.0664, lon: 77.0864, loc: "Neelambur", slots: "Comprehensive Cardiac ICU & Interventional ER" },
-      { name: "Kongunad Hospital", lat: 11.0223, lon: 76.9634, loc: "Tatabad, 11th Street", slots: "Multi-Speciality Emergency & Intensive Care" },
-      { name: "FIMS Hospitals", lat: 11.0076, lon: 76.9712, loc: "Race Course", slots: "NABH Accredited Multi-Speciality Care" },
-      { name: "NG Hospital & Research Centre", lat: 11.0042, lon: 77.0143, loc: "Singanallur", slots: "Liver Transplant & GI Surgery Pioneer" },
-      { name: "The Eye Foundation", lat: 11.0189, lon: 76.9576, loc: "DB Road, RS Puram", slots: "Advanced Cornea & Retinal Trauma Unit" },
-      { name: "Rao Hospital", lat: 11.0112, lon: 76.9534, loc: "West Venkatasamy Road, RS Puram", slots: "Obstetrics, Gynaecology & Laparoscopy Center" },
-      { name: "Manu Hospital", lat: 11.0278, lon: 76.9723, loc: "New Siddhapudur", slots: "Speciality Ortho, Joint & General OPD" },
-      { name: "Sheela Hospital", lat: 11.0094, lon: 76.9748, loc: "Kuppusamy Street, PN Palayam", slots: "24/7 Emergency & Maternity Center" },
-      { name: "Rex Ortho Hospital", lat: 11.0105, lon: 76.9641, loc: "Periaswamy Road, RS Puram", slots: "Trauma, Spine & Joint Replacement" },
-      { name: "Ashwin Hospital", lat: 11.0211, lon: 76.9489, loc: "Alagesan Road, Saibaba Colony", slots: "Tertiary Multi-Speciality Medical Care" }
-    ];
-
-    coimbatoreMasterHospitals.forEach(h => {
-      const popupHtml = `
-        <div class="popup-title">${h.name}</div>
-        <div class="popup-loc">📍 ${h.loc}, Coimbatore</div>
-        <div class="popup-slot">🟢 ${h.slots}</div>
-        <div class="popup-actions">
-          <a href="#book" class="popup-btn" onclick="preselectHospitalFromMap('${h.name}')">Book Slot</a>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lon}" target="_blank" class="popup-btn nav-btn">📍 Navigate</a>
-        </div>
-      `;
-      markers.addLayer(L.marker([h.lat, h.lon], { icon: createQDPin('#07EBDF') }).bindPopup(popupHtml));
-    });
-    map.addLayer(markers);
-    document.getElementById('hospital-count-badge').textContent = `Verified: ${coimbatoreMasterHospitals.length} Major Tertiary Hospitals in Coimbatore`;
-
-    async function loadAllCoimbatoreNeighborhoodClinics() {
-      const query = `
-        [out:json][timeout:25];
-        area["name"="Coimbatore"]->.a;
-        (
-          node["amenity"="hospital"](area.a);
-          node["amenity"="clinic"](area.a);
-        );
-        out center 140;
-      `;
-      try {
-        const res = await fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`);
-        const data = await res.json();
-        let total = coimbatoreMasterHospitals.length;
-
-        if (data && data.elements) {
-          data.elements.forEach(el => {
-            const lat = el.lat || (el.center && el.center.lat);
-            const lon = el.lon || (el.center && el.center.lon);
-            const name = (el.tags && el.tags.name) ? el.tags.name : "Coimbatore Clinic / Health Center";
-
-            const exists = coimbatoreMasterHospitals.some(mh => mh.name.toLowerCase() === name.toLowerCase());
-            if (lat && lon && !exists) {
-              total++;
-              const pop = `
-                <div class="popup-title">${name}</div>
-                <div class="popup-loc">📍 Coimbatore Municipal Registry</div>
-                <div class="popup-slot">🟢 Open Outpatient Slots</div>
-                <div class="popup-actions">
-                  <a href="#book" class="popup-btn" onclick="preselectHospitalFromMap('${name.replace(/'/g, "\\'")}')">Select Clinic</a>
-                  <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" class="popup-btn nav-btn">📍 Route</a>
-                </div>
-              `;
-              markers.addLayer(L.marker([lat, lon], { icon: createQDPin('#55BDD6') }).bindPopup(pop));
-            }
-          });
-        }
-        document.getElementById('hospital-count-badge').textContent = `Live: ${total}+ Hospitals & Clinics Online across Coimbatore`;
-      } catch (e) {
-        // Fallback
-      }
-    }
-    loadAllCoimbatoreNeighborhoodClinics();
-
-    function preselectHospitalFromMap(name) {
-      document.getElementById('book').scrollIntoView({ behavior: 'smooth' });
-      document.getElementById('selectedHospitalInput').value = name;
-      alert(`Hospital Selected: ${name}\nPlease fill in Patient Details & Description in Step 1 to proceed to on-duty specialist and timings.`);
-    }
-
-    // NLP Clinical Classifier
-    const CLINICAL_LEXICON = [
-      {
-        dept: "Cardiology",
-        keywords: ["chest pain", "chest pressure", "heart", "palpitation", "left arm", "fluttering", "breathless", "bp spike", "nenju"],
-        critical: true
-      },
-      {
-        dept: "Orthopaedics & Trauma",
-        keywords: ["fracture", "bone", "joint", "knee", "back pain", "ankle", "sprain", "shoulder", "swelling", "ligament", "fall"]
-      },
-      {
-        dept: "Gastroenterology & GI",
-        keywords: ["stomach pain", "acid", "gas", "indigestion", "diarrhea", "vomiting", "ulcer", "liver"]
-      },
-      {
-        dept: "Neurology & Stroke",
-        keywords: ["seizure", "stroke", "numbness", "face drooping", "speech blur", "dizziness", "blackout", "migraine", "paralysis"],
-        critical: true
-      },
-      {
-        dept: "Pulmonology & Chest",
-        keywords: ["cough", "wheeze", "asthma", "phlegm", "breathlessness", "lung", "inhaler"]
-      },
-      {
-        dept: "Paediatrics & Child Care",
-        keywords: ["baby", "child", "infant", "toddler", "vaccine", "teething"]
-      }
-    ];
-
-    function processSymptomInput(text) {
-      const q = text.toLowerCase().trim();
-      const hud = document.getElementById('triageHud');
-      const status = document.getElementById('triageStatus');
-      const deptSelect = document.getElementById('deptSelect');
-
-      if (!q) {
-        hud.className = 'triage-hud';
-        status.innerHTML = 'Step 1 Active: Enter patient credentials and describe symptoms to generate available hospitals.';
-        deptSelect.value = 'General Medicine / Triage';
-        return;
-      }
-
-      const criticalTriggers = ["unconscious", "heart attack", "collapsed", "severe blood loss", "crushing chest pain", "choking"];
-      if (criticalTriggers.some(term => q.includes(term))) {
-        hud.className = 'triage-hud critical';
-        status.innerHTML = '🚨 CRITICAL RED FLAG DETECTED: Immediate 1 km Emergency Ambulance SOS Recommended!';
-        deptSelect.value = 'Emergency & Trauma Care';
-        return;
-      }
-
-      let matched = "General Medicine / Triage";
-      let highestScore = 0;
-
-      for (const item of CLINICAL_LEXICON) {
-        let score = 0;
-        for (const kw of item.keywords) {
-          if (q.includes(kw)) score++;
-        }
-        if (score > highestScore) {
-          highestScore = score;
-          matched = item.dept;
-        }
-      }
-
-      hud.className = 'triage-hud';
-      status.innerHTML = `✅ Triage Matched: <strong>${matched}</strong> — Click 'Generate Matching Hospitals List' below.`;
-      deptSelect.value = matched;
-    }
-
-    function applySymptomQuickChip(symptom, dept) {
-      document.getElementById('symptomsText').value = symptom;
-      processSymptomInput(symptom);
-      document.getElementById('deptSelect').value = dept;
-      document.getElementById('book').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Specialty Data Matrix with Specialists & Slots
-    const SPECIALTY_HOSPITAL_DATA = {
-      "Cardiology": [
-        { name: "KG Hospital", loc: "Arts College Road", doc: "Dr. G. Bakthavathsalam, MS, FICS (Chief Cardiologist)", wait: "4m avg wait", slots: ["09:30 AM", "10:15 AM", "11:45 AM", "04:30 PM"] },
-        { name: "GKNM Hospital", loc: "PN Palayam", doc: "Dr. R. Sundaram, MD, DM (Cardiology)", wait: "7m avg wait", slots: ["10:00 AM", "11:30 AM", "12:15 PM", "05:00 PM"] },
-        { name: "Royal Care Hospital", loc: "Neelambur", doc: "Dr. V. Chockalingam, MCh (Cardiothoracic Surgeon)", wait: "5m avg wait", slots: ["09:45 AM", "11:00 AM", "02:30 PM", "04:15 PM"] },
-        { name: "KMCH", loc: "Avinashi Road", doc: "Dr. K. Nithyanand, DM (Interventional Cardiologist)", wait: "11m avg wait", slots: ["10:30 AM", "01:00 PM", "03:45 PM", "05:15 PM"] }
-      ],
-      "Orthopaedics & Trauma": [
-        { name: "Ganga Hospital", loc: "Mettupalayam Road", doc: "Dr. S. Raja Sabapathy, MS, MCh (Trauma & Reconstructive Surgery)", wait: "6m avg wait", slots: ["09:15 AM", "10:45 AM", "12:00 PM", "03:30 PM"] },
-        { name: "PSG Hospitals", loc: "Peelamedu", doc: "Dr. S. Rajasekaran, MS Ortho (Orthopaedic Surgeon)", wait: "5m avg wait", slots: ["09:30 AM", "11:15 AM", "02:00 PM", "04:30 PM"] },
-        { name: "Rex Ortho Hospital", loc: "RS Puram", doc: "Dr. Rex C. Stephen, MS Ortho (Joint Replacement Specialist)", wait: "4m avg wait", slots: ["10:00 AM", "11:30 AM", "04:00 PM"] },
-        { name: "Manu Hospital", loc: "Siddhapudur", doc: "Dr. M. Soundarapandian, D.Ortho (Trauma Consultant)", wait: "8m avg wait", slots: ["10:15 AM", "12:30 PM", "05:00 PM"] }
-      ],
-      "Gastroenterology & GI": [
-        { name: "GEM Hospital", loc: "Ramanathapuram", doc: "Dr. C. Palanivelu, MS, MCh (GI Laparoscopic Specialist)", wait: "6m avg wait", slots: ["09:30 AM", "11:00 AM", "12:15 PM", "04:00 PM"] },
-        { name: "NG Hospital", loc: "Singanallur", doc: "Dr. N. Gurusamy, MS (Surgical Gastroenterologist)", wait: "5m avg wait", slots: ["10:15 AM", "11:45 AM", "03:30 PM"] },
-        { name: "KMCH", loc: "Avinashi Road", doc: "Dr. P. Eswaramurthi, DNB (Medical Gastroenterology)", wait: "9m avg wait", slots: ["10:00 AM", "01:15 PM", "04:45 PM"] }
-      ],
-      "Neurology & Stroke": [
-        { name: "Sri Ramakrishna Hospital", loc: "Avarampalayam", doc: "Dr. A. Murugesan, DM Neuro (Senior Neurologist)", wait: "6m avg wait", slots: ["10:15 AM", "11:45 AM", "03:30 PM"] },
-        { name: "GKNM Hospital", loc: "PN Palayam", doc: "Dr. C. Ramasubramanian, DM (Neuro Specialist)", wait: "8m avg wait", slots: ["09:45 AM", "11:15 AM", "04:15 PM"] },
-        { name: "KMCH", loc: "Avinashi Road", doc: "Dr. G. Venkatesh, MCh (Neurosurgeon)", wait: "12m avg wait", slots: ["09:15 AM", "12:30 PM", "04:00 PM"] }
-      ],
-      "Pulmonology & Chest": [
-        { name: "Royal Care Hospital", loc: "Neelambur", doc: "Dr. P. Ravichandran, DTCD (Chest Specialist)", wait: "4m avg wait", slots: ["10:00 AM", "11:30 AM", "03:15 PM"] },
-        { name: "PSG Hospitals", loc: "Peelamedu", doc: "Dr. R. Karthik, MD Pulm (Pulmonologist)", wait: "8m avg wait", slots: ["09:45 AM", "12:15 PM", "04:45 PM"] }
-      ],
-      "Paediatrics & Child Care": [
-        { name: "PSG Hospitals", loc: "Peelamedu", doc: "Dr. K. Sumathi, DCH, MD (Senior Paediatrician)", wait: "5m avg wait", slots: ["09:30 AM", "10:45 AM", "12:00 PM"] },
-        { name: "GKNM Hospital", loc: "PN Palayam", doc: "Dr. J. Meenakshi, DNB (Pediatric Specialist)", wait: "7m avg wait", slots: ["11:00 AM", "01:30 PM", "04:00 PM"] }
-      ],
-      "General Medicine / Triage": [
-        { name: "CMCH (Govt. Hospital)", loc: "Trichy Road", doc: "Dr. S. Sivakumar, MD (Chief Triage Physician)", wait: "10m avg wait", slots: ["09:00 AM", "10:30 AM", "11:45 AM", "03:00 PM"] },
-        { name: "Sri Ramakrishna Hospital", loc: "Avarampalayam", doc: "Dr. P. Anand, MBBS (Consultant Physician)", wait: "5m avg wait", slots: ["09:30 AM", "11:00 AM", "02:30 PM", "04:15 PM"] },
-        { name: "Kongunad Hospital", loc: "Tatabad", doc: "Dr. K. Rajendran, MBBS (Senior Resident Physician)", wait: "6m avg wait", slots: ["10:00 AM", "12:15 PM", "03:45 PM"] }
-      ]
-    };
-
-    function unlockStage2Hospitals() {
-      const name = document.getElementById('patientName').value.trim();
-      const phone = document.getElementById('patientPhone').value.trim();
-      const date = document.getElementById('bookingDate').value;
-      const symptoms = document.getElementById('symptomsText').value.trim();
-
-      if (!name || !phone || !date || !symptoms) {
-        alert("⚠️ Complete Step 1 First:\nPlease enter your full name, phone number, select a date from the calendar, and describe your symptoms.");
-        return;
-      }
-
-      const dept = document.getElementById('deptSelect').value;
-      const list = SPECIALTY_HOSPITAL_DATA[dept] || SPECIALTY_HOSPITAL_DATA["General Medicine / Triage"];
-      const container = document.getElementById('hospitalDirectoryStack');
-      container.innerHTML = '';
-
-      document.getElementById('stage-3-specialist-timing').style.display = 'none';
-      document.getElementById('badge-step-3').classList.remove('active');
-      document.getElementById('selectedSlotInput').value = '';
-
-      list.forEach(h => {
-        const card = document.createElement('div');
-        card.className = 'hospital-entry-card';
-        card.onclick = () => selectHospitalToRevealSpecialist(h, card);
-
-        card.innerHTML = `
-          <div class="hospital-entry-info">
-            <h4>${h.name}</h4>
-            <p>📍 ${h.loc}, Coimbatore</p>
-            <div class="hospital-click-hint">👉 Click to view on-duty specialist &amp; timings</div>
-          </div>
-          <div>
-            <span class="hospital-dwell-badge">🟢 ${h.wait}</span>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-
-      document.getElementById('stage-2-hospitals').style.display = 'block';
-      document.getElementById('badge-step-2').classList.add('active');
-      document.getElementById('triageStatus').innerHTML = `✅ Step 2 Unlocked: <strong>${list.length} Hospitals available</strong> for ${dept}. Click a hospital below to reveal specialist and times.`;
-      
-      document.getElementById('stage-2-hospitals').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function selectHospitalToRevealSpecialist(hospitalObj, cardEl) {
-      document.querySelectorAll('.hospital-entry-card').forEach(c => c.classList.remove('selected'));
-      cardEl.classList.add('selected');
-      document.getElementById('selectedHospitalInput').value = hospitalObj.name;
-
-      const displayCard = document.getElementById('specialistDisplayCard');
-      displayCard.innerHTML = `
-        <div class="specialist-meta">
-          <div style="font-size:12px; font-weight:800; color:var(--brand-cyan-electric); text-transform:uppercase; letter-spacing:0.8px;">
-            🏥 ${hospitalObj.name} • On-Duty Specialist
-          </div>
-          <h3 style="margin-top:4px;">${hospitalObj.doc}</h3>
-          <p>Estimated queue dwell time: ${hospitalObj.wait}</p>
-        </div>
-        <div style="font-size:13px; font-weight:700; color:#FFFFFF; margin-top:12px;">
-          Select Available Consultation Window:
-        </div>
-        <div class="slot-pills-wrap">
-          ${hospitalObj.slots.map(s => `<button type="button" class="slot-pill" onclick="selectSlotPill(event, '${hospitalObj.name}', '${hospitalObj.doc}', '${s}', this)">${s}</button>`).join('')}
-        </div>
-      `;
-
-      document.getElementById('stage-3-specialist-timing').style.display = 'block';
-      document.getElementById('badge-step-3').classList.add('active');
-      document.getElementById('triageStatus').innerHTML = `🎯 Step 3 Unlocked: Specialist <strong>${hospitalObj.doc}</strong> ready at <strong>${hospitalObj.name}</strong>. Choose an available slot pill.`;
-      document.getElementById('stage-3-specialist-timing').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function selectSlotPill(event, hospName, docName, slotTime, pillEl) {
-      event.stopPropagation();
-      document.querySelectorAll('.slot-pill').forEach(p => p.classList.remove('active'));
-      pillEl.classList.add('active');
-
-      document.getElementById('selectedSlotInput').value = `${slotTime} | ${docName} (${hospName})`;
-      document.getElementById('selectedHospitalInput').dataset.doc = docName;
-      document.getElementById('selectedHospitalInput').dataset.time = slotTime;
     }
 
     // 5. RADAR SIMULATION
@@ -2115,7 +1820,7 @@
       }
     }
 
-    // 7. INSTANT QR CODE GENERATION & ACTIVATE FLOATING RED CROSSES
+    // 7. INSTANT ZERO-LATENCY QR GATE PASS GENERATOR & BACKGROUND RED CROSS TRANSFORMATION
     function handleAppointmentBooking(e) {
       e.preventDefault();
       const patient = document.getElementById('patientName').value;
@@ -2137,7 +1842,7 @@
       document.getElementById('modalToken').textContent = `TOKEN: ${token}`;
       document.getElementById('modalTime').textContent = `Slot: ${time}`;
 
-      // Synchronous instant QR rendering before modal display
+      // Instant Synchronous QR Canvas Render
       const qr = document.getElementById('qrCanvas');
       const qctx = qr.getContext('2d');
       qctx.fillStyle = "#FFFFFF";
@@ -2163,10 +1868,10 @@
       qctx.clearRect(15, 97, 18, 18);
       qctx.fillRect(19, 101, 10, 10);
 
-      // Instantly switch canvas background symbols to moving red crosses
+      // Trigger Red Medical Cross Transformation in Full Background Canvas
       isRedCrossEmergencyMode = true;
 
-      // Show modal immediately
+      // Show Gate Pass Modal Immediately
       document.getElementById('passModal').style.display = 'flex';
       e.target.reset();
       
@@ -2203,7 +1908,7 @@
 
       if (current && current !== currentNavSection) {
         currentNavSection = current;
-        triggerScrollSurge(); // Floats elements with an active surge whenever a new page section is traversed
+        triggerScrollSurge();
       }
 
       navLinks.forEach(link => {
