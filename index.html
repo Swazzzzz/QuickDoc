@@ -11,22 +11,22 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
   <style>
-    /* ================= PEACOCK NECK LUXURY PALETTE ================= */
+    /* ================= ELECTRIC #00FFFF CYAN PALETTE ================= */
     :root {
-      --peacock-deep: #02131F;          /* Deepest obsidian sapphire base */
-      --peacock-navy: #042138;          /* Rich iridescent navy shadow */
-      --peacock-royal: #0B3C61;         /* Electric royal blue sheen */
-      --peacock-card: rgba(4, 33, 56, 0.92); 
-      --peacock-teal: #00A896;          /* Rich peacock teal */
-      --peacock-bright: #02C39A;        /* Luminescent turquoise highlight */
-      --peacock-glow: rgba(0, 168, 150, 0.55);
-      --cyan-feather: #26C6DA;          /* Cyan neck plume shimmer */
-      --gold-feather: #E0A96D;          /* Eye-of-feather subtle gold accent */
+      --cyan-pure: #00FFFF;            /* Electric Pure Cyan */
+      --cyan-bright: #00E5FF;
+      --cyan-glow: rgba(0, 255, 255, 0.6);
+      --cyan-dim: rgba(0, 255, 255, 0.15);
+      --cyan-border: rgba(0, 255, 255, 0.35);
+
+      --navy-deep: #030C16;            /* Deep Obsidian Base */
+      --navy-card: rgba(5, 22, 38, 0.94);
+      --border-color: #0C3A5E;
+
       --danger-red: #EF4444;
-      --danger-glow: rgba(239, 68, 68, 0.6);
+      --danger-glow: rgba(239, 68, 68, 0.65);
       --text-white: #FFFFFF;
       --text-muted: #8FB2CE;
-      --border-color: #0E4870;
     }
 
     * {
@@ -41,14 +41,15 @@
     }
 
     body {
-      background-color: var(--peacock-deep);
+      background-color: var(--navy-deep);
       color: var(--text-white);
       line-height: 1.6;
       perspective: 1200px;
       overflow-x: hidden;
+      width: 100%;
     }
 
-    /* ================= PEACOCK IRIDESCENT MOTION CANVAS ================= */
+    /* ================= FULL PAGE ANIMATED BACKGROUND CANVAS ================= */
     #global-motion-canvas {
       position: fixed;
       top: 0;
@@ -57,7 +58,7 @@
       height: 100vh;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.9;
+      opacity: 0.95;
     }
 
     .ambient-glow-mesh {
@@ -66,9 +67,9 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: radial-gradient(circle at 18% 28%, rgba(0, 168, 150, 0.16) 0%, transparent 45%),
-                  radial-gradient(circle at 82% 72%, rgba(11, 60, 97, 0.25) 0%, transparent 55%),
-                  radial-gradient(circle at 50% 50%, rgba(38, 198, 218, 0.08) 0%, transparent 60%);
+      background: radial-gradient(circle at 18% 28%, rgba(0, 255, 255, 0.14) 0%, transparent 45%),
+                  radial-gradient(circle at 82% 72%, rgba(0, 150, 255, 0.15) 0%, transparent 55%),
+                  radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.06) 0%, transparent 60%);
       pointer-events: none;
       z-index: 2;
       animation: ambientShift 22s ease-in-out infinite alternate;
@@ -80,31 +81,134 @@
       100% { transform: scale(1) translate(15px, -15px); }
     }
 
-    /* Custom Peacock Scrollbar */
+    /* Scrollbar */
     ::-webkit-scrollbar { width: 9px; }
-    ::-webkit-scrollbar-track { background: #020D15; }
+    ::-webkit-scrollbar-track { background: #020810; }
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--cyan-feather), var(--peacock-teal));
+      background: linear-gradient(180deg, var(--cyan-pure), #00838F);
       border-radius: 6px;
     }
-    ::-webkit-scrollbar-thumb:hover { background: var(--peacock-bright); }
+    ::-webkit-scrollbar-thumb:hover { background: #80FFFF; }
+
+    /* ================= FULL WIDTH HEADER (ACROSS ENTIRE VIEWPORT) ================= */
+    header {
+      position: sticky;
+      top: 0;
+      width: 100vw;
+      left: 0;
+      background: rgba(3, 12, 22, 0.96);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--cyan-border);
+      z-index: 5000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 4%;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.7);
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-svg {
+      width: 48px;
+      height: 48px;
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 0 10px var(--cyan-glow));
+    }
+
+    .brand-logo:hover .brand-svg {
+      transform: scale(1.08) rotate(3deg);
+    }
+
+    .brand-name {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      display: flex;
+    }
+    .brand-name .dark { color: #FFFFFF; }
+    .brand-name .teal { color: var(--cyan-pure); text-shadow: 0 0 12px var(--cyan-glow); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-emergency {
+      background: linear-gradient(135deg, #DC2626, #EF4444);
+      color: #fff;
+      padding: 9px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 0 16px var(--danger-glow);
+      animation: emergencyPulse 2s infinite;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-book {
+      background: linear-gradient(135deg, #00B4D8, var(--cyan-pure));
+      color: #020C16;
+      padding: 9px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13px;
+      box-shadow: 0 0 14px var(--cyan-glow);
+      transition: all 0.25s ease;
+    }
+
+    .btn-book:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 22px var(--cyan-pure);
+    }
+
+    /* Full-width Telemetry Ticker */
+    .telemetry-ticker {
+      background: #020A12;
+      border-bottom: 1px solid var(--border-color);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 8px 0;
+      font-size: 12.5px;
+      font-family: monospace;
+      color: var(--cyan-pure);
+      position: relative;
+      z-index: 4000;
+      width: 100vw;
+    }
+
+    .ticker-content {
+      display: inline-block;
+      padding-left: 100%;
+      animation: tickerMarquee 42s linear infinite;
+    }
 
     /* ================= FIXED LEFT-SIDE NAVIGATION DOCK ================= */
     .sidebar-left-nav {
       position: fixed;
       left: 18px;
-      top: 50%;
+      top: 54%;
       transform: translateY(-50%) translateZ(60px);
-      z-index: 3000;
+      z-index: 4500;
       display: flex;
       flex-direction: column;
       gap: 7px;
-      background: rgba(3, 24, 40, 0.95);
+      background: rgba(3, 14, 26, 0.94);
       backdrop-filter: blur(20px);
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--cyan-border);
       padding: 16px 14px;
       border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85), inset 0 0 14px rgba(0, 168, 150, 0.15);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85), inset 0 0 14px var(--cyan-dim);
       transform-style: preserve-3d;
       min-width: 195px;
     }
@@ -113,7 +217,7 @@
       font-size: 10.5px;
       font-weight: 800;
       letter-spacing: 1.2px;
-      color: var(--cyan-feather);
+      color: var(--cyan-pure);
       margin-bottom: 6px;
       padding-bottom: 6px;
       border-bottom: 1px solid var(--border-color);
@@ -149,121 +253,24 @@
     .nav-dock-link:hover,
     .nav-dock-link.active {
       color: #FFFFFF;
-      background: rgba(0, 168, 150, 0.22);
+      background: rgba(0, 255, 255, 0.18);
       transform: translateX(4px);
     }
 
     .nav-dock-link:hover .dot-circle,
     .nav-dock-link.active .dot-circle {
-      background: var(--peacock-bright);
-      border-color: var(--cyan-feather);
-      box-shadow: 0 0 12px var(--peacock-bright);
-      transform: scale(1.3);
+      background: var(--cyan-pure);
+      border-color: #FFFFFF;
+      box-shadow: 0 0 12px var(--cyan-pure);
+      transform: scale(1.35);
     }
 
-    /* Page Layout Offset */
+    /* Page Content Container Offset */
     .page-wrapper {
       position: relative;
       z-index: 10;
       margin-left: 230px;
       padding-right: 25px;
-    }
-
-    /* ================= HEADER ================= */
-    header {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      background: rgba(2, 19, 31, 0.95);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-color);
-      z-index: 2500;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 5%;
-    }
-
-    .brand-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-
-    .brand-svg {
-      width: 48px;
-      height: 48px;
-      transition: transform 0.3s ease;
-      filter: drop-shadow(0 0 10px var(--peacock-glow));
-    }
-
-    .brand-logo:hover .brand-svg {
-      transform: scale(1.08) rotate(3deg);
-    }
-
-    .brand-name {
-      font-size: 26px;
-      font-weight: 900;
-      letter-spacing: -0.5px;
-      display: flex;
-    }
-    .brand-name .dark { color: #FFFFFF; }
-    .brand-name .teal { color: var(--peacock-bright); }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .btn-emergency {
-      background: linear-gradient(135deg, #DC2626, #EF4444);
-      color: #fff;
-      padding: 9px 18px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing: 0.5px;
-      box-shadow: 0 0 16px var(--danger-glow);
-      animation: emergencyPulse 2s infinite;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-book {
-      background: linear-gradient(135deg, var(--peacock-teal), #007A6C);
-      color: #fff;
-      padding: 9px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 13px;
-      box-shadow: 0 0 12px var(--peacock-glow);
-      transition: transform 0.25s ease;
-    }
-
-    .btn-book:hover { transform: translateY(-2px); }
-
-    /* ================= LIVE OPD QUEUE TICKER ================= */
-    .telemetry-ticker {
-      background: #021727;
-      border-bottom: 1px solid var(--border-color);
-      overflow: hidden;
-      white-space: nowrap;
-      padding: 8px 0;
-      font-size: 12.5px;
-      font-family: monospace;
-      color: var(--cyan-feather);
-      position: relative;
-      z-index: 15;
-    }
-
-    .ticker-content {
-      display: inline-block;
-      padding-left: 100%;
-      animation: tickerMarquee 42s linear infinite;
     }
 
     /* ================= 3D TILES & SECTIONS ================= */
@@ -273,11 +280,11 @@
     }
 
     .tile-interactive-3d {
-      background: var(--peacock-card);
+      background: var(--navy-card);
       border: 1px solid var(--border-color);
       border-radius: 20px;
       padding: 34px;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
       position: relative;
       overflow: hidden;
       cursor: pointer;
@@ -291,7 +298,7 @@
       content: '';
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at center, rgba(2, 195, 154, 0.25) 0%, transparent 72%);
+      background: radial-gradient(circle at center, rgba(0, 255, 255, 0.25) 0%, transparent 72%);
       opacity: 0;
       transition: opacity 0.4s ease;
       pointer-events: none;
@@ -300,8 +307,8 @@
     .tile-interactive-3d:hover,
     .tile-interactive-3d:active {
       transform: translateY(-12px) scale(1.025) rotateX(2deg);
-      border-color: var(--peacock-bright);
-      box-shadow: 0 24px 60px rgba(0, 168, 150, 0.45), inset 0 0 20px rgba(38, 198, 218, 0.18);
+      border-color: var(--cyan-pure);
+      box-shadow: 0 24px 60px rgba(0, 255, 255, 0.35), inset 0 0 20px rgba(0, 255, 255, 0.15);
     }
 
     .tile-interactive-3d:hover::before,
@@ -320,15 +327,15 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(0, 168, 150, 0.14);
-      border: 1px solid var(--peacock-teal);
+      background: var(--cyan-dim);
+      border: 1px solid var(--cyan-pure);
       padding: 6px 20px;
       border-radius: 30px;
       font-size: 13px;
       font-weight: 700;
-      color: var(--peacock-bright);
+      color: var(--cyan-pure);
       margin-bottom: 20px;
-      box-shadow: 0 0 16px rgba(0, 168, 150, 0.3);
+      box-shadow: 0 0 16px var(--cyan-dim);
     }
 
     .hero h1 {
@@ -339,7 +346,7 @@
     }
 
     .hero h1 span {
-      background: linear-gradient(135deg, #FFFFFF 30%, var(--cyan-feather) 70%, var(--peacock-bright) 100%);
+      background: linear-gradient(135deg, #FFFFFF 20%, var(--cyan-pure) 80%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -360,7 +367,7 @@
     }
 
     .chip-btn {
-      background: rgba(6, 38, 62, 0.85);
+      background: rgba(6, 30, 50, 0.85);
       border: 1px solid var(--border-color);
       color: var(--text-white);
       padding: 8px 18px;
@@ -371,9 +378,10 @@
     }
 
     .chip-btn:hover {
-      border-color: var(--peacock-bright);
-      background: rgba(0, 168, 150, 0.25);
+      border-color: var(--cyan-pure);
+      background: var(--cyan-dim);
       transform: translateY(-2px);
+      box-shadow: 0 0 12px var(--cyan-dim);
     }
 
     /* ================= 2. SEQUENTIAL BOOKING ENGINE ================= */
@@ -384,7 +392,7 @@
 
     .form-container-3d {
       max-width: 900px; margin: 0 auto;
-      background: var(--peacock-card); border: 1px solid var(--border-color);
+      background: var(--navy-card); border: 1px solid var(--border-color);
       border-radius: 24px; padding: 40px;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
     }
@@ -404,13 +412,13 @@
       transition: color 0.3s ease;
     }
     .stage-step.active {
-      color: var(--peacock-bright);
-      text-shadow: 0 0 10px var(--peacock-glow);
+      color: var(--cyan-pure);
+      text-shadow: 0 0 12px var(--cyan-glow);
     }
 
     .triage-hud {
-      background: #031D30;
-      border: 1px solid var(--peacock-teal);
+      background: #031828;
+      border: 1px solid var(--cyan-border);
       border-radius: 12px;
       padding: 14px 18px;
       margin-bottom: 22px;
@@ -422,7 +430,7 @@
       border-color: var(--danger-red);
       background: rgba(239, 68, 68, 0.15);
     }
-    .triage-status { font-size: 13.5px; font-weight: 700; color: var(--cyan-feather); }
+    .triage-status { font-size: 13.5px; font-weight: 700; color: var(--cyan-pure); }
     .triage-hud.critical .triage-status { color: #FCA5A5; }
 
     #stage-2-hospitals, #stage-3-specialist-timing {
@@ -438,7 +446,7 @@
     }
 
     .hospital-entry-card {
-      background: #021727;
+      background: #021220;
       border: 1px solid var(--border-color);
       border-radius: 14px;
       padding: 18px 22px;
@@ -449,29 +457,29 @@
       cursor: pointer;
     }
     .hospital-entry-card:hover, .hospital-entry-card.selected {
-      border-color: var(--peacock-bright);
-      background: #062842;
-      box-shadow: 0 6px 25px rgba(0, 168, 150, 0.3);
+      border-color: var(--cyan-pure);
+      background: #05233D;
+      box-shadow: 0 6px 25px var(--cyan-dim);
       transform: translateY(-3px);
     }
     .hospital-entry-info h4 { font-size: 17px; color: #fff; margin-bottom: 4px; }
     .hospital-entry-info p { font-size: 13px; color: var(--text-muted); }
-    .hospital-click-hint { font-size: 11.5px; color: var(--cyan-feather); margin-top: 6px; font-weight: 600; }
+    .hospital-click-hint { font-size: 11.5px; color: var(--cyan-pure); margin-top: 6px; font-weight: 600; }
     
     .hospital-dwell-badge {
       font-size: 12px;
       font-weight: 800;
       padding: 6px 14px;
       border-radius: 20px;
-      background: rgba(0, 168, 150, 0.18);
-      color: var(--peacock-bright);
+      background: var(--cyan-dim);
+      color: var(--cyan-pure);
       white-space: nowrap;
-      border: 1px solid rgba(0, 168, 150, 0.35);
+      border: 1px solid var(--cyan-border);
     }
 
     .specialist-card-active {
-      background: #032035;
-      border: 1.5px solid var(--peacock-bright);
+      background: #031A2C;
+      border: 1.5px solid var(--cyan-pure);
       border-radius: 16px;
       padding: 24px;
       margin-top: 15px;
@@ -479,7 +487,7 @@
     }
 
     .specialist-meta h3 { font-size: 19px; color: #fff; margin-bottom: 2px; }
-    .specialist-meta p { font-size: 13.5px; color: var(--cyan-feather); font-weight: 600; margin-bottom: 12px; }
+    .specialist-meta p { font-size: 13.5px; color: var(--cyan-pure); font-weight: 600; margin-bottom: 12px; }
 
     .slot-pills-wrap {
       display: flex;
@@ -489,7 +497,7 @@
     }
 
     .slot-pill {
-      background: #093454;
+      background: #082942;
       border: 1px solid var(--border-color);
       color: #fff;
       font-size: 13px;
@@ -500,9 +508,10 @@
       cursor: pointer;
     }
     .slot-pill:hover, .slot-pill.active {
-      background: var(--peacock-teal);
-      border-color: var(--peacock-bright);
-      box-shadow: 0 0 14px var(--peacock-glow);
+      background: var(--cyan-pure);
+      color: #020C16;
+      border-color: #FFFFFF;
+      box-shadow: 0 0 16px var(--cyan-glow);
       transform: translateY(-2px);
     }
 
@@ -510,33 +519,33 @@
     .form-group { display: flex; flex-direction: column; gap: 6px; }
     .form-group.full { grid-column: span 2; }
 
-    label { font-size: 13px; font-weight: 700; color: var(--peacock-bright); text-transform: uppercase; letter-spacing: 0.5px; }
+    label { font-size: 13px; font-weight: 700; color: var(--cyan-pure); text-transform: uppercase; letter-spacing: 0.5px; }
     input, select, textarea {
-      width: 100%; background: #021727; border: 1px solid var(--border-color);
+      width: 100%; background: #021220; border: 1px solid var(--border-color);
       border-radius: 8px; padding: 12px 14px; color: #fff; font-size: 14px;
       transition: all 0.25s ease;
     }
     input:focus, select:focus, textarea:focus {
-      outline: none; border-color: var(--peacock-bright); box-shadow: 0 0 12px var(--peacock-glow);
+      outline: none; border-color: var(--cyan-pure); box-shadow: 0 0 14px var(--cyan-dim);
     }
 
     .btn-stage {
-      background: linear-gradient(135deg, var(--peacock-teal), #007A6C);
-      color: #fff; border: none; border-radius: 10px; padding: 14px 20px;
+      background: linear-gradient(135deg, #00B4D8, var(--cyan-pure));
+      color: #020C16; border: none; border-radius: 10px; padding: 14px 20px;
       font-size: 15px; font-weight: 800; cursor: pointer; width: 100%;
-      box-shadow: 0 6px 20px var(--peacock-glow); transition: all 0.3s ease;
+      box-shadow: 0 6px 20px var(--cyan-dim); transition: all 0.3s ease;
       margin-top: 10px;
     }
-    .btn-stage:hover { transform: translateY(-2px); box-shadow: 0 10px 25px var(--peacock-glow); }
+    .btn-stage:hover { transform: translateY(-2px); box-shadow: 0 10px 25px var(--cyan-glow); }
 
     .submit-btn {
-      background: linear-gradient(135deg, var(--peacock-teal), #007A6C);
-      color: #fff; border: none; border-radius: 10px; padding: 16px;
+      background: linear-gradient(135deg, #00B4D8, var(--cyan-pure));
+      color: #020C16; border: none; border-radius: 10px; padding: 16px;
       font-size: 16px; font-weight: 800; cursor: pointer; width: 100%;
-      box-shadow: 0 6px 20px var(--peacock-glow); transition: all 0.3s ease;
+      box-shadow: 0 6px 20px var(--cyan-glow); transition: all 0.3s ease;
       margin-top: 12px;
     }
-    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px var(--peacock-glow); }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px var(--cyan-pure); }
 
     /* ================= 3. COIMBATORE MAP ================= */
     .map-section { padding: 30px 4% 70px; }
@@ -551,15 +560,15 @@
     #coimbatore-map {
       width: 100%;
       height: 580px;
-      background: #02121E;
+      background: #020E18;
     }
 
     .map-badge-overlay {
       position: absolute;
       top: 16px;
       left: 16px;
-      background: rgba(3, 21, 35, 0.95);
-      border: 1px solid var(--border-color);
+      background: rgba(3, 14, 26, 0.95);
+      border: 1px solid var(--cyan-border);
       padding: 10px 18px;
       border-radius: 12px;
       z-index: 500;
@@ -573,36 +582,36 @@
     .pulse-dot-green {
       width: 10px;
       height: 10px;
-      background: var(--peacock-bright);
+      background: var(--cyan-pure);
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--peacock-bright);
+      box-shadow: 0 0 12px var(--cyan-pure);
       animation: pulse 1.8s infinite;
     }
 
     .leaflet-popup-content-wrapper {
-      background: #042138 !important;
+      background: #041B2E !important;
       color: #fff !important;
-      border: 1px solid var(--peacock-bright) !important;
+      border: 1px solid var(--cyan-pure) !important;
       border-radius: 14px !important;
       padding: 6px !important;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
     }
-    .leaflet-popup-tip { background: #042138 !important; }
-    .popup-title { font-size: 15px; font-weight: 800; color: var(--peacock-bright); margin-bottom: 4px; }
+    .leaflet-popup-tip { background: #041B2E !important; }
+    .popup-title { font-size: 15px; font-weight: 800; color: var(--cyan-pure); margin-bottom: 4px; }
     .popup-loc { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
-    .popup-slot { font-size: 11.5px; color: var(--cyan-feather); font-weight: 700; margin-bottom: 8px; }
+    .popup-slot { font-size: 11.5px; color: #FFFFFF; font-weight: 700; margin-bottom: 8px; }
     .popup-actions { display: flex; gap: 6px; }
     .popup-btn {
-      flex: 1; text-align: center; background: var(--peacock-teal); color: #fff;
-      text-decoration: none; font-size: 11px; font-weight: 700; padding: 6px 8px; border-radius: 6px;
+      flex: 1; text-align: center; background: var(--cyan-pure); color: #020C16;
+      text-decoration: none; font-size: 11px; font-weight: 800; padding: 6px 8px; border-radius: 6px;
     }
     .popup-btn.nav-btn {
-      background: #0A375A; border: 1px solid var(--border-color); color: var(--cyan-feather);
+      background: #0A3250; border: 1px solid var(--cyan-border); color: var(--cyan-pure);
     }
 
     /* ================= 4. EMERGENCY RADAR ================= */
     .emergency-banner {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(4, 33, 56, 0.95) 100%);
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(5, 22, 38, 0.96) 100%);
       border: 2px solid var(--danger-red);
       border-radius: 20px;
       padding: 40px;
@@ -692,10 +701,11 @@
 
     .step-num {
       width: 44px; height: 44px;
-      background: linear-gradient(135deg, var(--peacock-teal), #007A6C);
-      color: #fff; border-radius: 12px;
+      background: linear-gradient(135deg, #00B4D8, var(--cyan-pure));
+      color: #020C16; border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
       font-size: 18px; font-weight: 900; margin-bottom: 20px;
+      box-shadow: 0 0 14px var(--cyan-glow);
     }
 
     /* ================= 6. PROBLEM & SOLUTION ================= */
@@ -709,11 +719,11 @@
     }
 
     .metric-card-3d.problem { border-left: 6px solid #EF4444; }
-    .metric-card-3d.solution { border-left: 6px solid var(--peacock-bright); box-shadow: 0 15px 40px rgba(0, 168, 150, 0.2); }
+    .metric-card-3d.solution { border-left: 6px solid var(--cyan-pure); box-shadow: 0 15px 40px var(--cyan-dim); }
 
     .rate-stat { font-size: 50px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
     .problem .rate-stat { color: #F87171; }
-    .solution .rate-stat { color: var(--peacock-bright); }
+    .solution .rate-stat { color: var(--cyan-pure); }
     .stat-desc { color: var(--text-muted); font-size: 14.5px; margin-bottom: 22px; }
 
     .point-item {
@@ -736,8 +746,8 @@
 
     .phone-mockup-3d {
       width: 190px; height: 340px;
-      border: 3px solid var(--border-color);
-      border-radius: 30px; background: #031D31;
+      border: 3px solid var(--cyan-border);
+      border-radius: 30px; background: #031524;
       padding: 16px 12px; display: flex; flex-direction: column;
       box-shadow: -15px 25px 40px rgba(0, 0, 0, 0.7);
       transform: rotateY(15deg) translateZ(30px);
@@ -745,23 +755,23 @@
     }
 
     .phone-mockup-3d:hover { transform: rotateY(0deg) translateZ(40px); }
-    .phone-notch { width: 60px; height: 8px; background: #0C4269; border-radius: 4px; margin: 0 auto 15px; }
-    .phone-screen { background: #052946; border-radius: 16px; flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
-    .phone-row { height: 12px; border-radius: 4px; background: rgba(38, 198, 218, 0.25); }
+    .phone-notch { width: 60px; height: 8px; background: #0A3250; border-radius: 4px; margin: 0 auto 15px; }
+    .phone-screen { background: #052035; border-radius: 16px; flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .phone-row { height: 12px; border-radius: 4px; background: var(--cyan-dim); }
 
     .sync-stream-pipe {
       flex: 1; height: 6px;
-      background: repeating-linear-gradient(90deg, var(--peacock-bright) 0px, var(--peacock-bright) 16px, transparent 16px, transparent 32px);
+      background: repeating-linear-gradient(90deg, var(--cyan-pure) 0px, var(--cyan-pure) 16px, transparent 16px, transparent 32px);
       background-size: 200% 100%;
       animation: dataStream 1.8s linear infinite;
-      box-shadow: 0 0 10px var(--peacock-glow);
+      box-shadow: 0 0 14px var(--cyan-glow);
     }
 
     .hospital-hub-3d {
       width: 190px; height: 190px; border-radius: 24px;
-      background: var(--peacock-card); border: 2px solid var(--peacock-bright);
+      background: var(--navy-card); border: 2px solid var(--cyan-pure);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      box-shadow: 15px 25px 40px rgba(0, 0, 0, 0.7), 0 0 30px var(--peacock-glow);
+      box-shadow: 15px 25px 40px rgba(0, 0, 0, 0.7), 0 0 30px var(--cyan-dim);
       transform: rotateY(-15deg) translateZ(30px);
       transition: transform 0.4s ease;
     }
@@ -771,8 +781,8 @@
     .about-section { padding: 40px 4% 80px; }
     
     .founder-banner {
-      background: linear-gradient(135deg, rgba(0, 168, 150, 0.2), rgba(4, 33, 56, 0.95));
-      border: 1px solid var(--peacock-bright);
+      background: linear-gradient(135deg, var(--cyan-dim), rgba(5, 22, 38, 0.96));
+      border: 1px solid var(--cyan-pure);
       border-radius: 18px;
       padding: 24px 30px;
       margin-bottom: 35px;
@@ -787,7 +797,7 @@
     /* ================= 9. CONTACT ================= */
     .contact-section { padding: 40px 4% 80px; }
     .contact-card-3d {
-      max-width: 820px; margin: 0 auto; background: var(--peacock-card);
+      max-width: 820px; margin: 0 auto; background: var(--navy-card);
       border: 1px solid var(--border-color); border-radius: 20px; padding: 40px;
       display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
@@ -795,10 +805,10 @@
     .contact-info h3 { font-size: 24px; font-weight: 800; margin-bottom: 15px; }
     .contact-line { margin-bottom: 16px; font-size: 15px; color: var(--text-muted); }
     .contact-line strong { color: #fff; display: block; font-size: 13px; text-transform: uppercase; }
-    .contact-line a { color: var(--cyan-feather); text-decoration: none; }
+    .contact-line a { color: var(--cyan-pure); text-decoration: none; }
 
     footer {
-      background: #020C14; border-top: 1px solid #0B3352;
+      background: #02070E; border-top: 1px solid var(--border-color);
       padding: 30px 6%; text-align: center; color: var(--text-muted); font-size: 14px;
       position: relative; z-index: 10;
     }
@@ -806,14 +816,14 @@
     /* ================= DIGITAL GATE PASS MODAL ================= */
     .modal-backdrop {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(2, 13, 21, 0.88); backdrop-filter: blur(12px);
-      z-index: 5000; display: none; align-items: center; justify-content: center;
+      background: rgba(2, 8, 14, 0.9); backdrop-filter: blur(12px);
+      z-index: 6000; display: none; align-items: center; justify-content: center;
     }
 
     .gate-pass-card {
-      background: #042138; border: 2px solid var(--peacock-bright); border-radius: 24px;
+      background: #041B2E; border: 2px solid var(--cyan-pure); border-radius: 24px;
       padding: 35px; width: 90%; max-width: 480px; text-align: center;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 30px var(--peacock-glow);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 30px var(--cyan-glow);
       position: relative;
     }
 
@@ -832,9 +842,9 @@
       100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
     @keyframes pulse {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 168, 150, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 168, 150, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 168, 150, 0); }
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 var(--cyan-glow); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 255, 255, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 var(--cyan-glow); }
     }
     @keyframes dataStream {
       0% { background-position: 100% 0; }
@@ -867,14 +877,45 @@
   <!-- Screen Red Radar Flash Frame -->
   <div class="sos-flash-overlay" id="sosFlash"></div>
 
-  <!-- Full-Page Peacock Iridescent Motion Canvas -->
+  <!-- Full-Page #00FFFF Electric Motion Canvas -->
   <canvas id="global-motion-canvas"></canvas>
   <div class="ambient-glow-mesh"></div>
+
+  <!-- ================= FIXED FULL-VIEWPORT HEADER ================= -->
+  <header>
+    <a href="#hero" class="brand-logo">
+      <svg class="brand-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 62 C16 46 22 24 38 18 C48 14 50 24 50 24" stroke="#0C3A5E" stroke-width="7" stroke-linecap="round"/>
+        <path d="M50 24 C50 24 52 14 64 18 C78 22 84 42 78 60 C74 72 62 80 48 80" stroke="#00FFFF" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="86" cy="62" r="8" fill="#00FFFF" stroke="#FFFFFF" stroke-width="2"/>
+        <line x1="78" y1="62" x2="86" y2="62" stroke="#00FFFF" stroke-width="4"/>
+        <circle cx="22" cy="66" r="4" fill="#0C3A5E"/>
+        <path d="M50 28 C41 28 34 35 34 44 C34 56 50 72 50 72 C50 72 66 56 66 44 C66 35 59 28 50 28 Z" fill="#041B2E"/>
+        <rect x="47" y="36" width="6" height="16" rx="2" fill="#FFFFFF"/>
+        <rect x="42" y="41" width="16" height="6" rx="2" fill="#FFFFFF"/>
+      </svg>
+      <div class="brand-name">
+        <span class="dark">Quick</span><span class="teal">doc</span>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <button class="btn-emergency" onclick="triggerEmergencySOS()">🚨 SOS 1 KM</button>
+      <a href="#book" class="btn-book">Book Slot</a>
+    </div>
+  </header>
+
+  <!-- FULL-WIDTH LIVE OPD QUEUE TICKER -->
+  <div class="telemetry-ticker">
+    <div class="ticker-content">
+      KMCH Avinashi Rd: Trauma Ward Green (0m wait) | Neuro OPD: 4 slots open &bull;&bull;&bull; GKNM Hospital: Cardiology Cath Lab Staged | OPD Token #42 In Cabin &bull;&bull;&bull; Ganga Hospital: Plastic &amp; Ortho Trauma Fast-Track Active &bull;&bull;&bull; KG Hospital: Robotic Heart Unit Standby &bull;&bull;&bull; PSG Hospitals Peelamedu: JCI Prime Wing Active (Avg dwell: 8 mins) &bull;&bull;&bull; Sri Ramakrishna Hospital: Urology &amp; Nephro Roster Clear &bull;&bull;&bull; GEM Hospital: GI Laparoscopy Unit Open &bull;&bull;&bull; CMCH Trichy Rd: 24/7 Casualty Fully Staffed &bull;&bull;&bull; Royal Care Neelambur: Cardiac ICU Standby Ready
+    </div>
+  </div>
 
   <!-- ================= FIXED LEFT-SIDE NAVIGATION (VISIBLE ON ALL PAGES) ================= -->
   <aside class="sidebar-left-nav">
     <div class="nav-dock-header">
-      <span>🦚 QuickDoc Pages</span>
+      <span>⚡ QuickDoc Pages</span>
     </div>
     <a href="#hero" class="nav-dock-link active">
       <div class="dot-circle"></div>
@@ -916,37 +957,6 @@
 
   <!-- ================= PAGE CONTENT WRAPPER ================= -->
   <div class="page-wrapper">
-
-    <!-- HEADER -->
-    <header>
-      <a href="#hero" class="brand-logo">
-        <svg class="brand-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22 62 C16 46 22 24 38 18 C48 14 50 24 50 24" stroke="#0B3C61" stroke-width="7" stroke-linecap="round"/>
-          <path d="M50 24 C50 24 52 14 64 18 C78 22 84 42 78 60 C74 72 62 80 48 80" stroke="#02C39A" stroke-width="7" stroke-linecap="round"/>
-          <circle cx="86" cy="62" r="8" fill="#02C39A" stroke="#FFFFFF" stroke-width="2"/>
-          <line x1="78" y1="62" x2="86" y2="62" stroke="#02C39A" stroke-width="4"/>
-          <circle cx="22" cy="66" r="4" fill="#0B3C61"/>
-          <path d="M50 28 C41 28 34 35 34 44 C34 56 50 72 50 72 C50 72 66 56 66 44 C66 35 59 28 50 28 Z" fill="#042138"/>
-          <rect x="47" y="36" width="6" height="16" rx="2" fill="#FFFFFF"/>
-          <rect x="42" y="41" width="16" height="6" rx="2" fill="#FFFFFF"/>
-        </svg>
-        <div class="brand-name">
-          <span class="dark">Quick</span><span class="teal">doc</span>
-        </div>
-      </a>
-
-      <div class="nav-actions">
-        <button class="btn-emergency" onclick="triggerEmergencySOS()">🚨 SOS 1 KM</button>
-        <a href="#book" class="btn-book">Book Slot</a>
-      </div>
-    </header>
-
-    <!-- LIVE OPD QUEUE TICKER -->
-    <div class="telemetry-ticker">
-      <div class="ticker-content">
-        KMCH Avinashi Rd: Trauma Ward Green (0m wait) | Neuro OPD: 4 slots open &bull;&bull;&bull; GKNM Hospital: Cardiology Cath Lab Staged | OPD Token #42 In Cabin &bull;&bull;&bull; Ganga Hospital: Plastic &amp; Ortho Trauma Fast-Track Active &bull;&bull;&bull; KG Hospital: Robotic Heart Unit Standby &bull;&bull;&bull; PSG Hospitals Peelamedu: JCI Prime Wing Active (Avg dwell: 8 mins) &bull;&bull;&bull; Sri Ramakrishna Hospital: Urology &amp; Nephro Roster Clear &bull;&bull;&bull; GEM Hospital: GI Laparoscopy Unit Open &bull;&bull;&bull; CMCH Trichy Rd: 24/7 Casualty Fully Staffed &bull;&bull;&bull; Royal Care Neelambur: Cardiac ICU Standby Ready
-      </div>
-    </div>
 
     <!-- 1. HERO OVERVIEW -->
     <section class="hero" id="hero">
@@ -1033,7 +1043,7 @@
           <!-- STEP 2: AVAILABLE HOSPITALS LIST (UNLOCKS ONLY AFTER STEP 1) -->
           <div id="stage-2-hospitals">
             <div style="margin: 25px 0 10px; display:flex; justify-content:space-between; align-items:center;">
-              <label style="color:var(--cyan-feather); font-size:14px;">Select Hospital From Live Duty Roster</label>
+              <label style="color:var(--cyan-pure); font-size:14px;">Select Hospital From Live Duty Roster</label>
               <span style="font-size:12px; color:var(--text-muted);">Click any hospital card to reveal on-duty specialist and timings</span>
             </div>
 
@@ -1162,7 +1172,7 @@
         </div>
 
         <div class="tile-interactive-3d metric-card-3d solution">
-          <h3 style="color:var(--peacock-bright); margin-bottom:12px;">✅ The QuickDoc Solution (Proven)</h3>
+          <h3 style="color:var(--cyan-pure); margin-bottom:12px;">✅ The QuickDoc Solution (Proven)</h3>
           <div class="rate-stat">88%</div>
           <div class="stat-desc">Measured operational reduction in overall outpatient queue and transit latency.</div>
           <div class="point-item">
@@ -1192,11 +1202,11 @@
         <div class="phone-mockup-3d">
           <div class="phone-notch"></div>
           <div class="phone-screen">
-            <div style="font-size:10px; font-weight:800; color:var(--peacock-bright); text-align:center;">QUICKDOC APP</div>
+            <div style="font-size:10px; font-weight:800; color:var(--cyan-pure); text-align:center;">QUICKDOC APP</div>
             <div class="phone-row" style="width:70%;"></div>
             <div class="phone-row" style="width:90%;"></div>
             <div style="margin-top:auto; font-size:9px; color:#94A3B8; text-align:center;">SLOT CONFIRMED</div>
-            <div class="phone-row" style="background:var(--peacock-teal); height:16px;"></div>
+            <div class="phone-row" style="background:var(--cyan-pure); height:16px;"></div>
           </div>
         </div>
 
@@ -1204,11 +1214,11 @@
 
         <div class="hospital-hub-3d">
           <svg width="60" height="60" viewBox="0 0 100 100" fill="none">
-            <rect x="42" y="10" width="16" height="80" rx="6" fill="#02C39A"/>
-            <rect x="10" y="42" width="80" height="16" rx="6" fill="#02C39A"/>
+            <rect x="42" y="10" width="16" height="80" rx="6" fill="#00FFFF"/>
+            <rect x="10" y="42" width="80" height="16" rx="6" fill="#00FFFF"/>
           </svg>
           <span style="font-size:13px; font-weight:800; margin-top:10px; color:#fff;">HOSPITAL HIMS</span>
-          <span style="font-size:11px; color:var(--cyan-feather);">LIVE INTAKE</span>
+          <span style="font-size:11px; color:var(--cyan-pure);">LIVE INTAKE</span>
         </div>
       </div>
     </section>
@@ -1222,12 +1232,12 @@
 
       <div class="founder-banner">
         <div>
-          <div style="font-size:12px; font-weight:700; color:var(--peacock-bright); text-transform:uppercase; letter-spacing:1px;">Founder</div>
+          <div style="font-size:12px; font-weight:700; color:var(--cyan-pure); text-transform:uppercase; letter-spacing:1px;">Founder</div>
           <h3 style="font-size:24px; color:#fff;">Swathi S</h3>
           <p style="color:var(--text-muted); font-size:14px;">Founder, QuickDoc</p>
         </div>
         <div style="text-align:right;">
-          <span style="background:rgba(0, 168, 150, 0.25); border:1px solid var(--peacock-bright); padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700; color:var(--cyan-feather);">
+          <span style="background:var(--cyan-dim); border:1px solid var(--cyan-pure); padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700; color:var(--cyan-pure);">
             Coimbatore Healthcare Corridor
           </span>
         </div>
@@ -1275,7 +1285,7 @@
           </div>
           <div class="contact-line">
             <strong>Official Slogan</strong>
-            <span style="color:var(--peacock-bright); font-weight:700;">"find your doc. beat the clock"</span>
+            <span style="color:var(--cyan-pure); font-weight:700;">"find your doc. beat the clock"</span>
           </div>
         </div>
 
@@ -1309,16 +1319,16 @@
   <!-- DIGITAL GATE PASS MODAL -->
   <div class="modal-backdrop" id="passModal">
     <div class="gate-pass-card">
-      <div style="font-size:12px; font-weight:800; color:var(--peacock-bright); letter-spacing:1px;">QUICKDOC FAST-TRACK GATE PASS</div>
+      <div style="font-size:12px; font-weight:800; color:var(--cyan-pure); letter-spacing:1px;">QUICKDOC FAST-TRACK GATE PASS</div>
       <h3 style="margin-top:5px; font-size:24px; color:#fff;" id="modalPatient">Patient Name</h3>
       <p style="font-size:13px; color:var(--text-muted);" id="modalHospital">Hospital Name</p>
-      <p style="font-size:12px; color:var(--cyan-feather); margin-top:2px;" id="modalSpecialist">Doctor Name</p>
+      <p style="font-size:12px; color:var(--cyan-pure); margin-top:2px;" id="modalSpecialist">Doctor Name</p>
 
       <div class="qr-box">
         <canvas id="qrCanvas" width="130" height="130"></canvas>
       </div>
 
-      <div style="font-size:13px; font-family:monospace; color:var(--peacock-bright);" id="modalToken">TOKEN: #QD-CBE-9824</div>
+      <div style="font-size:13px; font-family:monospace; color:var(--cyan-pure);" id="modalToken">TOKEN: #QD-CBE-9824</div>
       <div style="font-size:12px; color:#94A3B8; margin-top:4px;" id="modalTime">Window: 10:15 AM</div>
 
       <div class="pass-btn-group">
@@ -1333,7 +1343,7 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
   <script>
-    // 1. PEACOCK NECK IRIDESCENT ANIMATED CANVAS BACKGROUND
+    // 1. #00FFFF ELECTRIC CYAN ANIMATED CANVAS BACKGROUND
     const motionCanvas = document.getElementById('global-motion-canvas');
     if (motionCanvas) {
       const mctx = motionCanvas.getContext('2d');
@@ -1349,7 +1359,7 @@
 
       const types = ['cross', 'hospital', 'emergency'];
 
-      for (let i = 0; i < 60; i++) {
+      for (let i = 0; i < 65; i++) {
         floatingEntities.push({
           x: Math.random() * w,
           y: Math.random() * h,
@@ -1357,7 +1367,7 @@
           vy: (Math.random() - 0.5) * 0.7,
           size: Math.random() * 12 + 10,
           type: types[i % 3],
-          alpha: Math.random() * 0.4 + 0.15,
+          alpha: Math.random() * 0.4 + 0.18,
           angle: Math.random() * Math.PI * 2,
           va: (Math.random() - 0.5) * 0.015
         });
@@ -1374,7 +1384,7 @@
             const dist = Math.sqrt(dx * dx + dy * dy);
 
             if (dist < 140) {
-              mctx.strokeStyle = `rgba(0, 168, 150, ${0.18 * (1 - dist / 140)})`;
+              mctx.strokeStyle = `rgba(0, 255, 255, ${0.18 * (1 - dist / 140)})`;
               mctx.lineWidth = 1;
               mctx.beginPath();
               mctx.moveTo(floatingEntities[i].x, floatingEntities[i].y);
@@ -1384,7 +1394,7 @@
           }
         }
 
-        // Draw Floating Peacock-Toned Materials
+        // Draw Floating #00FFFF Themed Elements
         floatingEntities.forEach(ent => {
           ent.x += ent.vx;
           ent.y += ent.vy;
@@ -1400,19 +1410,19 @@
           mctx.rotate(ent.angle);
 
           if (ent.type === 'cross') {
-            // Luminescent Emerald/Teal Cross
-            mctx.fillStyle = `rgba(2, 195, 154, ${ent.alpha})`;
+            // Electric Cyan Cross
+            mctx.fillStyle = `rgba(0, 255, 255, ${ent.alpha})`;
             const s = ent.size;
             mctx.fillRect(-s / 6, -s / 2, s / 3, s);
             mctx.fillRect(-s / 2, -s / 6, s, s / 3);
           } else if (ent.type === 'hospital') {
-            // Peacock Plume Cyan Hospital Sign
+            // Cyan Hospital Sign
             const s = ent.size * 1.3;
-            mctx.strokeStyle = `rgba(38, 198, 218, ${ent.alpha * 0.8})`;
+            mctx.strokeStyle = `rgba(0, 255, 255, ${ent.alpha * 0.9})`;
             mctx.lineWidth = 1.5;
             mctx.strokeRect(-s / 2, -s / 2, s, s);
 
-            mctx.fillStyle = `rgba(38, 198, 218, ${ent.alpha})`;
+            mctx.fillStyle = `rgba(0, 255, 255, ${ent.alpha})`;
             mctx.font = `bold ${Math.floor(s * 0.7)}px sans-serif`;
             mctx.textAlign = 'center';
             mctx.textBaseline = 'middle';
@@ -1454,13 +1464,13 @@
       maxClusterRadius: 40
     });
 
-    function createQDPin(color = '#02C39A') {
+    function createQDPin(color = '#00FFFF') {
       return L.divIcon({
         className: 'custom-qd-pin',
         html: `
           <div style="
             width: 30px; height: 30px; 
-            background: #02131F; 
+            background: #030C16; 
             border: 2px solid ${color}; 
             border-radius: 50% 50% 50% 0; 
             transform: rotate(-45deg); 
@@ -1507,7 +1517,7 @@
           <a href="https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lon}" target="_blank" class="popup-btn nav-btn">📍 Navigate</a>
         </div>
       `;
-      markers.addLayer(L.marker([h.lat, h.lon], { icon: createQDPin('#26C6DA') }).bindPopup(popupHtml));
+      markers.addLayer(L.marker([h.lat, h.lon], { icon: createQDPin('#00FFFF') }).bindPopup(popupHtml));
     });
     map.addLayer(markers);
     document.getElementById('hospital-count-badge').textContent = `Verified: ${coimbatoreMasterHospitals.length} Major Tertiary Hospitals in Coimbatore`;
@@ -1545,13 +1555,13 @@
                   <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" class="popup-btn nav-btn">📍 Route</a>
                 </div>
               `;
-              markers.addLayer(L.marker([lat, lon], { icon: createQDPin('#02C39A') }).bindPopup(pop));
+              markers.addLayer(L.marker([lat, lon], { icon: createQDPin('#00E5FF') }).bindPopup(pop));
             }
           });
         }
         document.getElementById('hospital-count-badge').textContent = `Live: ${total}+ Hospitals & Clinics Online across Coimbatore`;
       } catch (e) {
-        // Fallback to master roster
+        // Fallback
       }
     }
     loadAllCoimbatoreNeighborhoodClinics();
@@ -1678,7 +1688,7 @@
       ]
     };
 
-    // Unlock Step 2 ONLY after details and symptoms
+    // Unlock Step 2 ONLY after details and description
     function unlockStage2Hospitals() {
       const name = document.getElementById('patientName').value.trim();
       const phone = document.getElementById('patientPhone').value.trim();
@@ -1733,7 +1743,7 @@
       const displayCard = document.getElementById('specialistDisplayCard');
       displayCard.innerHTML = `
         <div class="specialist-meta">
-          <div style="font-size:12px; font-weight:800; color:var(--cyan-feather); text-transform:uppercase; letter-spacing:0.8px;">
+          <div style="font-size:12px; font-weight:800; color:var(--cyan-pure); text-transform:uppercase; letter-spacing:0.8px;">
             🏥 ${hospitalObj.name} • On-Duty Specialist
           </div>
           <h3 style="margin-top:4px;">${hospitalObj.doc}</h3>
@@ -1849,7 +1859,7 @@
       const qctx = qr.getContext('2d');
       qctx.fillStyle = "#FFFFFF";
       qctx.fillRect(0, 0, 130, 130);
-      qctx.fillStyle = "#02131F";
+      qctx.fillStyle = "#030C16";
 
       for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
